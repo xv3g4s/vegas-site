@@ -1,0 +1,53 @@
+# robots.txt — vegasaceleradora.com.br
+# Objetivo: permitir descoberta do conteúdo público por buscadores
+# tradicionais e por mecanismos de busca baseados em IA.
+
+# ---- Buscadores tradicionais ----
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# ---- Busca com IA (descoberta e citação, não treinamento) ----
+# ChatGPT Search
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Gemini / Google AI Overviews (extensão do Googlebot)
+User-agent: Google-Extended
+Allow: /
+
+# Bing / Copilot
+User-agent: msnbot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ---- Coleta para TREINAMENTO de modelos ----
+# Diferente de busca: estes agentes coletam conteúdo para treinar modelos.
+# Descomente para bloquear (não afeta a aparição em ChatGPT Search / Gemini / Perplexity).
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: CCBot
+# Disallow: /
+# User-agent: ClaudeBot
+# Disallow: /
+
+# ---- Regra geral ----
+User-agent: *
+Allow: /
+
+Sitemap: https://vegasaceleradora.com.br/sitemap.xml

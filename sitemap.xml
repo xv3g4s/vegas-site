@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml — vegasaceleradora.com.br
+  Contém apenas a Home, que é a única URL existente hoje.
+  Ao publicar cada página futura (ver seo/arquitetura-futura.md),
+  acrescente o bloco <url> correspondente e atualize <lastmod>.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://vegasaceleradora.com.br/</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

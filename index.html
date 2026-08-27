@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Runtime deps servidas localmente (vendor/) em vez de unpkg.com.
+   `window.__resources` e o hook oficial do runtime (cdnScriptFor em support.js):
+   quando a URL do CDN esta mapeada aqui, o runtime carrega o arquivo local.
+   Mantem o site 100% self-contained na HostGator, sem depender de CDN externo. */
+window.__resources = {
+  "https://unpkg.com/react@18.3.1/umd/react.production.min.js": "vendor/react.production.min.js",
+  "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "vendor/react-dom.production.min.js"
+};
+</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preload" as="image" href="img/logo-vegas-aceleradora.webp">
+<link rel="preload" as="image" href="img/hero-fundador-vegas-hd.webp" media="(min-width: 721px)">
+<link rel="preload" as="image" href="img/hero-fundador-vegas-mobile-opt.webp" media="(max-width: 720px)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Marketing para Restaurantes e Delivery | Vegas Aceleradora</title>
+<meta name="description" content="Assessoria de marketing para restaurantes e delivery focada em aumentar pedidos, recorrência e faturamento através de tráfego pago (Meta Ads e Google Ads), funil de vendas no WhatsApp e automação de recompra. Sem fidelidade.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://vegasaceleradora.com.br/">
+<meta property="og:site_name" content="Vegas Aceleradora">
+<meta property="og:title" content="Marketing para Restaurantes e Delivery | Vegas Aceleradora">
+<meta property="og:description" content="Tráfego pago, funil de vendas no WhatsApp e automação de recompra para o seu restaurante ou delivery vender mais. Sem fidelidade.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://vegasaceleradora.com.br/">
+<meta property="og:image" content="https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Marketing para Restaurantes e Delivery | Vegas Aceleradora">
+<meta name="twitter:description" content="Tráfego pago, funil de vendas no WhatsApp e automação de recompra para o seu restaurante ou delivery vender mais.">
+<meta name="twitter:image" content="https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://vegasaceleradora.com.br/#organizacao",
+      "name": "Vegas Aceleradora",
+      "alternateName": "Vegas Aceleradora — Marketing para Restaurantes e Delivery",
+      "url": "https://vegasaceleradora.com.br/",
+      "logo": "https://vegasaceleradora.com.br/img/logo-vegas-aceleradora.webp",
+      "image": "https://vegasaceleradora.com.br/img/equipe-vegas-aceleradora-escritorio-opt.webp",
+      "email": "contato@vegasaceleradora.com.br",
+      "telephone": "+55 27 99224-6343",
+      "foundingDate": "2019",
+      "description": "Assessoria de marketing especializada em restaurantes e delivery. Atua com gestão de tráfego pago (Meta Ads e Google Ads), criativos e oferta, funil de vendas no WhatsApp e automação de recompra para aumentar pedidos, ticket médio e faturamento de operações de food service.",
+      "slogan": "Resultado ou seu dinheiro de volta.",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Brasil"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+55 27 99224-6343",
+          "email": "contato@vegasaceleradora.com.br",
+          "contactType": "sales",
+          "availableLanguage": [
+            "Portuguese"
+          ],
+          "areaServed": "BR"
+        }
+      ],
+      "knowsAbout": [
+        "marketing para restaurantes",
+        "marketing para delivery",
+        "marketing digital para restaurantes",
+        "marketing para food service",
+        "tráfego pago para restaurantes",
+        "tráfego pago para delivery",
+        "Meta Ads",
+        "Instagram Ads",
+        "Google Ads",
+        "funil de vendas",
+        "automação de WhatsApp",
+        "recorrência de clientes",
+        "ticket médio",
+        "custo de aquisição de clientes",
+        "ROAS",
+        "iFood",
+        "cardápio digital",
+        "dark kitchens",
+        "hamburguerias",
+        "pizzarias"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://vegasaceleradora.com.br/#site",
+      "url": "https://vegasaceleradora.com.br/",
+      "name": "Vegas Aceleradora",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://vegasaceleradora.com.br/#organizacao"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://vegasaceleradora.com.br/#pagina",
+      "url": "https://vegasaceleradora.com.br/",
+      "name": "Marketing para Restaurantes e Delivery | Vegas Aceleradora",
+      "description": "Assessoria de marketing para restaurantes e delivery focada em aumentar pedidos, recorrência e faturamento.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@id": "https://vegasaceleradora.com.br/#site"
+      },
+      "about": {
+        "@id": "https://vegasaceleradora.com.br/#organizacao"
+      },
+      "primaryImageOfPage": "https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp"
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://vegasaceleradora.com.br/#servico",
+      "name": "Vegas Aceleradora — Assessoria de Marketing para Restaurantes e Delivery",
+      "parentOrganization": {
+        "@id": "https://vegasaceleradora.com.br/#organizacao"
+      },
+      "description": "Assessoria de marketing para restaurantes e delivery: gestão de tráfego pago (Meta Ads e Google Ads), criativos e oferta, funil de vendas no WhatsApp e automação de recompra, organizados em aquisição, conversão e recorrência.",
+      "email": "contato@vegasaceleradora.com.br",
+      "telephone": "+55 27 99224-6343",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Brasil"
+      },
+      "priceRange": "$$",
+      "serviceType": [
+        "Marketing para restaurantes",
+        "Marketing para delivery",
+        "Gestão de tráfego pago",
+        "Meta Ads",
+        "Google Ads",
+        "Funil de vendas no WhatsApp",
+        "Automação de recompra"
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "Restaurantes, deliveries, hamburguerias, pizzarias, restaurantes japoneses, cafeterias, bares e dark kitchens"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Serviços de marketing para restaurantes e delivery",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gestão de tráfego pago para restaurantes e delivery",
+              "description": "Campanhas no Meta Ads (Instagram e Facebook) e no Google Ads com segmentação geográfica pela área real de entrega e de atendimento.",
+              "serviceType": "Gestão de tráfego pago para restaurantes e delivery"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Criativos e oferta para food service",
+              "description": "Criação de anúncios e ajuste de oferta para provocar desejo pelo produto e aumentar a taxa de conversão em pedido.",
+              "serviceType": "Criativos e oferta para food service"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Funil de vendas no WhatsApp",
+              "description": "Estruturação do caminho entre o anúncio e o pedido, incluindo cardápio digital e canais próprios de venda.",
+              "serviceType": "Funil de vendas no WhatsApp"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Automação de recompra e base própria de clientes",
+              "description": "Automação e remarketing para trazer de volta quem já comprou, aumentando recorrência e ticket médio.",
+              "serviceType": "Automação de recompra e base própria de clientes"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://vegasaceleradora.com.br/#faq",
+      "isPartOf": {
+        "@id": "https://vegasaceleradora.com.br/#pagina"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que faz uma assessoria de marketing para restaurantes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Uma assessoria especializada em food service cuida do sistema que traz pedidos: gestão de tráfego pago (Meta Ads e Google Ads), criativos que despertam fome, oferta, funil de vendas no WhatsApp, automação de recompra e leitura de métricas. Cada decisão considera a realidade da operação: raio de entrega, horário de pico, cardápio e ticket médio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como aumentar as vendas de um restaurante?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vendas crescem em três frentes: atrair mais gente da região, converter melhor quem já demonstrou interesse e fazer o cliente voltar. Na prática: campanhas segmentadas pela área de atendimento, oferta e comunicação ajustadas para gerar pedido e recompra trabalhada por WhatsApp e remarketing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como aumentar os pedidos no delivery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anúncios no Meta Ads e no Google Ads trazem novos clientes todos os dias, e o funil de vendas com automação garante que eles voltem a comprar. É esse conjunto que faz o número de pedidos subir de forma constante."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Tráfego pago funciona para restaurantes e delivery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim, quando campanha, oferta, raio de atendimento, criativo e canal de conversão são trabalhados em conjunto. Anúncio isolado gera visualização; a combinação com oferta clara e atendimento rápido no WhatsApp ou no cardápio é o que transforma clique em pedido."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como depender menos do iFood e das taxas dos aplicativos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fortalecendo os canais próprios: WhatsApp, cardápio digital e site de pedidos. A ideia não é abandonar os marketplaces, mas diversificar, direcionando tráfego para onde a margem é maior e construindo uma base de clientes própria."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto investir em tráfego pago para restaurante?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não existe valor único: o investimento é adaptado ao tamanho do negócio e à capacidade da cozinha, porque não faz sentido gerar mais pedidos do que a operação entrega. A gestão otimiza cada real investido para que o retorno sobre o anúncio seja positivo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como aumentar a recorrência e o ticket médio dos clientes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Construindo base própria e conversando com quem já comprou. Automação no WhatsApp e remarketing trazem o cliente de volta, e ajustes de oferta e combos elevam o valor de cada pedido."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Google Ads ou Meta Ads para restaurantes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Os dois têm papéis diferentes. O Meta Ads provoca desejo em quem ainda não estava procurando, ideal para foto de produto, oferta e dias de baixo movimento. O Google Ads captura quem já pesquisa por comida ou delivery na região. Na maioria das operações o melhor resultado vem da combinação dos dois."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual a diferença entre uma agência generalista e uma assessoria especializada em restaurantes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A especialização muda o ponto de partida. Uma agência generalista precisa aprender como o negócio funciona; uma assessoria de food service já considera raio de entrega, horário de pico, capacidade da cozinha, cardápio, ticket médio e margem ao montar a campanha."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vale a pena criar um delivery próprio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vale como canal complementar, não como substituto do marketplace. O aplicativo traz volume e novos clientes; o canal próprio protege a margem e permite falar com quem já comprou. A estratégia mais saudável usa o marketplace para aquisição e o canal próprio para a recompra."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Em quanto tempo vejo os primeiros resultados?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nos primeiros 30 dias configuramos o rastreamento, validamos os melhores criativos e entendemos o comportamento do público. É nesse período que as campanhas ganham tração e os resultados consistentes começam a aparecer."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0A0908; }
+  body { font-family: 'Poppins', sans-serif; }
+  a { color: #F49E1D; text-decoration: none; }
+  a:hover { color: #FFB84D; }
+  ::selection { background: #F49E1D; color: #0A0908; }
+  @keyframes floatPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes heroIn { from { opacity: 0; transform: scale(1.16); } to { opacity: 1; transform: scale(1.08); } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes ctaSheen { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  @keyframes vegasShine { 0% { background-position: 100% 0%; } 100% { background-position: 0% 100%; } }
+  @keyframes vegasLogoIn { 0% { opacity: 0; transform: scale(0.82) translateY(14px); filter: blur(6px); } 100% { opacity: 1; transform: none; filter: blur(0); } }
+  @keyframes columnScroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+  /* scroll suave em toda a página */
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  @supports (scroll-behavior: smooth) { body { overscroll-behavior-y: none; } }
+
+  /* tablet */
+  [data-hero-mobile] { display: none; }
+  /* header em uma única linha até o ponto em que os links cabem */
+  @media (max-width: 1150px) {
+    header { flex-wrap: nowrap !important; }
+    header nav { flex-wrap: nowrap !important; }
+    /* mantém só os 3 links essenciais nessa faixa (os demais seguem no rodapé) */
+    header nav a[href="#marketing-para-restaurantes"],
+    header nav a[href="#sistema"],
+    header nav a[href="#quem-somos"] { display: none; }
+  }
+  @media (max-width: 1024px) {
+    [data-vs-badge] { display: none; }
+    [data-sticky] { position: static !important; }
+  }
+  @media (max-width: 900px) {
+    header nav a[href="#metodo"] { display: none; }
+    html { scroll-padding-top: 88px; }
+  }
+  /* mobile */
+  @media (max-width: 720px) {
+    header nav a[href^="#"] { display: none; }
+    [data-divider] { display: none; }
+    section[data-screen-label="Hero"] > img[data-hero-desktop] { display: none; }
+    [data-hero-mobile] { display: block; }
+    [data-marquee] span { font-size: 15px !important; }
+    [data-testi-wall] { max-height: 520px !important; }
+    [data-lead-modal] { border-radius: 20px !important; }
+    /* no mobile o parallax pesa e cria saltos: fixa as camadas */
+    [data-parallax] { transform: none !important; }
+    /* toque confortável: nenhum CTA abaixo de 48px de altura */
+    a[href*="whatsapp"]:not([data-wa-float]), button:not([aria-label="Fechar"]) { min-height: 48px; }
+    /* uma coluna de depoimentos rolando (3 colunas viram ruído) */
+    [data-testi-wall] > div:nth-child(n+2) { display: none; }
+    /* cards e blocos com respiro menor */
+    section { padding-left: 18px !important; padding-right: 18px !important; }
+    /* marca d'água gigante dos passos vira ruído em tela pequena */
+    [data-step-ghost] { display: none !important; }
+    /* ritmo vertical mais curto entre seções */
+    section { padding-top: 56px !important; padding-bottom: 56px !important; }
+    /* blocos do método empilham com menos ar */
+    [data-benefit-row] { padding: 34px 0 !important; gap: 20px !important; }
+    /* logo do topo menor libera espaço para o CTA do header */
+    header img { height: 38px !important; }
+    header { padding-left: 18px !important; padding-right: 18px !important; }
+    /* marquee mais discreto */
+    [data-marquee] { padding: 12px 0 !important; }
+    html { scroll-padding-top: 78px; }
+  }
+  @media (max-width: 420px) {
+    [data-chat-bubble] { right: 16px !important; bottom: 96px !important; width: min(268px, calc(100vw - 32px)) !important; }
+    [data-wa-float] { right: 16px !important; bottom: 20px !important; width: 62px !important; height: 62px !important; }
+    /* balão não deve cobrir a tela toda em telas muito pequenas */
+    [data-chat-bubble] p { font-size: 12px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    html { scroll-behavior: auto; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</helmet>
+
+<main style="background:#0A0908; color:#F3EDE3; overflow-x:clip; display:block">
+
+  <!-- scroll progress -->
+  <div data-progress="" style="position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,#D3372B,#F49E1D); z-index:200; box-shadow:0 0 12px rgba(240,78,35,0.6)"></div>
+
+  <div data-preloader="" style="position:fixed; inset:0; z-index:3000; background:#0A0908; display:flex; align-items:center; justify-content:center; transition:opacity .55s ease">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:26px">
+      <div style="position:relative; width:172px; height:172px; animation:vegasLogoIn .95s cubic-bezier(.22,.61,.36,1) both">
+        <div style="position:absolute; inset:0; -webkit-mask:url('img/logo-v-outline-mask.webp') center/contain no-repeat; mask:url('img/logo-v-outline-mask.webp') center/contain no-repeat; background:rgba(244,158,29,0.22)"></div>
+        <div style="position:absolute; inset:0; -webkit-mask:url('img/logo-v-outline-mask.webp') center/contain no-repeat; mask:url('img/logo-v-outline-mask.webp') center/contain no-repeat; background:linear-gradient(45deg, transparent 36%, #D3372B 46%, #F49E1D 54%, transparent 64%); background-size:300% 300%; animation:vegasShine 2.2s linear .4s infinite"></div>
+      </div>
+    </div>
+  </div>
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0A0908"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D3372B"/><stop offset="1" stop-color="#F49E1D"/></linearGradient></defs><text x="50" y="62" font-family="Poppins, sans-serif" font-size="42" font-weight="800" fill="url(#g)" text-anchor="middle">V</text></svg>
+  </template>
+
+  <!-- ===== HEADER ===== -->
+  <header data-screen-label="Header" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:18px clamp(20px,5vw,72px); position:sticky; top:0; background:rgba(10,9,8,0.85); backdrop-filter:blur(16px); z-index:50; border-bottom:1px solid rgba(243,237,227,0.08); transition:padding .3s ease, box-shadow .3s ease">
+    <img src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:46px; width:auto; display:block">
+    <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:clamp(14px,2.6vw,40px); font-size:13px; font-weight:700; letter-spacing:0.16em; color:#9C968A">
+      <a href="#resultados" style="color:#9C968A" style-hover="color:#F3EDE3">RESULTADOS</a>
+      <a href="#metodo" style="color:#9C968A" style-hover="color:#F3EDE3">MÉTODO</a>
+      <a href="#sistema" style="color:#9C968A" style-hover="color:#F3EDE3">TRÁFEGO PAGO</a>
+      <a href="#marketing-para-restaurantes" style="color:#9C968A" style-hover="color:#F3EDE3">COMO FUNCIONA</a>
+      <a href="#quem-somos" style="color:#9C968A" style-hover="color:#F3EDE3">QUEM SOMOS</a>
+      <a href="#faq" style="color:#9C968A" style-hover="color:#F3EDE3">FAQ</a>
+      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="background:linear-gradient(90deg,#D3372B,#F49E1D); color:#FFF; padding:13px 26px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:12px; letter-spacing:0.12em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR COM A VEGAS</a>
+    </nav>
+  </header>
+
+  <!-- ===== HERO (founder) ===== -->
+  <section data-screen-label="Hero" style="position:relative; min-height:78vh; display:flex; align-items:center; background:#0A0908; overflow:hidden">
+    <img src="img/hero-fundador-vegas-hd.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" fetchpriority="high" decoding="async" data-hero-desktop="" data-parallax="0.14" data-parallax-scale="1.08" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center; transform:scale(1.08); will-change:transform; animation:heroIn 1.6s ease-out backwards; mix-blend-mode:screen">
+    <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,9,8,0.9) 12%, rgba(10,9,8,0.55) 45%, rgba(10,9,8,0) 75%)"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0A0908 0%, rgba(10,9,8,0) 18%)"></div>
+    <div style="position:relative; z-index:1; max-width:1360px; margin:0 auto; width:100%; padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px) clamp(72px,10vw,130px); display:flex; flex-direction:column; gap:clamp(22px,3.5vw,32px)">
+      <div data-hero-mobile="" style="position:relative; margin:-44px -20px 0; overflow:hidden">
+        <img src="img/hero-fundador-vegas-mobile-opt.webp" alt="Fundador da Vegas Aceleradora, especialista em marketing para restaurantes e delivery" fetchpriority="high" decoding="async" style="display:block; width:100%; height:auto; animation:heroIn 1.2s ease-out backwards">
+        <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0A0908 4%, rgba(10,9,8,0) 45%)"></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px; font-size:13px; font-weight:700; letter-spacing:0.24em; color:#F49E1D; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) both">
+        <span style="display:block; width:44px; height:1px; background:linear-gradient(90deg,#D3372B,#F49E1D)"></span>
+        MARKETING ESPECIALIZADO EM FOOD SERVICE
+      </div>
+      <h1 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(38px,5.6vw,64px); line-height:1.04; margin:0; letter-spacing:-0.02em; max-width:760px; text-wrap:balance; text-transform:uppercase; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .12s both">Assessoria de marketing para <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">restaurantes e delivery</span></h1>
+      <p style="font-size:20px; line-height:1.65; color:#C9C3B6; margin:0; max-width:480px; text-wrap:pretty; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .24s both">Tráfego pago, funil de vendas no WhatsApp e automação de recompra para aumentar pedidos, ticket médio e faturamento — no delivery e no salão. Sem fidelidade.</p>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin-top:8px; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .36s both">
+        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:19px 38px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; box-shadow:0 12px 40px rgba(240,78,35,0.35)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CONTRATE A NOSSA ASSESSORIA →</a>
+        <a href="#resultados" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(243,237,227,0.25); color:#F3EDE3; padding:19px 34px; border-radius:100px; transition:all .3s ease; font-weight:700; font-size:14px; letter-spacing:0.1em" style-hover="border-color:#F49E1D; color:#F49E1D; transform:translateY(-4px)">VER RESULTADOS</a>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px 28px; margin-top:40px; border-top:1px solid rgba(243,237,227,0.12); padding-top:30px; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .5s both">
+        <div style="display:flex; align-items:center; gap:12px">
+          <span style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 14px rgba(240,78,35,0.45)">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+          </span>
+          <span style="font-size:15px; font-weight:600; letter-spacing:0.06em; color:#D9D5CB; white-space:nowrap">Sem fidelidade</span>
+        </div>
+        <span data-divider="" style="width:1px; height:22px; background:rgba(243,237,227,0.15)"></span>
+        <div style="display:flex; align-items:center; gap:12px">
+          <span style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 14px rgba(240,78,35,0.45)">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+          </span>
+          <span style="font-size:15px; font-weight:600; letter-spacing:0.06em; color:#D9D5CB; white-space:nowrap">Investimos no seu anúncio</span>
+        </div>
+        <span data-divider="" style="width:1px; height:22px; background:rgba(243,237,227,0.15)"></span>
+        <div style="display:flex; align-items:center; gap:12px">
+          <span style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 14px rgba(240,78,35,0.45)">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+          </span>
+          <span style="font-size:15px; font-weight:600; letter-spacing:0.06em; color:#D9D5CB; white-space:nowrap">Resultado ou dinheiro de volta</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARQUEE ===== -->
+  <div data-marquee="" data-screen-label="Marquee" style="overflow:hidden; border-top:1px solid rgba(243,237,227,0.08); border-bottom:1px solid rgba(243,237,227,0.08); background:#0F0D0C; padding:20px 0; white-space:nowrap">
+    <div style="display:inline-flex; align-items:center; gap:56px; animation:marquee 30s linear infinite; will-change:transform; padding-right:56px">
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">DELIVERY</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">RESTAURANTES</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">PIZZARIAS</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">HAMBURGUERIAS</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">JAPONESES</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">CAFETERIAS</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">DARK KITCHENS</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">DELIVERY</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">RESTAURANTES</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">PIZZARIAS</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">HAMBURGUERIAS</span><span style="color:#F49E1D; font-size:14px">◆</span>
+      <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; letter-spacing:0.18em; color:rgba(243,237,227,0.3)">JAPONESES</span><span style="color:#F49E1D; font-size:14px">◆</span>
+    </div>
+  </div>
+
+  <!-- ===== RESULTADOS ===== -->
+  <section id="resultados" data-screen-label="Resultados" style="background:#F3EDE3; color:#141210; padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:56px">
+      <div data-reveal="left" style="display:flex; flex-direction:column; align-items:flex-start; gap:18px">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#B4482B">01 — RESULTADOS</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(30px,4.2vw,46px); line-height:1.04; margin:0; max-width:720px; text-transform:uppercase; letter-spacing:-0.01em">Resultados reais de <span style="background:linear-gradient(90deg,#D3372B,#F04E23); -webkit-background-clip:text; background-clip:text; color:transparent">donos de delivery</span> que aceleraram com a Vegas</h2>
+        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="flex-shrink:0; background:#141210; color:#F3EDE3; padding:16px 30px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em" style-hover="background:#B4482B; color:#FFF; transform:translateY(-4px)">QUERO ESSES RESULTADOS</a>
+      </div>
+      <p data-reveal="" style="margin:-24px 0 0; font-size:18px; line-height:1.7; color:#5C574E; max-width:760px; text-wrap:pretty">Cada painel abaixo é de um restaurante ou delivery atendido pela Vegas: pizzarias, hamburguerias, restaurantes e operações de delivery que passaram a anunciar com estratégia e acompanhar pedidos, ticket médio e retorno sobre o investimento em anúncios.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:18px">
+        <sc-for list="{{ results }}" as="r" hint-placeholder-count="8">
+          <div data-reveal="" style="border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(20,18,16,0.12); transition:transform .35s ease, box-shadow .35s ease" style-hover="transform:translateY(-4px); box-shadow:0 16px 40px rgba(20,18,16,0.22)">
+            <div role="img" aria-label="{{ r.alt }}" style="width:100%; aspect-ratio:16/9; background-size:cover; background-position:center; background-image:{{ r.bg }}; transition:transform .6s cubic-bezier(.22,.61,.36,1)" style-hover="transform:scale(1.07)"></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA MARBLE BAND ===== -->
+  <section data-screen-label="Análise gratuita" style="position:relative; padding:clamp(72px,10vw,130px) clamp(20px,5vw,72px); background:#000; overflow:hidden">
+    <img src="img/marmore-preto-laranja-vegas-opt.webp" alt="" loading="lazy" decoding="async" data-parallax="-0.08" data-parallax-scale="1.18" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.65; transform:scale(1.18); will-change:transform">
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.88) 100%)"></div>
+    <div data-reveal="scale" style="position:relative; max-width:900px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:24px">
+      <img src="img/selo-vegas-aceleradora.webp" alt="" style="width:64px; height:64px; border-radius:50%; box-shadow:0 0 30px rgba(240,78,35,0.55); animation:floatPulse 3s ease-in-out infinite">
+      <div style="font-size:13px; font-weight:700; letter-spacing:0.28em; color:#F49E1D">ANÁLISE GRATUITA</div>
+      <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(32px,4.8vw,54px); margin:0; line-height:1.04; text-transform:uppercase; text-wrap:balance">Análise gratuita de marketing para o seu delivery</h2>
+      <p style="font-size:18px; color:#C9C3B6; margin:0; max-width:480px">Um especialista analisa seu funil de vendas, seus anúncios e seus canais — e mostra onde está o faturamento que você deixa na mesa.</p>
+      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:20px 44px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; margin-top:12px; box-shadow:0 12px 40px rgba(240,78,35,0.4)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">SOLICITAR ANÁLISE GRATUITA →</a>
+    </div>
+  </section>
+
+  <!-- ===== MÉTODO ===== -->
+  <section id="metodo" data-screen-label="Método" style="background:#F3EDE3; color:#141210; padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:72px">
+    <div data-reveal="left" style="display:flex; flex-direction:column; align-items:flex-start; gap:14px">
+      <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#B4482B; flex-shrink:0">02 — MÉTODO</div>
+      <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(30px,4.2vw,46px); line-height:1.04; margin:0; max-width:820px; text-transform:uppercase; letter-spacing:-0.01em">Do anonimato à <span style="background:linear-gradient(90deg,#D3372B,#F04E23); -webkit-background-clip:text; background-clip:text; color:transparent">referência</span><br>da sua região</h2>
+      <p style="margin:0; font-size:18px; line-height:1.7; color:#5C574E; max-width:680px; text-wrap:pretty">Marketing para restaurantes focado em vendas: posicionamento, criativos e campanhas que levam o cliente da descoberta ao pedido — no delivery, no cardápio digital e no salão.</p>
+    </div>
+    <div style="display:flex; flex-direction:column">
+      <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="3">
+        <div data-reveal="" data-benefit-row="" style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,48px); align-items:center; padding:56px 0; border-top:1px solid rgba(20,18,16,0.12); direction:{{ b.dir }}">
+          <div style="direction:ltr; flex:0 0 auto; font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(40px,6.5vw,72px); line-height:1; background:linear-gradient(180deg,#F49E1D 0%,#F04E23 55%,#8C1F14 100%); -webkit-background-clip:text; background-clip:text; color:transparent">{{ b.num }}</div>
+          <div style="direction:ltr; flex:1 1 360px; display:flex; flex-direction:column; gap:16px">
+            <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:27px; line-height:1.2; margin:0; text-wrap:balance">{{ b.title }}</h3>
+            <p style="font-size:18px; line-height:1.7; color:#5C574E; margin:0; max-width:560px; text-wrap:pretty">{{ b.body }}</p>
+          </div>
+          <div style="direction:ltr; flex:1 1 380px; max-width:600px; display:flex; align-items:center; justify-content:center">
+            <div style="width:100%; height:clamp(280px, 30vw, 400px); background-size:contain; background-repeat:no-repeat; background-position:center; background-image:{{ b.bg }}; filter:drop-shadow(0 18px 40px rgba(20,18,16,0.12))"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    </div>
+  </section>
+
+  <!-- ===== SISTEMA (aquisição / conversão / recorrência) ===== -->
+  <section id="sistema" data-screen-label="Sistema" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:48px">
+      <div data-reveal="left" style="display:flex; flex-direction:column; align-items:flex-start; gap:14px">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#F49E1D; flex-shrink:0">03 — O SISTEMA</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(29px,4vw,44px); line-height:1.06; margin:0; max-width:860px; text-transform:uppercase; letter-spacing:-0.01em; text-wrap:balance">Mais pedidos no delivery.<br>Mais clientes no <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">salão</span>.</h2>
+        <p style="margin:0; font-size:18px; line-height:1.7; color:#9C968A; max-width:680px; text-wrap:pretty">Não vendemos alcance nem seguidores. Montamos um sistema de crescimento para a sua operação de alimentação em três etapas: atrair quem tem fome perto de você, transformar essa atenção em pedido e fazer esse cliente voltar a comprar.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:20px">
+        <div data-reveal="" style="position:relative; background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:20px; padding:36px 32px; display:flex; flex-direction:column; gap:16px; overflow:hidden; transition:border-color .35s ease, transform .35s ease" style-hover="border-color:rgba(244,158,29,0.45); transform:translateY(-4px)">
+          <div data-glow="" style="position:absolute; inset:-1px; border-radius:20px; padding:1.5px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), rgba(240,78,35,0.3) 45%, transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+          <div style="display:flex; align-items:center; gap:12px">
+            <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">01</span>
+            <span style="font-size:13px; font-weight:700; letter-spacing:0.18em; color:#9C968A">AQUISIÇÃO</span>
+          </div>
+          <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; line-height:1.25; margin:0; text-wrap:balance">Tráfego pago para restaurantes e delivery</h3>
+          <p style="margin:0; font-size:17px; line-height:1.65; color:#9C968A; text-wrap:pretty">Campanhas no Meta Ads (Instagram e Facebook) e no Google Ads com segmentação geográfica pela sua área real de entrega e de atendimento. Criativos que despertam fome, feitos para o horário e o dia em que o seu público decide o que vai comer.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px"><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Meta Ads</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Instagram Ads</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Google Ads</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Segmentação por raio</span></div>
+        </div>
+        <div data-reveal="" style="position:relative; background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:20px; padding:36px 32px; display:flex; flex-direction:column; gap:16px; overflow:hidden; transition:border-color .35s ease, transform .35s ease" style-hover="border-color:rgba(244,158,29,0.45); transform:translateY(-4px)">
+          <div data-glow="" style="position:absolute; inset:-1px; border-radius:20px; padding:1.5px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), rgba(240,78,35,0.3) 45%, transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+          <div style="display:flex; align-items:center; gap:12px">
+            <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">02</span>
+            <span style="font-size:13px; font-weight:700; letter-spacing:0.18em; color:#9C968A">CONVERSÃO</span>
+          </div>
+          <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; line-height:1.25; margin:0; text-wrap:balance">Do anúncio ao pedido, sem vazamento</h3>
+          <p style="margin:0; font-size:17px; line-height:1.65; color:#9C968A; text-wrap:pretty">Anúncio não é pedido. Ajustamos oferta, comunicação e o caminho até a compra — WhatsApp, cardápio digital e canais próprios — para que o clique vire pedido no caixa, com ticket médio maior e menos dependência de desconto.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px"><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Oferta e criativo</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Funil no WhatsApp</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Cardápio e canais próprios</span></div>
+        </div>
+        <div data-reveal="" style="position:relative; background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:20px; padding:36px 32px; display:flex; flex-direction:column; gap:16px; overflow:hidden; transition:border-color .35s ease, transform .35s ease" style-hover="border-color:rgba(244,158,29,0.45); transform:translateY(-4px)">
+          <div data-glow="" style="position:absolute; inset:-1px; border-radius:20px; padding:1.5px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), rgba(240,78,35,0.3) 45%, transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+          <div style="display:flex; align-items:center; gap:12px">
+            <span style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">03</span>
+            <span style="font-size:13px; font-weight:700; letter-spacing:0.18em; color:#9C968A">RECORRÊNCIA</span>
+          </div>
+          <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; line-height:1.25; margin:0; text-wrap:balance">Clientes que voltam a pedir toda semana</h3>
+          <p style="margin:0; font-size:17px; line-height:1.65; color:#9C968A; text-wrap:pretty">Cliente que compra uma vez e desaparece é prejuízo. Com base própria, automação no WhatsApp e remarketing, quem já pediu volta a comprar — aumentando faturamento sem precisar pagar de novo por cada cliente.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px"><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Automação de recompra</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Remarketing</span><span style="border:1px solid rgba(244,158,29,0.28); border-radius:100px; padding:7px 14px; font-size:13px; font-weight:600; color:#C9C3B6">Base própria de clientes</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DEFINIÇÕES / ANSWER-FIRST (cards empilhados) ===== -->
+  <section id="marketing-para-restaurantes" data-screen-label="O que é" style="background:#0F0D0C; border-top:1px solid rgba(243,237,227,0.08); padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:clamp(40px,5vw,80px); align-items:start">
+
+      <div data-sticky="" style="position:sticky; top:104px; align-self:start; display:flex; flex-direction:column; gap:22px; min-width:0">
+        <div data-reveal="left" style="display:inline-flex; align-self:flex-start; align-items:center; gap:10px; border:1px solid rgba(243,237,227,0.16); background:rgba(20,18,16,0.6); border-radius:100px; padding:8px 16px; font-size:13px; font-weight:600; color:#9C968A">
+          <span style="width:8px; height:8px; border-radius:50%; background:#F49E1D; flex-shrink:0"></span>
+          04 — ENTENDA
+        </div>
+        <h2 data-reveal="left" style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(29px,4vw,44px); line-height:1.06; margin:0; text-transform:uppercase; letter-spacing:-0.01em; text-wrap:balance">Como funciona o marketing para <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">restaurantes</span>?</h2>
+        <p data-reveal="left" style="margin:0; font-size:19px; line-height:1.7; color:#C9C3B6; text-wrap:pretty"><strong style="color:#F3EDE3">Marketing para restaurantes é o conjunto de estratégias usadas para atrair novos clientes, aumentar pedidos, elevar o ticket médio e estimular a recompra de uma operação de alimentação.</strong> A estratégia combina tráfego pago, presença no Google, redes sociais, marketplaces como o iFood, cardápio digital, WhatsApp e base própria de clientes — o peso de cada canal muda conforme o modelo da operação.</p>
+        <p data-reveal="left" style="margin:0; font-size:17px; line-height:1.7; color:#9C968A; text-wrap:pretty">Na Vegas Aceleradora, esse trabalho é executado em três frentes — <a href="#sistema" style="color:#F49E1D">aquisição, conversão e recorrência</a> — com gestão de tráfego pago no Meta Ads e no Google Ads, criativos e oferta, funil de vendas no WhatsApp e automação de recompra. As decisões partem da operação: raio de entrega, horário de pico, cardápio, capacidade da cozinha e margem.</p>
+        <div data-reveal="left" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:4px">
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:14px; padding:18px 14px; text-align:center">
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(22px,2.4vw,30px); line-height:1; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">0</div>
+            <div style="font-size:13px; line-height:1.35; color:#9C968A; margin-top:8px">fidelidade ou multa</div>
+          </div>
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:14px; padding:18px 14px; text-align:center">
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(22px,2.4vw,30px); line-height:1; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">100%</div>
+            <div style="font-size:13px; line-height:1.35; color:#9C968A; margin-top:8px">foco em food service</div>
+          </div>
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:14px; padding:18px 14px; text-align:center">
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(22px,2.4vw,30px); line-height:1; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">2019</div>
+            <div style="font-size:13px; line-height:1.35; color:#9C968A; margin-top:8px">desde o início</div>
+          </div>
+        </div>
+        <div data-reveal="left" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:8px">
+          <a href="#resultados" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(243,237,227,0.25); color:#F3EDE3; padding:16px 30px; border-radius:100px; transition:all .3s ease; font-weight:700; font-size:13px; letter-spacing:0.1em" style-hover="border-color:#F49E1D; color:#F49E1D; transform:translateY(-4px)">VER RESULTADOS</a>
+          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:16px 32px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em; box-shadow:0 10px 32px rgba(240,78,35,0.3)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR COM A VEGAS →</a>
+        </div>
+      </div>
+
+      <div style="position:relative; display:flex; flex-direction:column; gap:18px; min-width:0; padding-bottom:120px">
+        <div data-reveal="" style="position:sticky; top:104px; width:100%">
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:20px; padding:clamp(26px,3vw,34px); display:flex; flex-direction:column; gap:14px; box-shadow:0 18px 50px rgba(0,0,0,0.45)">
+            <div style="display:flex; align-items:center; gap:14px">
+              <span style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#FFF">01</span>
+              <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:19px; line-height:1.3; margin:0; color:#F3EDE3; text-wrap:balance">O que medir no marketing de um restaurante?</h3>
+            </div>
+            <p style="margin:0; font-size:17px; line-height:1.7; color:#9C968A; text-wrap:pretty">Alcance e seguidores não pagam a conta. Para food service, as métricas que aproximam marketing e caixa são: número de pedidos, ticket médio, custo de aquisição por cliente (CAC), retorno sobre o investimento em anúncios (ROAS), taxa de recompra e faturamento por canal.</p>
+          </div>
+        </div>
+        <div data-reveal="" style="position:sticky; top:126px; width:100%">
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:20px; padding:clamp(26px,3vw,34px); display:flex; flex-direction:column; gap:14px; box-shadow:0 18px 50px rgba(0,0,0,0.45)">
+            <div style="display:flex; align-items:center; gap:14px">
+              <span style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#FFF">02</span>
+              <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:19px; line-height:1.3; margin:0; color:#F3EDE3; text-wrap:balance">Tráfego pago funciona para restaurantes?</h3>
+            </div>
+            <p style="margin:0; font-size:17px; line-height:1.7; color:#9C968A; text-wrap:pretty">Sim — quando campanha, oferta, raio de atendimento, criativo e canal de conversão são trabalhados juntos. Anúncio isolado gera visualização; é a combinação com oferta clara e atendimento rápido no WhatsApp ou no cardápio que transforma clique em pedido.</p>
+          </div>
+        </div>
+        <div data-reveal="" style="position:sticky; top:148px; width:100%">
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:20px; padding:clamp(26px,3vw,34px); display:flex; flex-direction:column; gap:14px; box-shadow:0 18px 50px rgba(0,0,0,0.45)">
+            <div style="display:flex; align-items:center; gap:14px">
+              <span style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#FFF">03</span>
+              <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:19px; line-height:1.3; margin:0; color:#F3EDE3; text-wrap:balance">iFood ou delivery próprio?</h3>
+            </div>
+            <p style="margin:0; font-size:17px; line-height:1.7; color:#9C968A; text-wrap:pretty">Os dois. O marketplace traz volume e novos clientes; o canal próprio (WhatsApp, cardápio e base de clientes) protege a margem e é um ativo do restaurante. A decisão não é abandonar um, é diversificar — e usar o canal próprio para a recompra, onde a taxa pesa menos.</p>
+          </div>
+        </div>
+        <div data-reveal="" style="position:sticky; top:170px; width:100%">
+          <div style="background:#141210; border:1px solid rgba(243,237,227,0.1); border-radius:20px; padding:clamp(26px,3vw,34px); display:flex; flex-direction:column; gap:14px; box-shadow:0 18px 50px rgba(0,0,0,0.45)">
+            <div style="display:flex; align-items:center; gap:14px">
+              <span style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#FFF">04</span>
+              <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:19px; line-height:1.3; margin:0; color:#F3EDE3; text-wrap:balance">Agência generalista ou especializada em food service?</h3>
+            </div>
+            <p style="margin:0; font-size:17px; line-height:1.7; color:#9C968A; text-wrap:pretty">Uma agência generalista precisa aprender a sua operação; uma especializada já parte dela. Em restaurantes e delivery, detalhes como dia de baixo movimento, tempo de entrega, combo, upsell e capacidade de produção mudam completamente a estratégia de mídia.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== COMPARISON ===== -->
+  <section data-screen-label="Comparação" style="background:#F3EDE3; color:#141210; padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:56px">
+      <div data-reveal="left" style="display:flex; flex-direction:column; align-items:flex-start; gap:14px">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#B4482B; flex-shrink:0">05 — DIFERENÇA</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(28px,3.9vw,42px); line-height:1.08; margin:0; max-width:900px; text-transform:uppercase; letter-spacing:-0.01em">Muito potencial, <span style="background:linear-gradient(90deg,#D3372B,#F04E23); -webkit-background-clip:text; background-clip:text; color:transparent">pouco resultado</span>? Isso acaba aqui.</h2>
+      </div>
+      <div style="position:relative; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:20px">
+        <div data-vs-badge="" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:18px; color:#FFF; box-shadow:0 0 0 8px #F3EDE3, 0 0 34px rgba(240,78,35,0.35)">VS</div>
+        <div style="display:flex; flex-direction:column; gap:20px">
+          <div style="font-size:14px; font-weight:800; letter-spacing:0.2em; color:#8A8478">SEM A VEGAS</div>
+          <sc-for list="{{ withoutVegas }}" as="c" hint-placeholder-count="2">
+            <div data-reveal="" style="background:#EAE2D5; border:1px solid rgba(20,18,16,0.12); border-radius:18px; padding:36px; display:flex; flex-direction:column; gap:12px; flex:1">
+              <div style="font-size:20px; color:#8A8478; font-weight:800">✕</div>
+              <h4 style="font-size:20px; font-weight:800; margin:0; color:#3D3830">{{ c.title }}</h4>
+              <p style="font-size:17px; line-height:1.65; color:#6E6A60; margin:0">{{ c.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:20px">
+          <div style="font-size:14px; font-weight:800; letter-spacing:0.2em; color:#B4482B">COM A VEGAS</div>
+          <sc-for list="{{ withVegas }}" as="c" hint-placeholder-count="2">
+            <div data-reveal="" style="position:relative; border-radius:18px; padding:36px; display:flex; flex-direction:column; gap:12px; flex:1; background:#FFFFFF; border:1px solid rgba(211,55,43,0.35); overflow:hidden; box-shadow:0 10px 34px rgba(20,18,16,0.1)">
+              <div style="font-size:20px; background:linear-gradient(90deg,#D3372B,#F04E23); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:800">✓</div>
+              <h4 style="font-size:20px; font-weight:800; margin:0; color:#141210">{{ c.title }}</h4>
+              <p style="font-size:17px; line-height:1.65; color:#5C574E; margin:0">{{ c.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VANTAGENS ===== -->
+  <section data-screen-label="Vantagens" style="background:#0F0D0C; border-top:1px solid rgba(243,237,227,0.08); padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:48px">
+      <div data-reveal="" style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px; max-width:720px; margin:0 auto">
+        <div style="border:1px solid rgba(244,158,29,0.4); border-radius:100px; padding:8px 20px; font-size:13px; font-weight:700; letter-spacing:0.16em; color:#F49E1D">VANTAGENS</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(29px,4vw,44px); line-height:1.08; margin:0; text-transform:uppercase; letter-spacing:-0.01em; text-wrap:balance">Por que escolher a <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">Vegas Aceleradora</span>?</h2>
+        <p style="margin:0; font-size:18px; line-height:1.65; color:#9C968A; text-wrap:pretty">Tudo o que o seu delivery precisa para vender todos os dias — em um só time.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap:16px">
+        <sc-for list="{{ advantages }}" as="a" hint-placeholder-count="5">
+          <div data-reveal="" style="grid-column:{{ a.col }}; position:relative; background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:20px; padding:32px; display:flex; flex-direction:{{ a.dir }}; flex-wrap:wrap; align-items:{{ a.alignItems }}; gap:22px 28px; transition:transform .35s ease" style-hover="transform:translateY(-3px)">
+            <div data-glow="" style="position:absolute; inset:-1px; border-radius:20px; padding:1.5px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), rgba(240,78,35,0.3) 45%, transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+            <div data-glow="" style="position:absolute; inset:-1px; border-radius:20px; padding:2px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; filter:blur(14px); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+            <div style="width:44px; height:44px; border-radius:12px; background:rgba(244,158,29,0.12); border:1px solid rgba(244,158,29,0.25); display:flex; align-items:center; justify-content:center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F49E1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ a.d1 }}"></path><path d="{{ a.d2 }}"></path></svg>
+            </div>
+            <div style="flex:1 1 300px; min-width:0; display:flex; flex-direction:column; gap:10px">
+              <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:{{ a.titleSize }}; line-height:1.25; margin:0; text-wrap:balance">{{ a.title }}</h3>
+              <p style="margin:0; font-size:16px; line-height:1.6; color:#9C968A; max-width:680px; text-wrap:pretty">{{ a.body }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA GARANTIA ===== -->
+  <section data-screen-label="CTA Garantia" style="position:relative; padding:clamp(72px,10vw,130px) clamp(20px,5vw,72px); background:#000; overflow:hidden">
+    <img src="img/marmore-preto-laranja-vegas-opt.webp" alt="" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; opacity:0.5">
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%)"></div>
+    <div data-reveal="scale" style="position:relative; max-width:920px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:24px">
+      <div style="font-size:13px; font-weight:700; letter-spacing:0.28em; color:#F49E1D">GARANTIA VEGAS</div>
+      <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(34px,5.4vw,60px); margin:0; line-height:1.02; text-transform:uppercase; text-wrap:balance">Resultado ou seu <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">dinheiro de volta</span></h2>
+      <p style="font-size:18px; color:#C9C3B6; margin:0; max-width:520px; text-wrap:pretty">Sem fidelidade, sem multa e com a nossa pele em jogo: investimos no seu anúncio. Se não entregarmos resultado, você não paga.</p>
+      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:20px 44px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; margin-top:12px; box-shadow:0 12px 40px rgba(240,78,35,0.4)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">QUERO ACELERAR MEU DELIVERY →</a>
+    </div>
+  </section>
+
+  <!-- ===== COMO FUNCIONA ===== -->
+  <section data-screen-label="Como funciona" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:56px">
+      <div data-reveal="left" style="display:flex; flex-direction:column; align-items:flex-start; gap:14px">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#F49E1D; flex-shrink:0">06 — COMO FUNCIONA</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(29px,4vw,44px); line-height:1.06; margin:0; max-width:820px; text-transform:uppercase; letter-spacing:-0.01em">Da análise gratuita à <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">escala</span><br>em 3 passos</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:20px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+          <div data-reveal="" style="position:relative; background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:18px; padding:38px 34px; display:flex; flex-direction:column; gap:16px; overflow:hidden; transition:border-color .35s ease, transform .35s ease" style-hover="border-color:rgba(244,158,29,0.45); transform:translateY(-4px)">
+            <div data-glow="" style="position:absolute; inset:-1px; border-radius:18px; padding:1.5px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), rgba(240,78,35,0.3) 45%, transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+            <div data-glow="" style="position:absolute; inset:-1px; border-radius:18px; padding:2px; background:radial-gradient(240px circle at 50% 50%, rgba(244,158,29,0.8), transparent 72%); opacity:0; transition:opacity .35s ease; pointer-events:none; filter:blur(14px); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite:exclude"></div>
+            <div data-step-ghost="" style="position:absolute; top:-36px; right:-16px; font-family:'Poppins',sans-serif; font-weight:800; font-size:130px; line-height:1; color:rgba(243,237,227,0.04); pointer-events:none">{{ s.num }}</div>
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:40px; line-height:1; background:linear-gradient(180deg,#FFB84D 0%,#F04E23 70%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 12px rgba(240,78,35,0.4))">{{ s.num }}</div>
+            <h3 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:21px; line-height:1.25; margin:0">{{ s.title }}</h3>
+            <p style="font-size:17px; line-height:1.65; color:#9C968A; margin:0; text-wrap:pretty">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUEM SOMOS ===== -->
+  <section id="quem-somos" data-screen-label="Quem somos" style="background:#F3EDE3; color:#141210; padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:clamp(40px,6vw,88px); align-items:center">
+      <div data-reveal="left" style="display:flex; flex-direction:column; gap:24px; min-width:0">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#B4482B">07 — QUEM SOMOS</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(30px,4.2vw,46px); margin:0; line-height:1.05; text-transform:uppercase; text-wrap:balance">Uma assessoria construída <span style="background:linear-gradient(90deg,#D3372B,#F04E23); -webkit-background-clip:text; background-clip:text; color:transparent">dentro do delivery</span></h2>
+        <p style="margin:0; font-size:18px; line-height:1.7; color:#3D3830; max-width:560px; text-wrap:pretty">A <strong style="color:#141210">Vegas Aceleradora</strong> é uma assessoria de marketing especializada em restaurantes e delivery, no mercado desde 2019 e atuando em todo o Brasil. Atende operações de food service — restaurantes, deliveries, hamburguerias, pizzarias, japoneses, cafeterias, bares e dark kitchens — com gestão de tráfego pago no Meta Ads e no Google Ads, criativos e oferta, funil de vendas no WhatsApp e automação de recompra, sempre com o objetivo de aumentar pedidos, ticket médio e faturamento.</p>
+        <p style="margin:0; font-size:17px; line-height:1.7; color:#5C574E; max-width:560px; text-wrap:pretty">O trabalho é organizado em <a href="#sistema" style="color:#B4482B">aquisição, conversão e recorrência</a>, com contrato sem fidelidade e garantia de resultado. Veja os <a href="#resultados" style="color:#B4482B">resultados de restaurantes atendidos</a> ou as <a href="#faq" style="color:#B4482B">perguntas frequentes sobre marketing para restaurantes</a>.</p>
+        <div style="display:flex; flex-direction:column; gap:16px; margin-top:4px">
+          <div style="display:flex; align-items:flex-start; gap:14px">
+            <span style="width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 14px rgba(240,78,35,0.4); margin-top:2px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+            </span>
+            <div style="min-width:0">
+              <div style="font-size:16px; font-weight:700; color:#141210">Time multidisciplinar dedicado</div>
+              <div style="font-size:16px; line-height:1.6; color:#5C574E">Gestores de tráfego, marketing, design, projetos e customer success no seu negócio.</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:14px">
+            <span style="width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 14px rgba(240,78,35,0.4); margin-top:2px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+            </span>
+            <div style="min-width:0">
+              <div style="font-size:16px; font-weight:700; color:#141210">Método validado desde 2019</div>
+              <div style="font-size:16px; line-height:1.6; color:#5C574E">Tráfego pago, funil de vendas e automação feitos para a realidade do delivery.</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:14px">
+            <span style="width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#D3372B,#F49E1D); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 14px rgba(240,78,35,0.4); margin-top:2px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"></path></svg>
+            </span>
+            <div style="min-width:0">
+              <div style="font-size:16px; font-weight:700; color:#141210">Sem fidelidade, com garantia</div>
+              <div style="font-size:16px; line-height:1.6; color:#5C574E">Resultado ou seu dinheiro de volta — o risco é nosso, não seu.</div>
+            </div>
+          </div>
+        </div>
+        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="align-self:flex-start; display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:18px 36px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em; margin-top:8px" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CONTRATE A NOSSA ASSESSORIA →</a>
+      </div>
+      <div data-reveal="right" style="position:relative; min-width:0">
+        <div style="position:absolute; inset:-1px; border-radius:26px; background:linear-gradient(135deg, rgba(244,158,29,0.45), rgba(244,158,29,0.04) 60%); pointer-events:none"></div>
+        <img src="img/equipe-vegas-aceleradora-escritorio-opt.webp" alt="Equipe de marketing especializada em restaurantes e delivery da Vegas Aceleradora" loading="lazy" decoding="async" style="position:relative; width:100%; height:clamp(360px,42vw,560px); object-fit:cover; border-radius:24px; display:block; border:1px solid rgba(243,237,227,0.1)">
+        <div style="position:absolute; left:18px; right:18px; bottom:18px; display:flex; flex-wrap:wrap; gap:12px">
+          <div style="flex:1 1 140px; background:rgba(10,9,8,0.72); border:1px solid rgba(243,237,227,0.14); border-radius:14px; padding:16px 20px; backdrop-filter:blur(10px)">
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:26px; line-height:1; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">7+</div>
+            <div style="font-size:13px; font-weight:700; letter-spacing:0.12em; color:#C9C3B6; margin-top:6px">ANOS DE MERCADO</div>
+          </div>
+          <div style="flex:1 1 140px; background:rgba(10,9,8,0.72); border:1px solid rgba(243,237,227,0.14); border-radius:14px; padding:16px 20px; backdrop-filter:blur(10px)">
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:26px; line-height:1; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">100%</div>
+            <div style="font-size:13px; font-weight:700; letter-spacing:0.12em; color:#C9C3B6; margin-top:6px">FOCO EM DELIVERY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DEPOIMENTOS ===== -->
+  <section data-screen-label="Depoimentos" style="background:#0F0D0C; border-top:1px solid rgba(243,237,227,0.08); padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:48px">
+      <div data-reveal="" style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px; max-width:640px; margin:0 auto">
+        <div style="border:1px solid rgba(244,158,29,0.4); border-radius:100px; padding:8px 20px; font-size:13px; font-weight:700; letter-spacing:0.16em; color:#F49E1D">DEPOIMENTOS</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(29px,4vw,44px); line-height:1.08; margin:0; text-transform:uppercase; letter-spacing:-0.01em; text-wrap:balance">O que nossos <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">clientes dizem</span></h2>
+        <p style="margin:0; font-size:18px; line-height:1.65; color:#9C968A; text-wrap:pretty">Donos de delivery e restaurante que aceleraram com a Vegas.</p>
+      </div>
+      <div data-testi-wall="" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:24px; max-height:680px; overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent); mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)">
+        <sc-for list="{{ testiCols }}" as="tc" hint-placeholder-count="3">
+          <div style="min-width:0">
+            <div style="display:flex; flex-direction:column; gap:20px; animation:columnScroll {{ tc.dur }} linear infinite; will-change:transform">
+              <sc-for list="{{ tc.items }}" as="t" hint-placeholder-count="6">
+                <div style="background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:18px">
+                  <p style="margin:0; font-size:16px; line-height:1.65; color:#C9C3B6; text-wrap:pretty">{{ t.text }}</p>
+                  <div style="display:flex; align-items:center; gap:12px">
+                    <img src="{{ t.image }}" onError="{{ t.onImgError }}" alt="{{ t.name }} — cliente da Vegas Aceleradora" loading="lazy" decoding="async" style="width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid rgba(244,158,29,0.5)">
+                    <div style="min-width:0">
+                      <div style="font-size:15px; font-weight:700; color:#F3EDE3">{{ t.name }}</div>
+                      <div style="font-size:14px; color:#9C968A">{{ t.role }}</div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" data-screen-label="FAQ" style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px)">
+    <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:clamp(40px,6vw,80px); align-items:start">
+      <div data-reveal="" data-sticky="" style="display:flex; flex-direction:column; gap:20px; position:sticky; top:104px; align-self:start">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#F49E1D">08 — FAQ</div>
+        <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(28px,3.9vw,42px); margin:0; line-height:1.08; text-transform:uppercase">Perguntas frequentes sobre marketing para restaurantes</h2>
+        <p style="font-size:16px; color:#9C968A; margin:0; line-height:1.65">Se a sua pergunta não estiver aqui, fale direto com o nosso time no WhatsApp.</p>
+        <div style="margin-top:12px; background:linear-gradient(135deg, rgba(211,55,43,0.14) 0%, #141210 65%); border:1px solid rgba(244,158,29,0.35); border-radius:18px; padding:28px; display:flex; flex-direction:column; gap:14px">
+          <div style="font-size:18px; font-weight:800; color:#F3EDE3">Atendimento direto, sem robô.</div>
+          <div style="font-size:16px; line-height:1.6; color:#9C968A">Resposta em minutos no horário comercial.</div>
+          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="align-self:flex-start; display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:14px 26px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:12px; letter-spacing:0.1em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CHAMAR NO WHATSAPP →</a>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+          <div data-reveal="" style="border-top:1px solid rgba(243,237,227,0.12)">
+            <button onClick="{{ f.toggle }}" style="all:unset; box-sizing:border-box; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; padding:28px 4px; font-family:'Poppins',sans-serif; font-size:20px; font-weight:700; transition:color .3s ease; color:{{ f.qColor }}">
+              {{ f.q }}
+              <span style="color:#F49E1D; font-size:26px; font-weight:300; flex-shrink:0; line-height:1; display:inline-block; transition:transform .4s cubic-bezier(.22,.61,.36,1); transform:rotate({{ f.iconRot }})">+</span>
+            </button>
+            <div style="display:grid; grid-template-rows:{{ f.rows }}; transition:grid-template-rows .45s cubic-bezier(.22,.61,.36,1)">
+              <div style="overflow:hidden">
+                <div style="padding:0 4px 30px; font-size:18px; line-height:1.7; color:#9C968A; max-width:640px; opacity:{{ f.aOpacity }}; transform:translateY({{ f.aShift }}); transition:opacity .4s ease .08s, transform .4s ease .08s">{{ f.a }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer data-screen-label="Footer" style="position:relative; background:#0F0D0C; border-top:1px solid rgba(243,237,227,0.08); padding:80px clamp(20px,5vw,72px) 40px; overflow:hidden">
+    <img src="img/marmore-rodape-vegas-opt.webp" alt="" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.6">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,9,8,0) 0%, rgba(10,9,8,0.55) 30%, #0A0908 50%, #0A0908 100%)"></div>
+    <div style="position:relative; z-index:1; max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:56px">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px 64px">
+        <div style="display:flex; flex-direction:column; gap:24px">
+          <img src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:44px; width:auto; display:block; align-self:flex-start">
+          <div style="display:flex; flex-direction:column; gap:14px; font-size:16px; color:#9C968A">
+            <div style="display:flex; align-items:center; gap:12px">
+              <span style="width:34px; height:34px; border-radius:10px; background:rgba(244,158,29,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F49E1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"></rect><path d="m3 6 9 7 9-7"></path></svg>
+              </span>
+              contato@vegasaceleradora.com.br
+            </div>
+            <div style="display:flex; align-items:center; gap:12px">
+              <span style="width:34px; height:34px; border-radius:10px; background:rgba(244,158,29,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F49E1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </span>
+              +55 (27) 9 9224-6343
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:20px">
+          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:16px 32px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR NO WHATSAPP →</a>
+          <nav style="display:flex; flex-wrap:wrap; gap:16px 28px; font-size:13px; font-weight:700; letter-spacing:0.14em; color:#6E6A60">
+            <a href="#resultados" style="color:#6E6A60" style-hover="color:#F3EDE3">RESULTADOS</a>
+            <a href="#metodo" style="color:#6E6A60" style-hover="color:#F3EDE3">MÉTODO</a>
+            <a href="#sistema" style="color:#6E6A60" style-hover="color:#F3EDE3">TRÁFEGO PAGO</a>
+            <a href="#marketing-para-restaurantes" style="color:#6E6A60" style-hover="color:#F3EDE3">MARKETING PARA RESTAURANTES</a>
+            <a href="#quem-somos" style="color:#6E6A60" style-hover="color:#F3EDE3">QUEM SOMOS</a>
+            <a href="#faq" style="color:#6E6A60" style-hover="color:#F3EDE3">FAQ</a>
+          </nav>
+        </div>
+      </div>
+      <div style="overflow:hidden; text-align:center; user-select:none; pointer-events:none; margin-bottom:-24px">
+        <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(72px,15vw,190px); line-height:0.82; letter-spacing:-0.02em; color:transparent; -webkit-text-stroke:1.5px rgba(244,158,29,0.35); white-space:nowrap">VEGAS</div>
+      </div>
+      <div style="border-top:1px solid rgba(243,237,227,0.08); padding-top:28px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 24px; font-size:14px; color:#6E6A60; line-height:1.6">
+        <div>©2026 Vegas Aceleradora — assessoria de marketing para restaurantes e delivery. Todos os Direitos Reservados. | CNPJ</div>
+        <div>Não temos ligação com o Google, Facebook ou outras redes sociais | Não compartilhamos seus dados.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== LEAD POPUP ===== -->
+  <sc-if value="{{ leadOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeLeadOverlay }}" style="position:fixed; inset:0; z-index:200; background:rgba(5,4,3,0.82); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeUp .3s ease both">
+      <div data-lead-modal="" style="position:relative; width:min(560px, 100%); max-height:92vh; overflow-y:auto; background:radial-gradient(120% 90% at 50% 0%, #2A0F08 0%, #140A08 45%, #0A0908 100%); border:1px solid rgba(244,158,29,0.25); border-radius:24px; padding:clamp(28px,5vw,48px); display:flex; flex-direction:column; gap:22px; box-shadow:0 30px 90px rgba(0,0,0,0.7)">
+        <button onClick="{{ closeLead }}" aria-label="Fechar" style="all:unset; box-sizing:border-box; cursor:pointer; position:absolute; top:18px; right:18px; width:38px; height:38px; border-radius:10px; border:1px solid rgba(244,158,29,0.4); display:flex; align-items:center; justify-content:center; color:#F49E1D; font-size:18px; font-weight:800; transition:all .25s ease" style-hover="background:rgba(244,158,29,0.12); color:#FFB84D">✕</button>
+        <img src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:74px; width:auto; align-self:center; margin-top:8px">
+        <div style="display:flex; flex-direction:column; gap:8px; text-align:center">
+          <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(21px,3vw,26px); line-height:1.2; color:#F3EDE3; text-wrap:balance">Receba sua <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">análise gratuita</span> de marketing</div>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:#9C968A; text-wrap:pretty">Preencha seus dados e um especialista te chama no WhatsApp em minutos, no horário comercial — sem compromisso e sem custo.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px">
+          <label style="display:flex; flex-direction:column; gap:8px; font-size:16px; font-weight:600; color:#F3EDE3">
+            Nome
+            <input type="text" placeholder="Seu nome" value="{{ leadName }}" onChange="{{ setLeadName }}" style="box-sizing:border-box; width:100%; background:rgba(10,9,8,0.6); border:1px solid rgba(243,237,227,0.35); border-radius:14px; padding:16px 18px; font-family:'Poppins',sans-serif; font-size:16px; color:#F3EDE3; outline:none; transition:border-color .25s ease" style-focus="border-color:#F49E1D">
+          </label>
+          <label style="display:flex; flex-direction:column; gap:8px; font-size:16px; font-weight:600; color:#F3EDE3">
+            Email
+            <input type="email" placeholder="Seu melhor email" value="{{ leadEmail }}" onChange="{{ setLeadEmail }}" style="box-sizing:border-box; width:100%; background:rgba(10,9,8,0.6); border:1px solid rgba(243,237,227,0.35); border-radius:14px; padding:16px 18px; font-family:'Poppins',sans-serif; font-size:16px; color:#F3EDE3; outline:none; transition:border-color .25s ease" style-focus="border-color:#F49E1D">
+          </label>
+          <label style="display:flex; flex-direction:column; gap:8px; font-size:16px; font-weight:600; color:#F3EDE3">
+            WhatsApp
+            <input type="tel" placeholder="(DDD) 9 9999-9999" value="{{ leadWhats }}" onChange="{{ setLeadWhats }}" style="box-sizing:border-box; width:100%; background:rgba(10,9,8,0.6); border:1px solid rgba(243,237,227,0.35); border-radius:14px; padding:16px 18px; font-family:'Poppins',sans-serif; font-size:16px; color:#F3EDE3; outline:none; transition:border-color .25s ease" style-focus="border-color:#F49E1D">
+          </label>
+          <!-- campos ocultos: UTM e rastreamento de origem -->
+          <input type="hidden" name="utm_source" value="{{ utmSource }}">
+          <input type="hidden" name="utm_medium" value="{{ utmMedium }}">
+          <input type="hidden" name="utm_campaign" value="{{ utmCampaign }}">
+          <input type="hidden" name="utm_term" value="{{ utmTerm }}">
+          <input type="hidden" name="utm_content" value="{{ utmContent }}">
+          <input type="hidden" name="gclid" value="{{ gclid }}">
+          <input type="hidden" name="fbclid" value="{{ fbclid }}">
+          <input type="hidden" name="landing_page" value="{{ landingPage }}">
+          <input type="hidden" name="referrer" value="{{ referrer }}">
+          <sc-if value="{{ leadError }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:14px; color:#F04E23; font-weight:600">{{ leadError }}</div>
+          </sc-if>
+          <button onClick="{{ submitLead }}" style="all:unset; box-sizing:border-box; cursor:pointer; width:100%; text-align:center; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:18px 0; border-radius:14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; letter-spacing:0.08em; transition:all .3s ease; box-shadow:0 12px 36px rgba(240,78,35,0.35)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-2px)">RECEBER MINHA ANÁLISE GRATUITA →</button>
+          <div style="font-size:13px; color:#6E6A60; text-align:center">🔒 Seus dados estão seguros. Nada de spam.</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== BALÃO DE ATENDIMENTO ===== -->
+  <sc-if value="{{ chatOpen }}" hint-placeholder-val="{{ true }}">
+    <div data-chat-bubble="" style="position:fixed; bottom:104px; right:28px; z-index:101; width:min(300px, calc(100vw - 44px)); animation:fadeUp .6s cubic-bezier(.22,.61,.36,1) both">
+      <div onClick="{{ openLead }}" style="position:relative; cursor:pointer; background:#F3EDE3; color:#141210; border-radius:20px; padding:20px 22px; display:flex; flex-direction:column; gap:12px; box-shadow:0 20px 50px rgba(0,0,0,0.5); transition:transform .3s ease" style-hover="transform:translateY(-3px)">
+        <button onClick="{{ closeChat }}" aria-label="Fechar" style="all:unset; box-sizing:border-box; cursor:pointer; position:absolute; top:10px; right:12px; width:22px; height:22px; display:flex; align-items:center; justify-content:center; color:#8A8478; font-size:15px; transition:color .25s ease" style-hover="color:#141210">✕</button>
+        <div style="display:flex; align-items:center; gap:12px">
+          <img src="img/atendente-vegas-b.webp" alt="Especialista da Vegas Aceleradora" loading="lazy" decoding="async" width="44" height="44" style="width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0">
+          <div style="min-width:0">
+            <div style="font-size:13px; font-weight:700; line-height:1.2">Marina · Vegas Aceleradora</div>
+            <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:#1F9D55; font-weight:600">
+              <span style="width:7px; height:7px; border-radius:50%; background:#25D366; flex-shrink:0"></span>
+              Online agora
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; line-height:1.25">{{ chatTitle }}</div>
+          <p style="margin:0; font-size:13px; line-height:1.5; color:#5C574E; text-wrap:pretty">{{ chatBody }}</p>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-wa-float="" style="position:fixed; bottom:28px; right:28px; z-index:100; width:72px; height:72px; border-radius:50%; padding:0; border:2px solid #25D366; background:#0A0908; overflow:visible; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 28px rgba(37,211,102,0.4); animation:floatPulse 2.6s ease-in-out infinite" style-hover="transform:scale(1.1)">
+    <img src="img/atendente-vegas-b.webp" alt="Falar com especialista da Vegas Aceleradora no WhatsApp" loading="lazy" decoding="async" width="68" height="68" style="width:100%; height:100%; border-radius:50%; object-fit:cover; display:block">
+    <span style="position:absolute; bottom:2px; right:2px; width:16px; height:16px; border-radius:50%; background:#25D366; border:2px solid #0A0908"></span>
+  </a>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { openFaq: 0, chatOpen: false, chatStep: 0, leadOpen: false, leadName: '', leadEmail: '', leadWhats: '', leadError: '' };
+
+  _setupReveal() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    els.filter((el) => !el.dataset.revealInit).forEach((el) => {
+      el.dataset.revealInit = '1';
+      const dir = el.getAttribute('data-reveal') || 'up';
+      el.style.opacity = '0';
+      el.style.transform = dir === 'left' ? 'translateX(-44px)' : dir === 'right' ? 'translateX(44px)' : dir === 'scale' ? 'scale(0.94) translateY(20px)' : 'translateY(30px)';
+      el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + 'opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1)';
+    });
+    this._revealPending = Array.from(document.querySelectorAll('[data-reveal]')).filter((el) => el.dataset.revealDone !== '1');
+  }
+
+  // revela por posição real (funciona mesmo quando o scroll acontece em um container pai)
+  _checkReveal(vh) {
+    const pending = this._revealPending || [];
+    if (!pending.length) return;
+    const still = [];
+    pending.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.9 && r.bottom > -40) {
+        const parent = el.parentElement;
+        const sibs = parent ? Array.from(parent.children).filter((s) => s.hasAttribute && s.hasAttribute('data-reveal')) : [];
+        el.style.transitionDelay = (Math.max(0, sibs.indexOf(el)) * 70) + 'ms';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.dataset.revealDone = '1';
+      } else {
+        still.push(el);
+      }
+    });
+    this._revealPending = still;
+  }
+
+  _scrollMetrics() {
+    // descobre quem realmente rola: documento ou um ancestral com overflow
+    let node = this._rootEl || document.querySelector('[data-progress]');
+    while (node && node !== document.body) {
+      if (node.scrollHeight - node.clientHeight > 40) {
+        const ov = getComputedStyle(node).overflowY;
+        if (ov === 'auto' || ov === 'scroll') return { top: node.scrollTop, max: node.scrollHeight - node.clientHeight, vh: node.clientHeight };
+      }
+      node = node.parentElement;
+    }
+    const de = document.documentElement;
+    return { top: window.scrollY || de.scrollTop || 0, max: Math.max(1, de.scrollHeight - window.innerHeight), vh: window.innerHeight };
+  }
+
+  componentDidMount() {
+    this._scheduleChat();
+    this._runPreloader();
+    this._rootEl = document.querySelector('[data-progress]');
+    this._setupReveal();
+    this._setupGlow();
+
+    const spyIds = ['resultados', 'metodo', 'quem-somos', 'faq'];
+    this._frame = () => {
+      const m = this._scrollMetrics();
+      const vh = m.vh || window.innerHeight;
+
+      this._checkReveal(vh);
+
+      if (m.top !== this._lastTop) {
+        this._lastTop = m.top;
+        const bar = document.querySelector('[data-progress]');
+        if (bar) bar.style.width = Math.max(0, Math.min(100, (m.top / m.max) * 100)) + '%';
+
+        const header = document.querySelector('header');
+        if (header) {
+          const on = m.top > 40;
+          header.style.paddingTop = on ? '10px' : '18px';
+          header.style.paddingBottom = on ? '10px' : '18px';
+          header.style.boxShadow = on ? '0 10px 30px rgba(0,0,0,0.45)' : 'none';
+        }
+
+        document.querySelectorAll('[data-parallax]').forEach((el) => {
+          const speed = parseFloat(el.getAttribute('data-parallax')) || 0.14;
+          const scale = parseFloat(el.getAttribute('data-parallax-scale')) || 1.12;
+          const host = el.parentElement;
+          if (!host) return;
+          const rect = host.getBoundingClientRect();
+          if (rect.bottom < -120 || rect.top > vh + 120) return;
+          const offset = (rect.top + rect.height / 2 - vh / 2) * speed;
+          el.style.transform = 'translateY(' + offset.toFixed(1) + 'px) scale(' + scale + ')';
+        });
+
+        let active = '';
+        spyIds.forEach((id) => {
+          const sec = document.getElementById(id);
+          if (!sec) return;
+          const r = sec.getBoundingClientRect();
+          if (r.top <= vh * 0.55 && r.bottom >= vh * 0.45) active = id;
+        });
+        document.querySelectorAll('header nav a').forEach((a) => {
+          const href = a.getAttribute('href') || '';
+          if (href.charAt(0) !== '#') return;
+          a.style.color = href === '#' + active ? '#F49E1D' : '';
+        });
+      }
+      this._raf = requestAnimationFrame(this._frame);
+    };
+    this._lastTop = -1;
+    this._frame();
+
+    // fail-open: em contextos onde o scroll é controlado por um container externo
+    // (preview/embed) o rect nunca muda — então revelamos tudo em cascata.
+    this._failOpen = setTimeout(() => {
+      if (this._scrolled) return;
+      (this._revealPending || []).forEach((el, i) => {
+        el.style.transitionDelay = (i * 45) + 'ms';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.dataset.revealDone = '1';
+      });
+      this._revealPending = [];
+    }, 2600);
+    const markScrolled = () => { this._scrolled = true; };
+    window.addEventListener('scroll', markScrolled, { passive: true, once: true });
+    window.addEventListener('wheel', markScrolled, { passive: true, once: true });
+    window.addEventListener('touchmove', markScrolled, { passive: true, once: true });
+  }
+
+  _setupGlow() {
+    this._glows = Array.from(document.querySelectorAll('[data-glow]'));
+    if (this._glowMove) return;
+    const RANGE = 200; // px de proximidade para o glow começar a acender
+    let glowRaf = 0, lastEvt = null;
+    const applyGlow = (e) => (this._glows || []).forEach((glow) => {
+        const card = glow.parentElement;
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        if (r.width === 0) return;
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        const dx = Math.max(r.left - e.clientX, 0, e.clientX - r.right);
+        const dy = Math.max(r.top - e.clientY, 0, e.clientY - r.bottom);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < RANGE) {
+          const strength = 1 - dist / RANGE;
+          glow.style.background = 'radial-gradient(120px circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.85), transparent 45%), radial-gradient(280px circle at ' + x + 'px ' + y + 'px, rgba(244,158,29,0.9), rgba(240,78,35,0.35) 50%, transparent 75%)';
+          glow.style.opacity = String(Math.min(1, strength * 1.35));
+        } else {
+          glow.style.opacity = '0';
+        }
+      });
+    this._glowMove = (e) => {
+      lastEvt = e;
+      if (glowRaf) return;
+      glowRaf = requestAnimationFrame(() => { glowRaf = 0; applyGlow(lastEvt); });
+    };
+    document.addEventListener('pointermove', this._glowMove, { passive: true });
+  }
+
+  componentDidUpdate() {
+    this._setupReveal();
+    this._setupGlow();
+  }
+
+  _runPreloader() {
+    const overlay = document.querySelector('[data-preloader]');
+    if (!overlay) return;
+    const start = performance.now();
+    const MIN_MS = 1400;   // tempo mínimo de exibição
+    const MAX_MS = 6000;   // teto absoluto: o overlay nunca sobrevive além disso
+    let hidden = false;
+
+    // esconder NÃO depende de requestAnimationFrame (em aba de fundo o rAF é pausado)
+    const hide = () => {
+      if (hidden) return;
+      hidden = true;
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(() => { overlay.style.display = 'none'; }, 560);
+    };
+    const hideWhenAllowed = () => {
+      const wait = Math.max(0, MIN_MS - (performance.now() - start));
+      setTimeout(hide, wait);
+    };
+
+    const waitForAssets = () => {
+      const imgs = Array.from(document.images).filter((im) => im.loading !== 'lazy');
+      Promise.all(imgs.map((im) => (im.complete ? Promise.resolve() : new Promise((res) => {
+        im.addEventListener('load', res, { once: true });
+        im.addEventListener('error', res, { once: true });
+      })))).then(() => {
+        const fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+        fonts.then(hideWhenAllowed, hideWhenAllowed);
+      }, hideWhenAllowed);
+    };
+    if (document.readyState === 'complete') waitForAssets();
+    else window.addEventListener('load', waitForAssets, { once: true });
+
+    this._preloaderCap = setTimeout(hide, MAX_MS);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && performance.now() - start > MIN_MS) hide();
+    });
+  }
+
+  // sequência de mensagens do balão: [espera antes de abrir, tempo visível]
+  _chatScript = [
+    { title: 'Ainda com dúvidas?', body: 'Posso te mostrar como atrair mais pedidos para o seu delivery — sem compromisso.', wait: 6000, show: 14000 },
+    { title: 'Quer vender mais no fim de semana?', body: 'Em 5 minutos eu te mostro o que está travando os seus pedidos.', wait: 22000, show: 13000 },
+    { title: 'Cansado das taxas do iFood?', body: 'Dá pra trazer esses pedidos para o seu WhatsApp. Me chama que eu te explico.', wait: 26000, show: 13000 },
+    { title: 'Sua análise gratuita continua disponível', body: 'Sem custo e sem fidelidade. Quer que eu faça a sua agora?', wait: 30000, show: 16000 },
+  ];
+
+  _scheduleChat(i) {
+    const idx = i || 0;
+    const step = this._chatScript[idx];
+    if (!step) return;
+    this._chatTimer = setTimeout(() => {
+      this.setState({ chatOpen: true, chatStep: idx });
+      this._chatTimer = setTimeout(() => {
+        this.setState({ chatOpen: false });
+        this._scheduleChat(idx + 1);
+      }, step.show);
+    }, step.wait);
+  }
+
+  componentWillUnmount() {
+    if (this._chatTimer) clearTimeout(this._chatTimer);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._failOpen) clearTimeout(this._failOpen);
+    if (this._preloaderCap) clearTimeout(this._preloaderCap);
+    if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
+    if (this._glowMove) { document.removeEventListener('pointermove', this._glowMove); this._glowMove = null; }
+
+  }
+
+  renderVals() {
+    const waLink = 'https://api.whatsapp.com/send?phone=5527992246343&text=' + encodeURIComponent('Olá! Vim pelo seu site e quero escalar meu Restaurante/Delivery.');
+
+    const results = [
+      ['img/case-donsini-restaurante-pizzaria.webp', 'DonSini Restaurante Pizzaria — cliente Vegas Aceleradora'],
+      ['img/case-la-foods-delivery.webp', "La Food's Delivery — cliente Vegas Aceleradora"],
+      ['img/case-restaurante-da-comadre.webp', 'Restaurante da Comadre — cliente Vegas Aceleradora'],
+      ['img/case-sabor-de-casa-pizzaria.webp', 'Sabor de Casa Pizzaria — cliente Vegas Aceleradora'],
+      ['img/case-lua-negra.webp', 'Lua Negra — cliente Vegas Aceleradora'],
+      ['img/case-mystic-burger.webp', 'Mystic Burger — cliente Vegas Aceleradora'],
+      ['img/case-taz-pizzaria.webp', 'TAZ Pizzaria — cliente Vegas Aceleradora'],
+      ['img/case-pao-guloso-burger-opt.webp', 'Pão Guloso Burger — cliente Vegas Aceleradora'],
+    ].map(([src, alt]) => ({ src, alt, bg: "url('" + encodeURI(src) + "')" }));
+
+    const benefits = [
+      {
+        num: '01', img: 'img/metodo-01-profissionalismo.webp',
+        title: 'Não adianta ter o melhor produto e não ser reconhecido na sua região.',
+        body: 'Produto excelente é obrigação — escala é estratégia. Unimos especialistas em marketing para restaurantes e gestão de tráfego pago (Meta Ads e Google Ads) para tirar o seu delivery do anonimato e colocar dinheiro no caixa todos os dias.',
+      },
+      {
+        num: '02', img: 'img/metodo-02-referencia.webp',
+        title: 'Cansado de ser apenas "mais um" delivery no iFood? É hora de se tornar a referência.',
+        body: 'Transformamos seu cardápio em uma marca desejada. Com posicionamento, criativos e campanhas de tráfego pago para delivery, você domina a concorrência da sua cidade e escala o faturamento — dentro e fora dos aplicativos.',
+      },
+      {
+        num: '03', img: 'img/metodo-03-preferencia.webp',
+        title: 'Deixe de ser apenas uma opção e torne-se o desejo do seu cliente.',
+        body: 'Transformamos o "tanto faz" em preferência absoluta. Funil de vendas, remarketing e automação no WhatsApp convertem visualizações em pedidos reais — e clientes de primeira compra em pedidos recorrentes.',
+      },
+    ];
+    benefits.forEach((b, i) => {
+      b.bg = "url('" + encodeURI(b.img) + "')";
+      b.dir = i % 2 === 1 ? 'rtl' : 'ltr';
+    });
+
+    const advantagesLayout = (a, i) => Object.assign(a, {
+      dir: 'row',
+      alignItems: 'flex-start',
+      titleSize: i === 0 ? '25px' : '21px',
+    });
+    const advantages = [
+      {
+        col: '1 / -1',
+        d1: 'M13 2 3 14h9l-1 8 10-12h-9l1-8z', d2: '',
+        title: 'Tráfego pago que vira pedido',
+        body: 'Campanhas no Meta Ads e Google Ads criadas para delivery: você aparece para quem está com fome, na hora certa, na sua região — e paga pelo que traz retorno.',
+      },
+      {
+        col: 'auto',
+        d1: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', d2: '',
+        title: 'Funil de vendas no WhatsApp',
+        body: 'Atendimento e ofertas automáticas que transformam conversas em pedidos.',
+      },
+      {
+        col: 'auto',
+        d1: 'M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z', d2: 'm9 12 2 2 4-4',
+        title: 'Menos dependência do iFood',
+        body: 'Canais próprios fortalecidos para você lucrar mais em cada pedido, sem taxas abusivas.',
+      },
+      {
+        col: 'auto',
+        d1: 'M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8', d2: 'M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5',
+        title: 'Automação de recompra',
+        body: 'Cliente que pediu uma vez volta a pedir: campanhas de recorrência direto no WhatsApp.',
+      },
+      {
+        col: 'auto',
+        d1: 'M3 3v18h18', d2: 'M18 17V9M13 17V5M8 17v-3',
+        title: 'Relatórios sem enrolação',
+        body: 'Você sabe exatamente quanto investiu e quanto voltou, com métricas claras todo mês.',
+      },
+    ].map(advantagesLayout);
+
+    const steps = [
+      { num: '01', title: 'Análise gratuita', body: 'Um especialista mergulha no seu delivery: anúncios, cardápio, canais de venda e concorrência. Você recebe um diagnóstico claro do faturamento que está deixando na mesa.' },
+      { num: '02', title: 'Plano de aceleração', body: 'Montamos a estratégia sob medida: campanhas de tráfego pago, funil de vendas no WhatsApp e automação de recompra — com metas e prazos definidos.' },
+      { num: '03', title: 'Escala com acompanhamento', body: 'Time dedicado otimizando suas campanhas todos os dias. Relatórios claros, sem fidelidade e com garantia: resultado ou seu dinheiro de volta.' },
+    ];
+
+    const withoutVegas = [
+      { title: 'Tráfego da esperança', body: 'Um gestor sem clareza sobre food service anuncia no escuro: o alcance sobe, o salão continua vazio e o delivery não sente diferença.' },
+      { title: 'Desconto como única saída', body: 'Sem estratégia, sobra promoção: o pedido entra com margem apertada, o cliente compra uma vez e nunca volta.' },
+    ];
+    const withVegas = [
+      { title: 'Tráfego com a Vegas', body: 'Time especializado em restaurantes e delivery, com cases reais no segmento. Campanhas no raio certo e na hora em que o cliente decide o que vai comer.' },
+      { title: 'Pedido, ticket médio e recompra', body: 'Acompanhamos o que muda o seu caixa: quantidade de pedidos, valor médio de cada um e quantas vezes o mesmo cliente volta a comprar.' },
+    ];
+
+    const testimonials = [
+      { text: 'Em dois meses o WhatsApp virou nosso principal canal de pedidos. A análise gratuita já mostrou onde estávamos perdendo dinheiro.', name: 'Rafael M.', role: 'Pizzaria — Vitória/ES' },
+      { text: 'Saímos da dependência do iFood. Hoje mais da metade dos pedidos entra pelos nossos canais, com margem muito melhor.', name: 'Juliana C.', role: 'Hamburgueria — Vila Velha/ES' },
+      { text: 'Time que responde rápido e explica tudo sem enrolação. Relatório claro: sei quanto investi e quanto voltou.', name: 'André S.', role: 'Restaurante — Serra/ES' },
+      { text: 'As campanhas começaram a dar tração no primeiro mês. Sexta e sábado agora é fila de pedidos no WhatsApp.', name: 'Camila R.', role: 'Delivery de comida caseira' },
+      { text: 'A automação de recompra é surreal: cliente que pedia uma vez por mês agora pede toda semana.', name: 'Bruno T.', role: 'Pizzaria e esfiharia' },
+      { text: 'Sem fidelidade e com garantia — foi o que me convenceu a testar. Fiquei pelo resultado.', name: 'Patrícia L.', role: 'Restaurante japonês' },
+      { text: 'Eles entendem de delivery de verdade. Criativo, oferta e horário certo: o anúncio conversa com quem está com fome.', name: 'Fernando A.', role: 'Burger artesanal' },
+      { text: 'Nosso faturamento cresceu de forma consistente, mês após mês, desde que fechamos com a Vegas.', name: 'Marina G.', role: 'Pizzaria — Cariacica/ES' },
+      { text: 'O funil no WhatsApp qualifica o cliente sozinho. Minha equipe só entra para confirmar o pedido.', name: 'Lucas P.', role: 'Dark kitchen' },
+    ].map((t, i) => Object.assign(t, {
+      image: 'https://randomuser.me/api/portraits/' + (['men/32', 'women/44', 'men/22', 'women/65', 'men/45', 'women/28', 'men/67', 'women/51', 'men/11'][i]) + '.jpg',
+      // reserva local: se a foto externa não carregar, entra o avatar da marca
+      onImgError: (e) => {
+        const fb = 'img/avatar-' + (i + 1) + '.webp';
+        if (e.target.getAttribute('src') !== fb) e.target.setAttribute('src', fb);
+      },
+    }));
+    const mkCol = (arr, dur) => ({ items: arr.concat(arr), dur });
+    const testiCols = [
+      mkCol(testimonials.slice(0, 3), '18s'),
+      mkCol(testimonials.slice(3, 6), '24s'),
+      mkCol(testimonials.slice(6, 9), '21s'),
+    ];
+
+    const faqData = [
+      { q: 'O que faz uma assessoria de marketing para restaurantes?', a: 'Uma assessoria especializada em food service cuida do sistema que traz pedidos: gestão de tráfego pago (Meta Ads e Google Ads), criativos que despertam fome, oferta, funil de vendas no WhatsApp, automação de recompra e leitura de métricas. Diferente de uma agência generalista, cada decisão considera a realidade da operação — raio de entrega, horário de pico, cardápio e ticket médio.' },
+      { q: 'Como aumentar as vendas de um restaurante?', a: 'Vendas crescem em três frentes: atrair mais gente da sua região, converter melhor quem já demonstrou interesse e fazer o cliente voltar. Na prática, isso significa campanhas segmentadas pela área de atendimento, oferta e comunicação ajustadas para gerar pedido — não só curtida — e recompra trabalhada por WhatsApp e remarketing.' },
+      { q: 'Como aumentar os pedidos no delivery?', a: 'Anúncios no Meta Ads e no Google Ads trazem novos clientes todos os dias, e o funil de vendas com automação garante que eles voltem a comprar. É esse conjunto que faz o número de pedidos subir de forma constante, sem depender de sorte nem de promoção agressiva.' },
+      { q: 'Tráfego pago funciona para restaurantes e delivery?', a: 'Funciona quando a campanha é construída para a operação, e não para métricas de vaidade. Segmentamos pelo raio real de entrega e de atendimento, usamos criativos que provocam desejo pelo produto e acompanhamos o que importa: pedidos, faturamento e retorno sobre o investimento em anúncios.' },
+      { q: 'Como depender menos do iFood e das taxas dos aplicativos?', a: 'Fortalecendo seus canais próprios — WhatsApp, cardápio digital e site de pedidos. A ideia não é abandonar os marketplaces, mas diversificar: direcionamos tráfego para onde a sua margem é maior e construímos uma base de clientes que é um ativo seu, reduzindo o peso das taxas no fechamento do mês.' },
+      { q: 'Quanto investir em tráfego pago para restaurante?', a: 'Não existe valor único: o investimento é adaptado ao tamanho do negócio e à capacidade da cozinha — não faz sentido gerar mais pedidos do que a operação consegue entregar. Nossa gestão otimiza cada real investido para que o retorno sobre o anúncio seja positivo e o crescimento sustentável.' },
+      { q: 'Como aumentar a recorrência e o ticket médio dos clientes?', a: 'Construindo base própria e conversando com quem já comprou. Automação no WhatsApp e remarketing trazem o cliente de volta, e ajustes de oferta e combos elevam o valor de cada pedido — crescimento sem pagar novamente pela aquisição do mesmo cliente.' },
+      { q: 'Google Ads ou Meta Ads para restaurantes?', a: 'Os dois têm papéis diferentes. O Meta Ads (Instagram e Facebook) provoca o desejo em quem ainda não estava procurando — ideal para foto de produto, oferta e dias de baixo movimento. O Google Ads captura quem já está com intenção declarada, pesquisando por comida ou delivery na região. Na maioria das operações, o melhor resultado vem da combinação dos dois, com o orçamento distribuído conforme o momento do negócio.' },
+      { q: 'Qual a diferença entre uma agência generalista e uma assessoria especializada em restaurantes?', a: 'A especialização muda o ponto de partida. Uma agência generalista precisa primeiro aprender como o seu negócio funciona; uma assessoria de food service já considera raio de entrega, horário de pico, capacidade da cozinha, cardápio, ticket médio e margem ao montar a campanha. Isso encurta o tempo até o primeiro resultado e reduz o dinheiro gasto em teste.' },
+      { q: 'Vale a pena criar um delivery próprio?', a: 'Vale, como canal complementar — não como substituto do marketplace. O aplicativo traz volume e novos clientes; o canal próprio (WhatsApp, cardápio digital e base de clientes) protege a margem e permite falar com quem já comprou. A estratégia mais saudável usa o marketplace para aquisição e o canal próprio para a recompra.' },
+      { q: 'Em quanto tempo vejo os primeiros resultados?', a: 'O marketing de performance exige uma fase de inteligência. Nos primeiros 30 dias configuramos o rastreamento, validamos os melhores criativos e entendemos o comportamento do seu público. É nesse período que as campanhas ganham tração e os resultados consistentes começam a aparecer.' },
+    ];
+
+    const faqs = faqData.map((f, i) => {
+      const open = this.state.openFaq === i;
+      return {
+        q: f.q,
+        a: f.a,
+        open,
+        iconRot: open ? '45deg' : '0deg',
+        qColor: open ? '#F49E1D' : '#F3EDE3',
+        rows: open ? '1fr' : '0fr',
+        aOpacity: open ? 1 : 0,
+        aShift: open ? '0px' : '-10px',
+        toggle: () => this.setState({ openFaq: open ? -1 : i }),
+      };
+    });
+
+    // ---- UTM / rastreamento (campos ocultos) ----
+    if (!this._utm) {
+      const KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem('vegas-utm') || '{}'); } catch (err) { saved = {}; }
+      const params = new URLSearchParams(window.location.search);
+      const current = {};
+      KEYS.forEach((k) => { const v = params.get(k); if (v) current[k] = v; });
+      // first-touch: só sobrescreve se a visita atual trouxe UTMs novas
+      const utm = Object.keys(current).length ? Object.assign({}, saved, current) : saved;
+      if (!utm.landing_page) utm.landing_page = window.location.href.split('?')[0];
+      if (!utm.referrer && document.referrer) utm.referrer = document.referrer;
+      try { localStorage.setItem('vegas-utm', JSON.stringify(utm)); } catch (err) { /* ignore */ }
+      this._utm = utm;
+    }
+    const utm = this._utm;
+
+    const closeChat = (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ chatOpen: false }); if (this._chatTimer) clearTimeout(this._chatTimer); };
+
+    const openLead = (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ leadOpen: true, leadError: '' }); };
+    const closeLead = () => this.setState({ leadOpen: false });
+    const closeLeadOverlay = (e) => { if (e.target && e.target.closest && e.target.closest('[data-lead-modal]')) return; closeLead(); };
+    const setLeadName = (e) => this.setState({ leadName: e.target.value });
+    const setLeadEmail = (e) => this.setState({ leadEmail: e.target.value });
+    const setLeadWhats = (e) => this.setState({ leadWhats: e.target.value });
+    const submitLead = () => {
+      // Planilha da Vegas (Google Apps Script)
+      const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBB2Uho_aHI5h_1nsaqkfApicszL8nQpXPCgJOOnge6xatJBL8fRT1sUa6GtJlhMjE/exec';
+      const nome = this.state.leadName.trim();
+      const email = this.state.leadEmail.trim();
+      const whats = this.state.leadWhats.trim();
+
+      if (!nome || !email || !whats) { this.setState({ leadError: 'Preencha todos os campos para continuar.' }); return; }
+      if (email.indexOf('@') < 1 || email.indexOf('.') < 0) { this.setState({ leadError: 'Informe um email válido.' }); return; }
+      if (whats.replace(/\D/g, '').length < 10) { this.setState({ leadError: 'Informe um WhatsApp válido com DDD.' }); return; }
+
+      const u = this._utm || {};
+      try {
+        const qs = 'nome=' + encodeURIComponent(nome) +
+          '&email=' + encodeURIComponent(email) +
+          '&whatsapp=' + encodeURIComponent(whats) +
+          '&utm_source=' + encodeURIComponent(u.utm_source || '') +
+          '&utm_medium=' + encodeURIComponent(u.utm_medium || '') +
+          '&utm_campaign=' + encodeURIComponent(u.utm_campaign || '') +
+          '&utm_term=' + encodeURIComponent(u.utm_term || '') +
+          '&utm_content=' + encodeURIComponent(u.utm_content || '') +
+          '&gclid=' + encodeURIComponent(u.gclid || '') +
+          '&fbclid=' + encodeURIComponent(u.fbclid || '') +
+          '&pagina=' + encodeURIComponent(location.href) +
+          '&t=' + Date.now();
+        // GET por imagem: sem CORS, funciona em qualquer navegador
+        const url = ENDPOINT + '?' + qs;
+        // 3 caminhos redundantes: se um for bloqueado, outro entrega
+        const ping = new Image();
+        ping.src = url;
+        window.__vegasPing = ping;
+        try { fetch(url, { mode: 'no-cors', keepalive: true }).catch(() => {}); } catch (err) { /* ignore */ }
+        try { if (navigator.sendBeacon) navigator.sendBeacon(url); } catch (err) { /* ignore */ }
+      } catch (err) { /* ignore */ }
+
+      try {
+        const leads = JSON.parse(localStorage.getItem('vegas-leads') || '[]');
+        leads.push(Object.assign({ nome, email, whatsapp: whats, data: new Date().toISOString() }, u));
+        localStorage.setItem('vegas-leads', JSON.stringify(leads));
+      } catch (err) { /* ignore */ }
+
+      try {
+        const a = document.createElement('a');
+        a.href = 'https://api.whatsapp.com/send?phone=5527992246343&text=' + encodeURIComponent('Olá! Vim pelo seu site e quero escalar meu Restaurante/Delivery.');
+        a.target = '_blank'; a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { try { a.remove(); } catch (err) { /* ignore */ } }, 0);
+      } catch (err) {
+        try { window.open('https://api.whatsapp.com/send?phone=5527992246343&text=' + encodeURIComponent('Olá! Vim pelo seu site e quero escalar meu Restaurante/Delivery.'), '_blank', 'noopener'); } catch (e2) { /* ignore */ }
+      }
+      this.setState({ leadOpen: false, leadError: '' });
+    };
+
+    return { waLink, results, benefits, advantages, steps, withoutVegas, withVegas, testiCols, faqs, leadOpen: this.state.leadOpen, leadName: this.state.leadName, leadEmail: this.state.leadEmail, leadWhats: this.state.leadWhats, leadError: this.state.leadError, chatOpen: this.state.chatOpen, closeChat,
+      chatTitle: (this._chatScript[this.state.chatStep] || this._chatScript[0]).title,
+      chatBody: (this._chatScript[this.state.chatStep] || this._chatScript[0]).body, openLead, closeLead, closeLeadOverlay, setLeadName, setLeadEmail, setLeadWhats, submitLead,
+      utmSource: utm.utm_source || '', utmMedium: utm.utm_medium || '', utmCampaign: utm.utm_campaign || '', utmTerm: utm.utm_term || '', utmContent: utm.utm_content || '', gclid: utm.gclid || '', fbclid: utm.fbclid || '', landingPage: utm.landing_page || '', referrer: utm.referrer || '' };
+  }
+}
+</script>
+</body>
+</html>

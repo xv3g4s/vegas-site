@@ -1,0 +1,36 @@
+# --- dependencias ---
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# --- midia bruta / material de trabalho (nao vai pro site) ---
+# 29 MB de prints, colagens e gravacoes de tela do processo de design.
+# O material original continua no projeto do Claude Design.
+uploads/
+
+# --- sistema operacional ---
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# --- editores ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- ambiente / segredos ---
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# --- build temporario ---
+.cache/
+tmp/

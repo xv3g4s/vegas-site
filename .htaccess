@@ -1,0 +1,67 @@
+# Vegas Aceleradora — configuracao Apache (HostGator)
+
+DirectoryIndex index.html
+
+# ---------- HTTPS + dominio canonico (sem www) ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # forca HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # www -> sem www (bate com o <link rel="canonical"> do site)
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ---------- Compressao ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript text/javascript
+  AddOutputFilterByType DEFLATE application/json application/xml image/svg+xml
+</IfModule>
+
+# ---------- Cache ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # HTML sempre revalidado: um deploy novo aparece na hora
+  ExpiresByType text/html "access plus 0 seconds"
+  # imagens e fontes: nomes estaveis, cache longo
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/png  "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  # vendor/ e versionado (react@18.3.1) -> pode cachear forte
+  <FilesMatch "^(react|react-dom)\.production\.min\.js$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # ---------- Seguranca ----------
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ---------- MIME ----------
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType application/javascript .js
+</IfModule>
+
+# ---------- Bloqueia arquivos internos, caso algum dia vazem ----------
+<FilesMatch "(^\.|\.(yml|yaml|md|gs|dc\.html)$)">
+  Require all denied
+</FilesMatch>
+<IfModule mod_rewrite.c>
+  RewriteRule ^(src|export|uploads|node_modules)/ - [F,L]
+</IfModule>
