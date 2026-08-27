@@ -1,0 +1,22 @@
+# Cloudflare Pages — equivalente ao .htaccess (que so a HostGator/Apache le).
+# HTTPS e o redirect www->apex ficam por conta da Cloudflare, nao daqui.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# HTML sempre revalidado: um deploy novo aparece na hora
+/index.html
+  Cache-Control: no-cache, must-revalidate
+
+# imagens: nomes estaveis, cache longo
+/img/*
+  Cache-Control: public, max-age=2592000
+
+# vendor/ e versionado (react@18.3.1): cache forte
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/support.js
+  Cache-Control: public, max-age=604800

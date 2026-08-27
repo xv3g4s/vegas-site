@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera index.html a partir do template do Claude Design em src/.
+"""Gera public/index.html a partir do template do Claude Design em src/.
 
 Unica transformacao: injeta `window.__resources` antes do support.js, para o
 runtime carregar o React de vendor/ (local) em vez de unpkg.com.
@@ -9,7 +9,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src" / "Vegas Aceleradora v2.dc.html"
-OUT = ROOT / "index.html"
+OUT = ROOT / "public" / "index.html"
 
 SHIM = '''<script>
 /* Runtime deps servidas localmente (vendor/) em vez de unpkg.com.
@@ -33,7 +33,7 @@ def main() -> int:
               file=sys.stderr)
         return 1
     OUT.write_text(html.replace(NEEDLE, SHIM), encoding="utf-8")
-    print(f"index.html gerado ({OUT.stat().st_size} bytes)")
+    print(f"public/index.html gerado ({OUT.stat().st_size} bytes)")
     return 0
 
 

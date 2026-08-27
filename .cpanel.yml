@@ -1,31 +1,15 @@
 ---
 # Deploy HostGator (cPanel > Git Version Control).
-# Publica APENAS os arquivos publicos do site em ~/public_html.
-# E uma allowlist: nada que nao esteja listado aqui vai para o ar
-# (src/, export/, uploads/, node_modules/, .git/ etc. ficam so no repositorio).
+#
+# ATENCAO ao DEPLOYPATH abaixo. Nesta conta, /public_html NAO e o site da Vegas:
+# ele e o document root do dominio principal e do link.riquelmevegas.com.br.
+# Cada dominio tem sua propria pasta (padrao: $HOME/<dominio>). Confirme o
+# document root de vegasaceleradora.com.br em cPanel > Dominios antes de publicar.
+#
+# Tudo que vai para o ar esta em public/ — nada fora dela e copiado,
+# entao src/, export/, build.py e .git nunca chegam ao servidor.
 deployment:
   tasks:
-    - export DEPLOYPATH=$HOME/public_html
+    - export DEPLOYPATH=$HOME/vegasaceleradora.com.br
     - /bin/mkdir -p "$DEPLOYPATH"
-
-    # --- pagina principal e arquivos de SEO da raiz ---
-    - /bin/cp -f index.html "$DEPLOYPATH/"
-    - /bin/cp -f robots.txt "$DEPLOYPATH/"
-    - /bin/cp -f sitemap.xml "$DEPLOYPATH/"
-
-    # --- todo *.css e *.js da raiz (hoje: support.js) ---
-    - /bin/bash -c 'shopt -s nullglob; f=(*.css *.js); [ ${#f[@]} -eq 0 ] || /bin/cp -f "${f[@]}" "$HOME/public_html/"'
-
-    # --- .htaccess (so se existir) ---
-    - /bin/bash -c 'if [ -f .htaccess ]; then /bin/cp -f .htaccess "$HOME/public_html/"; fi'
-
-    # --- pasta assets/ (so se existir) ---
-    - /bin/bash -c 'if [ -d assets ]; then /bin/mkdir -p "$HOME/public_html/assets" && /bin/cp -R -f assets/. "$HOME/public_html/assets/"; fi'
-
-    # --- imagens do site ---
-    - /bin/mkdir -p "$DEPLOYPATH/img"
-    - /bin/cp -R -f img/. "$DEPLOYPATH/img/"
-
-    # --- runtime local (React) para o site nao depender de CDN externo ---
-    - /bin/mkdir -p "$DEPLOYPATH/vendor"
-    - /bin/cp -R -f vendor/. "$DEPLOYPATH/vendor/"
+    - /bin/cp -R -f public/. "$DEPLOYPATH/"
