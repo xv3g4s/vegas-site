@@ -8,6 +8,11 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#0A0908">
+<style>
+  /* O CSS do site esta no <helmet> e so vale depois que o runtime monta.
+     Estas tres linhas valem no primeiro paint e evitam fundo branco. */
+  html, body { background: #0A0908; margin: 0; }
+</style>
 
 <!-- Recursos criticos no <head> real, nao no <helmet>.
      O <helmet> so e aplicado depois que o support.js roda, o que criava a
@@ -312,6 +317,13 @@ window.__resources = {
   @keyframes heroIn { from { opacity: 0; transform: scale(1.16); } to { opacity: 1; transform: scale(1.08); } }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes ctaSheen { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  /* Rede de seguranca da tela de carregamento: uma animacao CSS roda no
+     compositor e nao entra na fila do main thread. Mesmo que o JS esteja
+     ocupado montando a pagina, o overlay sai sozinho. O hide() do JS
+     continua podendo revelar antes disso. */
+  @keyframes preloaderOut { to { opacity: 0; visibility: hidden; } }
+  [data-preloader] { animation: preloaderOut .35s ease 1.1s forwards; }
+
   @keyframes vegasShine { 0% { background-position: 100% 0%; } 100% { background-position: 0% 100%; } }
   @keyframes vegasLogoIn { 0% { opacity: 0; transform: scale(0.82) translateY(14px); filter: blur(6px); } 100% { opacity: 1; transform: none; filter: blur(0); } }
   @keyframes columnScroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
@@ -1288,7 +1300,7 @@ class Component extends DCLogic {
     if (!overlay) return;
     const start = performance.now();
     const MIN_MS = 600;    // tempo mínimo de exibição
-    const MAX_MS = 2500;   // teto absoluto: o overlay nunca sobrevive além disso
+    const MAX_MS = 1800;   // teto absoluto: o overlay nunca sobrevive além disso
     let hidden = false;
 
     // esconder NÃO depende de requestAnimationFrame (em aba de fundo o rAF é pausado)
@@ -1301,7 +1313,8 @@ class Component extends DCLogic {
     };
     const hideWhenAllowed = () => {
       const wait = Math.max(0, MIN_MS - (performance.now() - start));
-      setTimeout(hide, wait);
+      // dois frames garantem que o conteudo por baixo ja pintou antes de revelar
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(hide)), wait);
     };
 
     // Esperar window.load + TODAS as imagens nao-lazy + a fonte inteira deixava
@@ -1316,11 +1329,17 @@ class Component extends DCLogic {
         im.addEventListener('error', res, { once: true });
       }))));
       const fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-      Promise.all([comTeto(heroPronto, 1200), comTeto(fonts, 800)]).then(hideWhenAllowed, hideWhenAllowed);
+      Promise.all([comTeto(heroPronto, 900), comTeto(fonts, 400)]).then(hideWhenAllowed, hideWhenAllowed);
     };
     waitForAssets();
 
-    this._preloaderCap = setTimeout(hide, MAX_MS);
+    // O teto contado a partir do mount nao limita nada de util: em aparelho
+    // lento o mount ja acontece perto de 1,5s, e o hide() ainda entra na fila
+    // atras do trabalho de montagem. performance.now() e relativo ao inicio da
+    // navegacao, entao este teto e absoluto: a tela de carregamento nunca passa
+    // de TETO_ABSOLUTO desde que o usuario pediu a pagina.
+    const TETO_ABSOLUTO = 2600;
+    this._preloaderCap = setTimeout(hide, Math.max(0, Math.min(MAX_MS, TETO_ABSOLUTO - performance.now())));
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible' && performance.now() - start > MIN_MS) hide();
     });
