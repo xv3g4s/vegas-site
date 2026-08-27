@@ -38,7 +38,7 @@ A unica dependencia externa que sobra e a fonte Poppins (Google Fonts).
     src/            fontes do projeto — nunca publicado
       Vegas Aceleradora v2.dc.html    design atual (fonte do index.html)
       Vegas Aceleradora.dc.html       versao anterior
-      apps-script-vegas-leads.gs      backend de leads (Google Apps Script)
+      apps-script-vegas-leads.gs      backend antigo de leads (Google Sheets)
       aether-flow.js                  componente nao usado hoje
       CLAUDE.md                       diretrizes de design do projeto
       seo/arquitetura-futura.md       plano de novas paginas
@@ -59,6 +59,21 @@ Cada push publica sozinho. O repositorio pode ser privado.
 `DEPLOYPATH`: nesta conta `/public_html` pertence a outro dominio.
 
 ---
+
+## Leads
+
+O popup envia para um **Inbound Webhook do GoHighLevel**. A URL fica na
+constante `GHL_WEBHOOK`, dentro de `submitLead` em
+`src/Vegas Aceleradora v2.dc.html`. Com ela vazia o formulario continua
+funcionando: o lead e guardado no localStorage e o WhatsApp abre igual.
+
+O envio usa `sendBeacon` (sobrevive a navegacao, e logo apos o envio a
+pagina abre o WhatsApp) com `text/plain`, que evita o preflight de CORS —
+com `application/json` o navegador manda um OPTIONS antes, que o webhook
+do GHL nao responde. `fetch` com `keepalive` fica como reserva.
+
+O `src/apps-script-vegas-leads.gs` e a integracao anterior, com Google
+Sheets. Fica no repositorio como historico; nao esta mais em uso.
 
 ## Alterando o site
 

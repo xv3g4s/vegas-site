@@ -1545,8 +1545,12 @@ class Component extends DCLogic {
     const setLeadEmail = (e) => this.setState({ leadEmail: e.target.value });
     const setLeadWhats = (e) => this.setState({ leadWhats: e.target.value });
     const submitLead = () => {
-      // Planilha da Vegas (Google Apps Script)
-      const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBB2Uho_aHI5h_1nsaqkfApicszL8nQpXPCgJOOnge6xatJBL8fRT1sUa6GtJlhMjE/exec';
+      // GoHighLevel — Inbound Webhook (Automation > Workflows > trigger
+      // "Inbound Webhook"). Cole aqui a URL que o GHL gera, algo como
+      // https://services.leadconnectorhq.com/hooks/XXXX/webhook-trigger/YYYY
+      // Enquanto estiver vazio, o lead ainda e salvo no navegador e o
+      // WhatsApp abre normalmente — nada quebra.
+      const GHL_WEBHOOK = '';
       const nome = this.state.leadName.trim();
       const email = this.state.leadEmail.trim();
       const whats = this.state.leadWhats.trim();
@@ -1556,28 +1560,53 @@ class Component extends DCLogic {
       if (whats.replace(/\D/g, '').length < 10) { this.setState({ leadError: 'Informe um WhatsApp válido com DDD.' }); return; }
 
       const u = this._utm || {};
-      try {
-        const qs = 'nome=' + encodeURIComponent(nome) +
-          '&email=' + encodeURIComponent(email) +
-          '&whatsapp=' + encodeURIComponent(whats) +
-          '&utm_source=' + encodeURIComponent(u.utm_source || '') +
-          '&utm_medium=' + encodeURIComponent(u.utm_medium || '') +
-          '&utm_campaign=' + encodeURIComponent(u.utm_campaign || '') +
-          '&utm_term=' + encodeURIComponent(u.utm_term || '') +
-          '&utm_content=' + encodeURIComponent(u.utm_content || '') +
-          '&gclid=' + encodeURIComponent(u.gclid || '') +
-          '&fbclid=' + encodeURIComponent(u.fbclid || '') +
-          '&pagina=' + encodeURIComponent(location.href) +
-          '&t=' + Date.now();
-        // GET por imagem: sem CORS, funciona em qualquer navegador
-        const url = ENDPOINT + '?' + qs;
-        // 3 caminhos redundantes: se um for bloqueado, outro entrega
-        const ping = new Image();
-        ping.src = url;
-        window.__vegasPing = ping;
-        try { fetch(url, { mode: 'no-cors', keepalive: true }).catch(() => {}); } catch (err) { /* ignore */ }
-        try { if (navigator.sendBeacon) navigator.sendBeacon(url); } catch (err) { /* ignore */ }
-      } catch (err) { /* ignore */ }
+
+      // WhatsApp em E.164, que e o formato que o GHL espera para conseguir
+      // enviar mensagem depois: 27999999999 -> +5527999999999
+      const digitos = whats.replace(/\D/g, '');
+      const telefone = digitos.length <= 11 ? '+55' + digitos : '+' + digitos;
+
+      const nomes = nome.split(/\s+/);
+      const payload = {
+        full_name: nome,
+        first_name: nomes[0],
+        last_name: nomes.slice(1).join(' '),
+        email: email,
+        phone: telefone,
+        source: 'Site — popup Vegas Aceleradora',
+        utm_source: u.utm_source || '',
+        utm_medium: u.utm_medium || '',
+        utm_campaign: u.utm_campaign || '',
+        utm_term: u.utm_term || '',
+        utm_content: u.utm_content || '',
+        gclid: u.gclid || '',
+        fbclid: u.fbclid || '',
+        pagina: location.href,
+        referrer: document.referrer || '',
+        enviado_em: new Date().toISOString()
+      };
+
+      if (GHL_WEBHOOK) {
+        const corpo = JSON.stringify(payload);
+        // text/plain evita o preflight do CORS: com application/json o
+        // navegador manda um OPTIONS antes, que o webhook do GHL nao responde.
+        const TIPO = 'text/plain;charset=UTF-8';
+        let entregue = false;
+        // sendBeacon sobrevive a navegacao — e logo abaixo abrimos o WhatsApp
+        try {
+          if (navigator.sendBeacon) {
+            entregue = navigator.sendBeacon(GHL_WEBHOOK, new Blob([corpo], { type: TIPO }));
+          }
+        } catch (err) { /* ignore */ }
+        if (!entregue) {
+          try {
+            fetch(GHL_WEBHOOK, {
+              method: 'POST', mode: 'no-cors', keepalive: true,
+              headers: { 'Content-Type': TIPO }, body: corpo
+            }).catch(() => {});
+          } catch (err) { /* ignore */ }
+        }
+      }
 
       try {
         const leads = JSON.parse(localStorage.getItem('vegas-leads') || '[]');
