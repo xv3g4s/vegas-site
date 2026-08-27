@@ -8,6 +8,17 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#0A0908">
+
+<!-- Recursos criticos no <head> real, nao no <helmet>.
+     O <helmet> so e aplicado depois que o support.js roda, o que criava a
+     cadeia HTML -> support.js -> poppins.css -> woff2 (4,2s de caminho
+     critico no PageSpeed). Aqui o browser descobre tudo no primeiro parse. -->
+<link rel="preload" as="image" href="img/hero-fundador-vegas-hd.webp" media="(min-width: 721px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-fundador-vegas-mobile-opt.webp" media="(max-width: 720px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/logo-vegas-aceleradora.webp" fetchpriority="high">
+<link rel="stylesheet" href="fonts/poppins.css">
+<link rel="preload" as="font" type="font/woff2" href="fonts/poppins-400-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/poppins-800-latin.woff2" crossorigin>
 <script>
 /* Runtime deps servidas localmente (vendor/) em vez de unpkg.com.
    `window.__resources` e o hook oficial do runtime (cdnScriptFor em support.js):
@@ -23,9 +34,6 @@ window.__resources = {
 <body>
 <x-dc>
 <helmet>
-<link rel="preload" as="image" href="img/logo-vegas-aceleradora.webp">
-<link rel="preload" as="image" href="img/hero-fundador-vegas-hd.webp" media="(min-width: 721px)">
-<link rel="preload" as="image" href="img/hero-fundador-vegas-mobile-opt.webp" media="(max-width: 720px)">
 <title>Marketing para Restaurantes e Delivery | Vegas Aceleradora</title>
 <meta name="description" content="Assessoria de marketing para restaurantes e delivery focada em aumentar pedidos, recorrência e faturamento através de tráfego pago (Meta Ads e Google Ads), funil de vendas no WhatsApp e automação de recompra. Sem fidelidade.">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -293,7 +301,6 @@ window.__resources = {
   ]
 }
 </script>
-<link rel="stylesheet" href="fonts/poppins.css">
 <style>
   html, body { margin: 0; padding: 0; background: #0A0908; }
   body { font-family: 'Poppins', sans-serif; }
@@ -534,12 +541,20 @@ window.__resources = {
 
   <!-- ===== HERO (founder) ===== -->
   <section data-screen-label="Hero" style="position:relative; min-height:78vh; display:flex; align-items:center; background:#0A0908; overflow:hidden">
-    <img src="img/hero-fundador-vegas-hd.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" fetchpriority="high" decoding="async" data-hero-desktop="" data-parallax="0.14" data-parallax-scale="1.08" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center; transform:scale(1.08); will-change:transform; animation:heroIn 1.6s ease-out backwards; mix-blend-mode:screen">
+    <picture>
+      <!-- no mobile esta imagem fica display:none, mas o browser baixava
+           os 162 KB mesmo assim: o pixel transparente evita isso -->
+      <source media="(max-width: 720px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img src="img/hero-fundador-vegas-hd.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" fetchpriority="high" decoding="async" data-hero-desktop="" data-parallax="0.14" data-parallax-scale="1.08" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center; transform:scale(1.08); will-change:transform; animation:heroIn 1.6s ease-out backwards; mix-blend-mode:screen">
+    </picture>
     <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,9,8,0.9) 12%, rgba(10,9,8,0.55) 45%, rgba(10,9,8,0) 75%)"></div>
     <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0A0908 0%, rgba(10,9,8,0) 18%)"></div>
     <div style="position:relative; z-index:1; max-width:1360px; margin:0 auto; width:100%; padding:clamp(64px,9vw,110px) clamp(20px,5vw,72px) clamp(72px,10vw,130px); display:flex; flex-direction:column; gap:clamp(22px,3.5vw,32px)">
       <div data-hero-mobile="" style="position:relative; margin:-44px -20px 0; overflow:hidden">
-        <img src="img/hero-fundador-vegas-mobile-opt.webp" alt="Fundador da Vegas Aceleradora, especialista em marketing para restaurantes e delivery" fetchpriority="high" decoding="async" style="display:block; width:100%; height:auto; animation:heroIn 1.2s ease-out backwards">
+        <picture>
+          <source media="(min-width: 721px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          <img src="img/hero-fundador-vegas-mobile-opt.webp" alt="Fundador da Vegas Aceleradora, especialista em marketing para restaurantes e delivery" fetchpriority="high" decoding="async" style="display:block; width:100%; height:auto; animation:heroIn 1.2s ease-out backwards">
+        </picture>
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0A0908 4%, rgba(10,9,8,0) 45%)"></div>
       </div>
       <div style="display:flex; align-items:center; gap:16px; font-size:13px; font-weight:700; letter-spacing:0.24em; color:#F49E1D; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) both">
@@ -1264,8 +1279,8 @@ class Component extends DCLogic {
     const overlay = document.querySelector('[data-preloader]');
     if (!overlay) return;
     const start = performance.now();
-    const MIN_MS = 1400;   // tempo mínimo de exibição
-    const MAX_MS = 6000;   // teto absoluto: o overlay nunca sobrevive além disso
+    const MIN_MS = 600;    // tempo mínimo de exibição
+    const MAX_MS = 2500;   // teto absoluto: o overlay nunca sobrevive além disso
     let hidden = false;
 
     // esconder NÃO depende de requestAnimationFrame (em aba de fundo o rAF é pausado)
@@ -1281,18 +1296,21 @@ class Component extends DCLogic {
       setTimeout(hide, wait);
     };
 
+    // Esperar window.load + TODAS as imagens nao-lazy + a fonte inteira deixava
+    // a tela preta por segundos no 4G (Speed Index 7,3s no PageSpeed). O que o
+    // overlay precisa esconder e a montagem do runtime, e o unico asset que
+    // importa para a primeira dobra e o hero. Tudo com teto de tempo.
+    const comTeto = (pr, ms) => Promise.race([pr, new Promise((r) => setTimeout(r, ms))]);
     const waitForAssets = () => {
-      const imgs = Array.from(document.images).filter((im) => im.loading !== 'lazy');
-      Promise.all(imgs.map((im) => (im.complete ? Promise.resolve() : new Promise((res) => {
+      const heros = Array.from(document.querySelectorAll('[data-hero-desktop], [data-hero-mobile] img'));
+      const heroPronto = Promise.all(heros.map((im) => (im.complete ? Promise.resolve() : new Promise((res) => {
         im.addEventListener('load', res, { once: true });
         im.addEventListener('error', res, { once: true });
-      })))).then(() => {
-        const fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-        fonts.then(hideWhenAllowed, hideWhenAllowed);
-      }, hideWhenAllowed);
+      }))));
+      const fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      Promise.all([comTeto(heroPronto, 1200), comTeto(fonts, 800)]).then(hideWhenAllowed, hideWhenAllowed);
     };
-    if (document.readyState === 'complete') waitForAssets();
-    else window.addEventListener('load', waitForAssets, { once: true });
+    waitForAssets();
 
     this._preloaderCap = setTimeout(hide, MAX_MS);
     document.addEventListener('visibilitychange', () => {
