@@ -502,7 +502,7 @@
   <!-- scroll progress -->
   <div data-progress="" style="position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,#D3372B,#F49E1D); z-index:200; box-shadow:0 0 12px rgba(240,78,35,0.6)"></div>
 
-  <div data-preloader="" style="position:fixed; inset:0; z-index:3000; background:#0A0908; display:flex; align-items:center; justify-content:center; transition:opacity .55s ease">
+  <div data-preloader="" style="position:fixed; inset:0; z-index:3000; background:#0A0908; display:flex; align-items:center; justify-content:center; transition:opacity .3s ease">
     <div style="display:flex; flex-direction:column; align-items:center; gap:26px">
       <div style="position:relative; width:172px; height:172px; animation:vegasLogoIn .95s cubic-bezier(.22,.61,.36,1) both">
         <div style="position:absolute; inset:0; -webkit-mask:url('img/logo-v-outline-mask.webp') center/contain no-repeat; mask:url('img/logo-v-outline-mask.webp') center/contain no-repeat; background:rgba(244,158,29,0.22)"></div>
@@ -517,7 +517,7 @@
 
   <!-- ===== HEADER ===== -->
   <header data-screen-label="Header" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:18px clamp(20px,5vw,72px); position:sticky; top:0; background:rgba(10,9,8,0.85); backdrop-filter:blur(16px); z-index:50; border-bottom:1px solid rgba(243,237,227,0.08); transition:padding .3s ease, box-shadow .3s ease">
-    <img src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:46px; width:auto; display:block">
+    <img  width="371" height="148"src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:46px; width:auto; display:block">
     <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:clamp(14px,2.6vw,40px); font-size:13px; font-weight:700; letter-spacing:0.16em; color:#9C968A">
       <a href="#resultados" style="color:#9C968A" style-hover="color:#F3EDE3">RESULTADOS</a>
       <a href="#metodo" style="color:#9C968A" style-hover="color:#F3EDE3">MÉTODO</a>
@@ -535,7 +535,7 @@
       <!-- no mobile esta imagem fica display:none, mas o browser baixava
            os 162 KB mesmo assim: o pixel transparente evita isso -->
       <source media="(max-width: 720px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-      <img src="img/hero-fundador-vegas-hd.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" fetchpriority="high" decoding="async" data-hero-desktop="" data-parallax="0.14" data-parallax-scale="1.08" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center; transform:scale(1.08); will-change:transform; animation:heroIn 1.6s ease-out backwards; mix-blend-mode:screen">
+      <img  width="2560" height="1440"src="img/hero-fundador-vegas-hd.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" fetchpriority="high" decoding="async" data-hero-desktop="" data-parallax="0.14" data-parallax-scale="1.08" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center; transform:scale(1.08); will-change:transform; animation:heroIn 1.6s ease-out backwards; mix-blend-mode:screen">
     </picture>
     <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,9,8,0.9) 12%, rgba(10,9,8,0.55) 45%, rgba(10,9,8,0) 75%)"></div>
     <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0A0908 0%, rgba(10,9,8,0) 18%)"></div>
@@ -543,7 +543,7 @@
       <div data-hero-mobile="" style="position:relative; margin:-44px -20px 0; overflow:hidden">
         <picture>
           <source media="(min-width: 721px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-          <img src="img/hero-fundador-vegas-mobile-opt.webp" alt="Fundador da Vegas Aceleradora, especialista em marketing para restaurantes e delivery" fetchpriority="high" decoding="async" style="display:block; width:100%; height:auto; animation:heroIn 1.2s ease-out backwards">
+          <img  width="826" height="1147"src="img/hero-fundador-vegas-mobile-opt.webp" alt="Fundador da Vegas Aceleradora, especialista em marketing para restaurantes e delivery" fetchpriority="high" decoding="async" style="display:block; width:100%; height:auto; animation:heroIn 1.2s ease-out backwards">
         </picture>
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, #0A0908 4%, rgba(10,9,8,0) 45%)"></div>
       </div>
@@ -612,7 +612,7 @@
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:18px">
         <sc-for list="{{ results }}" as="r" hint-placeholder-count="8">
           <div data-reveal="" style="border-radius:16px; overflow:hidden; box-shadow:0 2px 12px rgba(20,18,16,0.12); transition:transform .35s ease, box-shadow .35s ease" style-hover="transform:translateY(-4px); box-shadow:0 16px 40px rgba(20,18,16,0.22)">
-            <div role="img" aria-label="{{ r.alt }}" style="width:100%; aspect-ratio:16/9; background-size:cover; background-position:center; background-image:{{ r.bg }}; transition:transform .6s cubic-bezier(.22,.61,.36,1)" style-hover="transform:scale(1.07)"></div>
+            <img src="{{ r.src }}" alt="{{ r.alt }}" loading="lazy" decoding="async" width="756" height="426" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; transition:transform .6s cubic-bezier(.22,.61,.36,1)" style-hover="transform:scale(1.07)">
           </div>
         </sc-for>
       </div>
@@ -621,10 +621,10 @@
 
   <!-- ===== CTA MARBLE BAND ===== -->
   <section data-screen-label="Análise gratuita" style="position:relative; padding:clamp(72px,10vw,130px) clamp(20px,5vw,72px); background:#000; overflow:hidden">
-    <img src="img/marmore-preto-laranja-vegas-opt.webp" alt="" loading="lazy" decoding="async" data-parallax="-0.08" data-parallax-scale="1.18" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.65; transform:scale(1.18); will-change:transform">
+    <img  width="1600" height="900"src="img/marmore-preto-laranja-vegas-opt.webp" alt="" loading="lazy" decoding="async" data-parallax="-0.08" data-parallax-scale="1.18" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.65; transform:scale(1.18); will-change:transform">
     <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.88) 100%)"></div>
     <div data-reveal="scale" style="position:relative; max-width:900px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:24px">
-      <img src="img/selo-vegas-aceleradora.webp" alt="" style="width:64px; height:64px; border-radius:50%; box-shadow:0 0 30px rgba(240,78,35,0.55); animation:floatPulse 3s ease-in-out infinite">
+      <img  width="128" height="128"src="img/selo-vegas-aceleradora.webp" alt="" style="width:64px; height:64px; border-radius:50%; box-shadow:0 0 30px rgba(240,78,35,0.55); animation:floatPulse 3s ease-in-out infinite">
       <div style="font-size:13px; font-weight:700; letter-spacing:0.28em; color:#F49E1D">ANÁLISE GRATUITA</div>
       <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(32px,4.8vw,54px); margin:0; line-height:1.04; text-transform:uppercase; text-wrap:balance">Análise gratuita de marketing para o seu delivery</h2>
       <p style="font-size:18px; color:#C9C3B6; margin:0; max-width:480px">Um especialista analisa seu funil de vendas, seus anúncios e seus canais — e mostra onde está o faturamento que você deixa na mesa.</p>
@@ -649,7 +649,7 @@
             <p style="font-size:18px; line-height:1.7; color:#5C574E; margin:0; max-width:560px; text-wrap:pretty">{{ b.body }}</p>
           </div>
           <div style="direction:ltr; flex:1 1 380px; max-width:600px; display:flex; align-items:center; justify-content:center">
-            <div style="width:100%; height:clamp(280px, 30vw, 400px); background-size:contain; background-repeat:no-repeat; background-position:center; background-image:{{ b.bg }}; filter:drop-shadow(0 18px 40px rgba(20,18,16,0.12))"></div>
+            <img src="{{ b.img }}" alt="" loading="lazy" decoding="async" width="811" height="702" style="display:block; width:100%; height:clamp(280px, 30vw, 400px); object-fit:contain; filter:drop-shadow(0 18px 40px rgba(20,18,16,0.12))">
           </div>
         </div>
       </sc-for>
@@ -835,7 +835,7 @@
 
   <!-- ===== CTA GARANTIA ===== -->
   <section data-screen-label="CTA Garantia" style="position:relative; padding:clamp(72px,10vw,130px) clamp(20px,5vw,72px); background:#000; overflow:hidden">
-    <img src="img/marmore-preto-laranja-vegas-opt.webp" alt="" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; opacity:0.5">
+    <img  width="1600" height="900"src="img/marmore-preto-laranja-vegas-opt.webp" alt="" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; opacity:0.5">
     <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%)"></div>
     <div data-reveal="scale" style="position:relative; max-width:920px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:24px">
       <div style="font-size:13px; font-weight:700; letter-spacing:0.28em; color:#F49E1D">GARANTIA VEGAS</div>
@@ -908,7 +908,7 @@
       </div>
       <div data-reveal="right" style="position:relative; min-width:0">
         <div style="position:absolute; inset:-1px; border-radius:26px; background:linear-gradient(135deg, rgba(244,158,29,0.45), rgba(244,158,29,0.04) 60%); pointer-events:none"></div>
-        <img src="img/equipe-vegas-aceleradora-escritorio-opt.webp" alt="Equipe de marketing especializada em restaurantes e delivery da Vegas Aceleradora" loading="lazy" decoding="async" style="position:relative; width:100%; height:clamp(360px,42vw,560px); object-fit:cover; border-radius:24px; display:block; border:1px solid rgba(243,237,227,0.1)">
+        <img  width="900" height="900"src="img/equipe-vegas-aceleradora-escritorio-opt.webp" alt="Equipe de marketing especializada em restaurantes e delivery da Vegas Aceleradora" loading="lazy" decoding="async" style="position:relative; width:100%; height:clamp(360px,42vw,560px); object-fit:cover; border-radius:24px; display:block; border:1px solid rgba(243,237,227,0.1)">
         <div style="position:absolute; left:18px; right:18px; bottom:18px; display:flex; flex-wrap:wrap; gap:12px">
           <div style="flex:1 1 140px; background:rgba(10,9,8,0.72); border:1px solid rgba(243,237,227,0.14); border-radius:14px; padding:16px 20px; backdrop-filter:blur(10px)">
             <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:26px; line-height:1; background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">7+</div>
@@ -939,7 +939,7 @@
                 <div style="background:#141210; border:1px solid rgba(243,237,227,0.08); border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:18px">
                   <p style="margin:0; font-size:16px; line-height:1.65; color:#C9C3B6; text-wrap:pretty">{{ t.text }}</p>
                   <div style="display:flex; align-items:center; gap:12px">
-                    <img src="{{ t.image }}" onError="{{ t.onImgError }}" alt="{{ t.name }} — cliente da Vegas Aceleradora" loading="lazy" decoding="async" style="width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid rgba(244,158,29,0.5)">
+                    <img width="48" height="48" src="{{ t.image }}" onError="{{ t.onImgError }}" alt="{{ t.name }} — cliente da Vegas Aceleradora" loading="lazy" decoding="async" style="width:44px; height:44px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid rgba(244,158,29,0.5)">
                     <div style="min-width:0">
                       <div style="font-size:15px; font-weight:700; color:#F3EDE3">{{ t.name }}</div>
                       <div style="font-size:14px; color:#9C968A">{{ t.role }}</div>
@@ -987,12 +987,12 @@
 
   <!-- ===== FOOTER ===== -->
   <footer data-screen-label="Footer" style="position:relative; background:#0F0D0C; border-top:1px solid rgba(243,237,227,0.08); padding:80px clamp(20px,5vw,72px) 40px; overflow:hidden">
-    <img src="img/marmore-rodape-vegas-opt.webp" alt="" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.6">
+    <img  width="1600" height="900"src="img/marmore-rodape-vegas-opt.webp" alt="" loading="lazy" decoding="async" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.6">
     <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,9,8,0) 0%, rgba(10,9,8,0.55) 30%, #0A0908 50%, #0A0908 100%)"></div>
     <div style="position:relative; z-index:1; max-width:1360px; margin:0 auto; display:flex; flex-direction:column; gap:56px">
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px 64px">
         <div style="display:flex; flex-direction:column; gap:24px">
-          <img src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:44px; width:auto; display:block; align-self:flex-start">
+          <img  width="371" height="148"src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:44px; width:auto; display:block; align-self:flex-start">
           <div style="display:flex; flex-direction:column; gap:14px; font-size:16px; color:#9C968A">
             <div style="display:flex; align-items:center; gap:12px">
               <span style="width:34px; height:34px; border-radius:10px; background:rgba(244,158,29,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0">
@@ -1035,7 +1035,7 @@
     <div onClick="{{ closeLeadOverlay }}" style="position:fixed; inset:0; z-index:200; background:rgba(5,4,3,0.82); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeUp .3s ease both">
       <div data-lead-modal="" style="position:relative; width:min(560px, 100%); max-height:92vh; overflow-y:auto; background:radial-gradient(120% 90% at 50% 0%, #2A0F08 0%, #140A08 45%, #0A0908 100%); border:1px solid rgba(244,158,29,0.25); border-radius:24px; padding:clamp(28px,5vw,48px); display:flex; flex-direction:column; gap:22px; box-shadow:0 30px 90px rgba(0,0,0,0.7)">
         <button onClick="{{ closeLead }}" aria-label="Fechar" style="all:unset; box-sizing:border-box; cursor:pointer; position:absolute; top:18px; right:18px; width:38px; height:38px; border-radius:10px; border:1px solid rgba(244,158,29,0.4); display:flex; align-items:center; justify-content:center; color:#F49E1D; font-size:18px; font-weight:800; transition:all .25s ease" style-hover="background:rgba(244,158,29,0.12); color:#FFB84D">✕</button>
-        <img src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:74px; width:auto; align-self:center; margin-top:8px">
+        <img  width="371" height="148"src="img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" style="height:74px; width:auto; align-self:center; margin-top:8px">
         <div style="display:flex; flex-direction:column; gap:8px; text-align:center">
           <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(21px,3vw,26px); line-height:1.2; color:#F3EDE3; text-wrap:balance">Receba sua <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:transparent">análise gratuita</span> de marketing</div>
           <p style="margin:0; font-size:15px; line-height:1.6; color:#9C968A; text-wrap:pretty">Preencha seus dados e um especialista te chama no WhatsApp em minutos, no horário comercial — sem compromisso e sem custo.</p>
@@ -1279,7 +1279,7 @@ class Component extends DCLogic {
       hidden = true;
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
-      setTimeout(() => { overlay.style.display = 'none'; }, 560);
+      setTimeout(() => { overlay.style.display = 'none'; }, 320);
     };
     const hideWhenAllowed = () => {
       const wait = Math.max(0, MIN_MS - (performance.now() - start));
