@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0A0908">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -11,8 +16,6 @@
 <link rel="preload" as="image" href="img/logo-vegas-aceleradora.webp">
 <link rel="preload" as="image" href="img/hero-fundador-vegas-hd.webp" media="(min-width: 721px)">
 <link rel="preload" as="image" href="img/hero-fundador-vegas-mobile-opt.webp" media="(max-width: 720px)">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <title>Marketing para Restaurantes e Delivery | Vegas Aceleradora</title>
 <meta name="description" content="Assessoria de marketing para restaurantes e delivery focada em aumentar pedidos, recorrência e faturamento através de tráfego pago (Meta Ads e Google Ads), funil de vendas no WhatsApp e automação de recompra. Sem fidelidade.">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -280,7 +283,7 @@
   ]
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/poppins.css">
 <style>
   html, body { margin: 0; padding: 0; background: #0A0908; }
   body { font-family: 'Poppins', sans-serif; }
@@ -347,6 +350,131 @@
     /* marquee mais discreto */
     [data-marquee] { padding: 12px 0 !important; }
     html { scroll-padding-top: 78px; }
+
+    /* ===== MOBILE: BOTOES, HERO E RODAPE ===== */
+
+    /* -- todo CTA de WhatsApp vira bloco cheio e centrado.
+          Excecoes: o flutuante e o do header, tratados abaixo. -- */
+    a[href*="whatsapp"]:not([data-wa-float]) {
+      display: flex !important;
+      width: 100% !important;
+      max-width: 420px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      justify-content: center !important;
+      text-align: center !important;
+      padding: 17px 22px !important;
+      box-sizing: border-box !important;
+    }
+    /* CTA do header: compacto, nao pode competir com a logo
+       (especificidade maior que a regra geral acima, de proposito) */
+    header nav a[href*="whatsapp"]:not([data-wa-float]) {
+      display: inline-flex !important;
+      width: auto !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 10px 16px !important;
+      font-size: 10px !important;
+      letter-spacing: 0.08em !important;
+      min-height: 40px !important;
+      white-space: nowrap !important;
+    }
+
+    /* -- HERO -- */
+    /* a foto sobe: menos respiro em cima e altura limitada,
+       para titulo e CTAs caberem na primeira dobra */
+    section[data-screen-label="Hero"] > div {
+      padding-top: 20px !important;
+      padding-bottom: 44px !important;
+      gap: 18px !important;
+    }
+    [data-hero-mobile] { margin: -20px -38px 0 !important; }
+    [data-hero-mobile] img {
+      height: 42vh !important;
+      min-height: 260px !important;
+      max-height: 380px !important;
+      object-fit: cover !important;
+      object-position: 50% 18% !important;  /* mantem o rosto enquadrado */
+    }
+    /* textos centralizados */
+    /* o rotulo e um no de texto solto dentro do flex: quando quebra em duas
+       linhas ele ocupa a largura toda, entao so justify-content nao centraliza */
+    section[data-screen-label="Hero"] [data-hero-mobile] + div {
+      justify-content: center !important;
+      text-align: center !important;
+    }
+    /* hero deixa de centralizar verticalmente: a faixa preta acima da foto some */
+    section[data-screen-label="Hero"] {
+      min-height: 0 !important;
+      align-items: flex-start !important;
+      padding-top: 0 !important;   /* anula o "section { padding-top:56px }" global */
+    }
+    section[data-screen-label="Hero"] h1,
+    section[data-screen-label="Hero"] p {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    /* os dois CTAs empilhados e do mesmo tamanho */
+    section[data-screen-label="Hero"] p + div { justify-content: center !important; gap: 12px !important; }
+    section[data-screen-label="Hero"] p + div > a {
+      display: flex !important;
+      width: 100% !important;
+      max-width: 420px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      justify-content: center !important;
+      padding: 17px 22px !important;
+      box-sizing: border-box !important;
+    }
+    section[data-screen-label="Hero"] p + div + div {
+      justify-content: center !important;
+      margin-top: 26px !important;
+    }
+
+    /* -- RODAPE: tudo centrado -- */
+    footer > div:last-child > div:first-child { justify-content: center !important; }
+    footer > div:last-child > div:first-child > div {
+      align-items: center !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
+    footer > div:last-child > div:first-child > div img { align-self: center !important; }
+    footer nav { justify-content: center !important; }
+    footer > div:last-child > div:last-child {
+      justify-content: center !important;
+      text-align: center !important;
+    }
+
+    /* -- titulos e textos centralizados em todas as secoes -- */
+    /* text-align e herdado: centralizar a secao centraliza todo o conteudo
+       de texto dentro dela. Quem tiver alinhamento proprio (inline ou regra
+       mais especifica, como a copy justificada abaixo) mantem o seu. */
+    section, footer { text-align: center !important; }
+    /* rotulos e numeros das secoes sao div, nao titulo: centralizam pelo
+       alinhamento do container (os inline styles usam "align-*:flex-start") */
+    section [style*="align-items:flex-start"] {
+      align-items: center !important;
+      text-align: center !important;
+    }
+    section [style*="align-self:flex-start"],
+    footer [style*="align-self:flex-start"] { align-self: center !important; }
+    /* linhas do metodo: numero em cima, texto centrado embaixo */
+    [data-benefit-row] { justify-content: center !important; text-align: center !important; }
+    [data-benefit-row] > div { align-items: center !important; }
+    /* copy longa nao funciona centralizada: nesta secao o texto justifica.
+       hyphens depende do lang="pt-BR" no <html> para nao abrir rios. */
+    section#marketing-para-restaurantes p {
+      text-align: justify !important;
+      hyphens: auto !important;
+      -webkit-hyphens: auto !important;
+      text-wrap: normal !important;
+    }
+
+    /* o tracinho decorativo do rotulo joga o texto para fora do eixo:
+       fora dele, o rotulo centraliza limpo */
+    section[data-screen-label="Hero"] [data-hero-mobile] + div > span:first-child { display: none !important; }
+
   }
   @media (max-width: 420px) {
     [data-chat-bubble] { right: 16px !important; bottom: 96px !important; width: min(268px, calc(100vw - 32px)) !important; }
