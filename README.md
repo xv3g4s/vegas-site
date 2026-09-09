@@ -9,17 +9,33 @@ Site institucional da Vegas Aceleradora (marketing para restaurantes e delivery)
 
 ## Como o site funciona
 
-O `public/index.html` nao e um HTML estatico comum: e um **template** do runtime do
-Claude Design. O `support.js` le esse template (`<x-dc>`, `<helmet>`, `{{ }}`,
-`<sc-for>`, `<sc-if>`) e monta a pagina no navegador usando React.
+O design vem do Claude Design como um **template** (`src/*.dc.html`) que o
+`support.js` monta com React. Servir isso direto custaria 207 KB de runtime no
+navegador de cada visitante, e nada pintaria antes do JavaScript rodar.
 
-Por padrao o runtime baixaria o React do `unpkg.com`. Isso foi removido: o React
-esta versionado em `public/vendor/` e o `index.html` aponta o runtime para la pelo
-hook oficial `window.__resources`. **O site nao depende de nenhum CDN de JS.**
-Os arquivos em `vendor/` sao os builds UMD oficiais do npm (react 18.3.1),
-conferidos byte a byte contra os hashes SRI que o proprio `support.js` declara.
+Entao a montagem acontece **uma vez, no build**: o `prerender.mjs` abre o
+template num Chromium headless, deixa o runtime montar a pagina e salva o
+resultado como HTML estatico. O visitante recebe a pagina pronta.
 
-A unica dependencia externa que sobra e a fonte Poppins (Google Fonts).
+    src/*.dc.html  --build.py-->  template  --prerender.mjs-->  public/index.html
+                                  (runtime/)                    (estatico)
+
+O `runtime/` (support.js + React) nunca chega ao navegador do visitante: e
+dependencia de build. A interatividade volta pelo `public/site.js`, ~4 KB de
+JavaScript comum — popup de lead, chat, UTM e animacoes de rolagem.
+
+A edicao visual continua igual: o design e editado no projeto do Claude Design e
+reexportado para `src/`. O editor nunca abre a pagina publicada.
+
+**O site nao faz nenhuma requisicao a dominio de terceiro.** React saiu do
+unpkg, a Poppins e servida localmente e os avatares dos depoimentos deixaram de
+vir do randomuser.me.
+
+### Progressive enhancement
+
+Os CTAs sao `<a href="https://api.whatsapp.com/...">` de verdade, com o link ja
+resolvido no HTML. Se o `site.js` falhar, o clique leva direto ao WhatsApp — a
+conversao acontece do mesmo jeito, so sem o popup.
 
 ---
 
@@ -63,8 +79,8 @@ Cada push publica sozinho. O repositorio pode ser privado.
 ## Leads
 
 O popup envia para um **Inbound Webhook do GoHighLevel**. A URL fica na
-constante `GHL_WEBHOOK`, dentro de `submitLead` em
-`src/Vegas Aceleradora v2.dc.html`. Com ela vazia o formulario continua
+constante `GHL_WEBHOOK`, no topo de `public/site.js` (e tambem em `submitLead`,
+em `src/Vegas Aceleradora v2.dc.html`, que so roda durante a pre-renderizacao). Com ela vazia o formulario continua
 funcionando: o lead e guardado no localStorage e o WhatsApp abre igual.
 
 O envio usa `sendBeacon` (sobrevive a navegacao, e logo apos o envio a
@@ -79,5 +95,7 @@ Sheets. Fica no repositorio como historico; nao esta mais em uso.
 
 1. Edite o design no projeto do Claude Design.
 2. Exporte o `.dc.html` e substitua `src/Vegas Aceleradora v2.dc.html`.
-3. Rode `python3 build.py` para regerar `public/index.html`.
+3. Rode `python3 build.py` para regerar `public/index.html`. O build precisa de
+   `node` com playwright disponivel; sem isso, `python3 build.py --so-template`
+   gera so a etapa 1 (pagina dependente do runtime, como era antes).
 4. Commit + push.

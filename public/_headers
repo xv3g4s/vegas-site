@@ -5,6 +5,9 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=86400
 
 # HTML sempre revalidado: um deploy novo aparece na hora
 /index.html
@@ -15,8 +18,5 @@
   Cache-Control: public, max-age=2592000
 
 # vendor/ e versionado (react@18.3.1): cache forte
-/vendor/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/support.js
+/site.js
   Cache-Control: public, max-age=604800
