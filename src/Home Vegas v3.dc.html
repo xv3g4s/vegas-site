@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A0908">
+<style>
+  /* Vale no primeiro paint, antes de o CSS do <helmet> ser aplicado. */
+  html, body { background: #0A0908; margin: 0; }
+</style>
+
+<!-- Recursos criticos no <head> real: o <helmet> so vale depois do runtime. -->
+<link rel="preload" as="image" href="/img/hero-fundador-vegas-retrato.webp" media="(min-width: 721px)" fetchpriority="high">
+<link rel="preload" as="image" href="/img/hero-fundador-vegas-mobile-opt.webp" media="(max-width: 720px)" fetchpriority="high">
+<link rel="preload" as="image" href="/img/logo-vegas-aceleradora.webp" fetchpriority="high">
+<link rel="stylesheet" href="/fonts/poppins.css">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-800-latin.woff2" crossorigin>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Marketing para Restaurantes e Delivery | Vegas Aceleradora</title>
+<meta name="description" content="Conheça a assessoria da Vegas para restaurantes e delivery: tráfego pago, conversão e recompra. Solicite uma análise gratuita da sua operação.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://vegasaceleradora.com.br/">
+<meta property="og:site_name" content="Vegas Aceleradora">
+<meta property="og:title" content="Marketing para Restaurantes e Delivery | Vegas Aceleradora">
+<meta property="og:description" content="Assessoria de marketing para restaurantes e delivery: tráfego pago, conversão no WhatsApp e estratégias de recompra.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://vegasaceleradora.com.br/">
+<meta property="og:image" content="https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Marketing para Restaurantes e Delivery | Vegas Aceleradora">
+<meta name="twitter:description" content="Tráfego pago, conversão no WhatsApp e recompra para restaurantes e delivery.">
+<meta name="twitter:image" content="https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Vegas Aceleradora",
+  "url": "https://vegasaceleradora.com.br/",
+  "logo": "https://vegasaceleradora.com.br/img/logo-vegas-aceleradora.webp",
+  "description": "Assessoria de marketing especializada em restaurantes e delivery.",
+  "telephone": "+55 27 99224-6343",
+  "email": "contato@vegasaceleradora.com.br",
+  "areaServed": { "@type": "Country", "name": "Brasil" }
+}
+</script>
+<style>
+  /* ---- Base herdada do sistema visual da LP atual ----
+     Mantido: tipografia, cores de link, animacoes, rolagem suave, foco visivel
+     e alvo de toque. Descartado: tudo que apontava para elementos da pagina
+     antiga (marquee, parede de depoimentos, popup, parallax, selo VS) e a
+     centralizacao global no mobile, que brigaria com o texto alinhado a
+     esquerda que esta pagina usa. */
+  html, body { margin: 0; padding: 0; background: #0A0908; }
+  body { font-family: 'Poppins', sans-serif; -webkit-font-smoothing: antialiased; }
+  *, *::before, *::after { box-sizing: border-box; }
+  a { color: #F49E1D; text-decoration: none; }
+  a:hover { color: #FFB84D; }
+  ::selection { background: #F49E1D; color: #0A0908; }
+  img { max-width: 100%; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes floatPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
+  /* Link dentro de texto corrido nao pode se distinguir so pela cor (WCAG 1.4.1).
+     Os botoes em pilula ficam de fora: tem fundo proprio. */
+  p a:not(.btn), li a:not(.btn) { text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 900px) {
+    html { scroll-padding-top: 84px; }
+    header nav a[href^="#"]:not(.btn) { display: none; }
+  }
+  @media (max-width: 720px) {
+    /* alvo de toque confortavel */
+    a.btn, button { min-height: 48px; }
+    header img { height: 36px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    html { scroll-behavior: auto; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+<style>
+  /* ---- Ajustes desta pagina sobre o sistema visual da marca ---- */
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  .sec { padding: clamp(64px,9vw,110px) clamp(20px,5vw,72px); }
+  .escuro { background: #0A0908; color: #F3EDE3; }
+  .superficie { background: #0F0D0C; color: #F3EDE3; border-top: 1px solid rgba(243,237,227,0.08); }
+  .claro { background: #F3EDE3; color: #141210; }
+  .rotulo { font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 18px; }
+  .escuro .rotulo, .superficie .rotulo { color: #F49E1D; }
+  .claro .rotulo { color: #B4482B; }
+  h1 { font-weight: 800; font-size: clamp(34px,5vw,60px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+  h2 { font-weight: 800; font-size: clamp(28px,3.6vw,42px); line-height: 1.12; letter-spacing: -0.01em; margin: 0 0 18px; text-wrap: balance; }
+  h3 { font-weight: 800; font-size: 21px; line-height: 1.3; margin: 0 0 10px; }
+  p { font-size: 17px; line-height: 1.7; margin: 0 0 14px; text-wrap: pretty; }
+  .escuro p, .superficie p { color: #C9C3B6; }
+  .claro p { color: #5C574E; }
+  .apoio { font-size: 18px; max-width: 58ch; }
+  .grad { background: linear-gradient(90deg,#D3372B,#F49E1D); -webkit-background-clip: text; background-clip: text; color: #F49E1D; -webkit-text-fill-color: transparent; }
+  .claro .grad { background: linear-gradient(90deg,#B4482B,#D3372B); -webkit-background-clip: text; background-clip: text; color: #B4482B; -webkit-text-fill-color: transparent; }
+
+  /* botoes: 52-56px de altura, como o briefing pede */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+         padding: 17px 30px; border-radius: 100px; font-weight: 800; font-size: 14px;
+         letter-spacing: 0.08em; text-transform: uppercase; transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease; }
+  .btn-1 { background-color: #D3372B; background-image: linear-gradient(90deg,#D3372B,#F49E1D); color: #FFF; box-shadow: 0 12px 34px rgba(211,55,43,0.3); }
+  .btn-1:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(211,55,43,0.42); }
+  .btn-2 { border: 1px solid rgba(243,237,227,0.28); color: #F3EDE3; }
+  .btn-2:hover { border-color: #F49E1D; color: #F49E1D; transform: translateY(-3px); }
+  .claro .btn-2 { border-color: rgba(20,18,16,0.24); color: #141210; }
+  .claro .btn-2:hover { border-color: #B4482B; color: #B4482B; }
+
+  /* foco visivel para navegacao por teclado */
+  a:focus-visible, button:focus-visible, summary:focus-visible,
+  input:focus-visible, textarea:focus-visible {
+    outline: 3px solid #F49E1D; outline-offset: 3px; border-radius: 6px;
+  }
+
+  .lista-editorial > li { list-style: none; padding: 26px 0; border-top: 1px solid rgba(243,237,227,0.12); display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start; }
+  /* cada <li> e um grid proprio, entao `auto` mede o rotulo linha a linha.
+     Com rotulos de larguras diferentes o texto comecava desalinhado. */
+  .lista-editorial.rotulos > li { grid-template-columns: clamp(118px, 13vw, 168px) 1fr; }
+  .claro .lista-editorial > li { border-top-color: rgba(20,18,16,0.12); }
+  .num { font-weight: 800; font-size: 15px; letter-spacing: 0.1em; color: #F49E1D; padding-top: 3px; }
+  .claro .num { color: #B4482B; }
+
+  .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+  .card { background: #141210; border: 1px solid rgba(243,237,227,0.1); border-radius: 18px; padding: 28px; }
+  .claro .card { background: #FFF; border-color: rgba(20,18,16,0.1); }
+  .card ul { margin: 14px 0 0; padding: 0 0 0 18px; }
+  .card li { font-size: 15px; line-height: 1.65; color: #9C968A; margin-bottom: 6px; }
+  .claro .card li { color: #5C574E; }
+
+  .faq details { border-top: 1px solid rgba(243,237,227,0.12); }
+  .faq details[open] summary { color: #F49E1D; }
+  .faq summary { cursor: pointer; list-style: none; padding: 22px 0; font-weight: 700; font-size: 17px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; font-size: 24px; font-weight: 400; line-height: 1; flex-shrink: 0; }
+  .faq details[open] summary::after { content: '–'; }
+  .faq details p { padding-bottom: 22px; max-width: 74ch; }
+
+  .campo { display: block; margin-bottom: 16px; }
+  .campo span { display: block; font-size: 14px; font-weight: 700; margin-bottom: 7px; color: #141210; }
+  .campo input, .campo textarea {
+    width: 100%; box-sizing: border-box; padding: 15px 16px; font: inherit; font-size: 16px;
+    border: 1px solid rgba(20,18,16,0.18); border-radius: 12px; background: #FFF; color: #141210;
+  }
+  .campo textarea { min-height: 96px; resize: vertical; }
+  .campo input:focus, .campo textarea:focus { border-color: #B4482B; }
+
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr !important; }
+    .lista-editorial > li, .lista-editorial.rotulos > li { grid-template-columns: 1fr; gap: 8px; }
+    .btn { width: 100%; max-width: 420px; }
+    /* o CTA do cabecalho nao acompanha os botoes de secao: em largura
+       total ele ocupa mais da metade da barra e engole a logo. */
+    header .btn { width: auto; max-width: none; padding: 11px 16px; font-size: 10px; }
+  }
+</style>
+</helmet>
+
+<main style="background:#0A0908; color:#F3EDE3; font-family:'Poppins',sans-serif; overflow-x:clip; display:block">
+
+  <a href="#conteudo" style="position:absolute; left:-9999px; top:0; background:#F49E1D; color:#0A0908; padding:12px 20px; z-index:999; font-weight:800" onfocus="this.style.left='12px'" onblur="this.style.left='-9999px'">Ir para o conteúdo</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:16px clamp(20px,5vw,72px); position:sticky; top:0; background:rgba(10,9,8,0.88); backdrop-filter:blur(16px); z-index:50; border-bottom:1px solid rgba(243,237,227,0.08)">
+    <a href="#conteudo" aria-label="Vegas Aceleradora — início">
+      <img src="/img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" width="371" height="148" style="height:42px; width:auto; display:block">
+    </a>
+    <nav aria-label="Navegação principal" style="display:flex; flex-wrap:wrap; align-items:center; gap:clamp(14px,2.4vw,34px); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#9C968A">
+      <a href="#solucoes" style="color:#9C968A" style-hover="color:#F3EDE3">Soluções</a>
+      <a href="#para-quem" style="color:#9C968A" style-hover="color:#F3EDE3">Para quem</a>
+      <a href="#metodo" style="color:#9C968A" style-hover="color:#F3EDE3">Método</a>
+      <a href="#sobre" style="color:#9C968A" style-hover="color:#F3EDE3">Sobre a Vegas</a>
+      <a href="#duvidas" style="color:#9C968A" style-hover="color:#F3EDE3">Dúvidas</a>
+      <a href="#analise" class="btn btn-1" style="padding:12px 20px; font-size:11px">Solicitar análise gratuita</a>
+    </nav>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="conteudo" class="escuro" data-screen-label="Hero" style="position:relative; padding:clamp(40px,6vw,90px) clamp(20px,5vw,72px) clamp(56px,7vw,100px)">
+    <div class="wrap hero-grid" style="display:grid; grid-template-columns:7fr 5fr; gap:clamp(32px,5vw,64px); align-items:center">
+      <div>
+        <p class="rotulo">Marketing para restaurantes e delivery</p>
+        <h1>Assessoria de marketing para <span class="grad">restaurantes e delivery</span>.</h1>
+        <p class="apoio" style="margin:22px 0 0">Conectamos tráfego pago, conversão no WhatsApp e estratégias de recompra para ajudar sua operação a atrair clientes, gerar pedidos e estimular novas compras.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; margin:30px 0 16px">
+          <a href="#analise" class="btn btn-1">Solicitar análise gratuita</a>
+          <a href="#solucoes" class="btn btn-2">Conhecer as soluções</a>
+        </div>
+        <p style="font-size:15px; color:#9C968A; margin:0">Entenda como a Vegas pode atuar no marketing da sua operação.</p>
+      </div>
+      <div style="position:relative">
+        <picture>
+          <source media="(max-width:720px)" srcset="/img/hero-fundador-vegas-mobile-opt.webp" width="826" height="1147">
+          <img src="/img/hero-fundador-vegas-retrato.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" width="1152" height="1440" fetchpriority="high" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; border-radius:20px">
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAIXA: TRES FRENTES ===================== -->
+  <section class="superficie" style="padding:26px clamp(20px,5vw,72px)">
+    <div class="wrap" style="display:flex; flex-wrap:wrap; justify-content:center; gap:14px 40px; font-size:14px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; color:#C9C3B6">
+      <span>Atrair clientes</span>
+      <span aria-hidden="true" style="color:#F49E1D">•</span>
+      <span>Melhorar a conversão</span>
+      <span aria-hidden="true" style="color:#F49E1D">•</span>
+      <span>Estimular a recompra</span>
+    </div>
+  </section>
+
+  <!-- ===================== MARCAS ATENDIDAS ===================== -->
+  <section class="claro sec" aria-labelledby="marcas-titulo" style="padding-top:clamp(48px,6vw,72px); padding-bottom:clamp(48px,6vw,72px)">
+    <div class="wrap">
+      <h2 id="marcas-titulo" class="rotulo" style="text-align:center; margin-bottom:28px">Operações que já trabalharam com a Vegas</h2>
+      <ul style="list-style:none; margin:0; padding:0; display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(min(100%, 150px), 1fr)); align-items:center">
+        <li><img src="/img/case-donsini-restaurante-pizzaria.webp" alt="DonSini Restaurante Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; border-radius:12px"></li>
+        <li><img src="/img/case-la-foods-delivery.webp" alt="La Food's Delivery" width="756" height="426" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; border-radius:12px"></li>
+        <li><img src="/img/case-restaurante-da-comadre.webp" alt="Restaurante da Comadre" width="756" height="426" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; border-radius:12px"></li>
+        <li><img src="/img/case-sabor-de-casa-pizzaria.webp" alt="Sabor de Casa Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; border-radius:12px"></li>
+        <li><img src="/img/case-mystic-burger.webp" alt="Mystic Burger" width="756" height="426" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; border-radius:12px"></li>
+        <li><img src="/img/case-taz-pizzaria.webp" alt="TAZ Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:contain; border-radius:12px"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== OPORTUNIDADES ===================== -->
+  <section class="escuro sec" aria-labelledby="oportunidades-titulo">
+    <div class="wrap">
+      <div style="max-width:900px">
+      <p class="rotulo">Identificação</p>
+      <h2 id="oportunidades-titulo">Onde sua operação pode estar <span class="grad">perdendo oportunidades</span>?</h2>
+      <p class="apoio">Nem toda operação tem o mesmo gargalo. Estes são três pontos que costumam aparecer — vale olhar quais fazem sentido no seu caso.</p>
+      <ul class="lista-editorial" style="margin:28px 0 0; padding:0" data-reveal="">
+        <li>
+          <span class="num">01</span>
+          <div>
+            <h3>Anúncios sem clareza do retorno</h3>
+            <p style="margin:0">Dificuldade para entender quais campanhas realmente contribuem para os pedidos.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div>
+            <h3>Interesse que não vira compra</h3>
+            <p style="margin:0">Obstáculos entre o anúncio, a oferta e o atendimento que travam o pedido no meio do caminho.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div>
+            <h3>Clientes que não voltam</h3>
+            <p style="margin:0">Falta de ações organizadas para estimular novas compras de quem já comprou uma vez.</p>
+          </div>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOLUCOES ===================== -->
+  <section id="solucoes" class="claro sec" aria-labelledby="solucoes-titulo">
+    <div class="wrap">
+      <div style="max-width:820px; margin-bottom:38px">
+        <p class="rotulo">Soluções</p>
+        <h2 id="solucoes-titulo">Marketing conectado do primeiro contato à <span class="grad">próxima compra</span>.</h2>
+        <p class="apoio">As três frentes funcionam juntas: atrair quem ainda não conhece, facilitar o caminho até o pedido e manter o relacionamento com quem já comprou.</p>
+      </div>
+      <div class="cards" data-reveal="">
+        <article class="card">
+          <h3>Tráfego pago para restaurantes e delivery</h3>
+          <p style="font-size:16px">Campanhas no Meta Ads e no Google Ads alinhadas à área de atendimento, às ofertas e à realidade da operação.</p>
+          <ul>
+            <li>Planejamento de campanhas</li>
+            <li>Criativos e comunicação da oferta</li>
+            <li>Acompanhamento dos indicadores pertinentes</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Conversão no WhatsApp e nos canais próprios</h3>
+          <p style="font-size:16px">Ajustes na oferta, na comunicação e no caminho de compra para reduzir obstáculos entre o interesse e o pedido.</p>
+          <ul>
+            <li>Análise do percurso até o pedido</li>
+            <li>Comunicação da oferta</li>
+            <li>Melhorias no funil conforme o escopo contratado</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Recompra e relacionamento</h3>
+          <p style="font-size:16px">Estratégias de remarketing e automação para manter o relacionamento com a base e incentivar novas compras.</p>
+          <ul>
+            <li>Planejamento de recorrência</li>
+            <li>Organização das ações</li>
+            <li>Acompanhamento dos resultados disponíveis</li>
+          </ul>
+        </article>
+      </div>
+      <div style="margin-top:36px">
+        <a href="#analise" class="btn btn-1">Solicitar análise gratuita</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PARA QUEM ===================== -->
+  <section id="para-quem" class="superficie sec" aria-labelledby="paraquem-titulo">
+    <div class="wrap">
+      <div style="max-width:760px; margin-bottom:34px">
+        <p class="rotulo">Para quem</p>
+        <h2 id="paraquem-titulo">Cada operação exige uma <span class="grad">estratégia própria</span>.</h2>
+        <p class="apoio">Os exemplos abaixo mostram o que costuma mudar de um tipo de operação para outro. Não são resultados comprovados em todos os grupos.</p>
+      </div>
+      <ul class="lista-editorial rotulos" style="margin:0; padding:0" data-reveal="">
+        <li><span class="num">Restaurantes</span><div><p style="margin:0">Salão e delivery disputam a mesma cozinha. Horários de movimento e canais de venda pesam na decisão do que anunciar e quando.</p></div></li>
+        <li><span class="num">Pizzarias</span><div><p style="margin:0">Dias fracos na semana e oferta certa no momento certo mudam o volume. A recompra costuma ser o ponto com mais espaço.</p></div></li>
+        <li><span class="num">Hamburguerias</span><div><p style="margin:0">A comunicação do produto e a montagem de combos influenciam o ticket. Canais próprios reduzem dependência de marketplace.</p></div></li>
+        <li><span class="num">Delivery</span><div><p style="margin:0">Área de entrega e percurso até o pedido definem o alcance útil do anúncio. Anunciar longe demais gasta verba sem gerar pedido.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== METODO ===================== -->
+  <section id="metodo" class="claro sec" aria-labelledby="metodo-titulo">
+    <div class="wrap">
+      <div style="max-width:820px; margin-bottom:38px">
+        <p class="rotulo">Método</p>
+        <h2 id="metodo-titulo">Aquisição, conversão e recorrência <span class="grad">trabalhando juntas</span>.</h2>
+      </div>
+      <div class="cards" data-reveal="">
+        <article class="card">
+          <p class="num" style="font-size:34px; margin:0 0 10px">01</p>
+          <h3>Aquisição</h3>
+          <p style="font-size:16px; margin:0">Alcançar potenciais clientes com campanhas e comunicação contextualizadas à operação e à região.</p>
+        </article>
+        <article class="card">
+          <p class="num" style="font-size:34px; margin:0 0 10px">02</p>
+          <h3>Conversão</h3>
+          <p style="font-size:16px; margin:0">Alinhar oferta e caminho de compra para facilitar o pedido, do anúncio ao atendimento.</p>
+        </article>
+        <article class="card">
+          <p class="num" style="font-size:34px; margin:0 0 10px">03</p>
+          <h3>Recorrência</h3>
+          <p style="font-size:16px; margin:0">Criar ações para estimular o retorno de quem já comprou e manter a base ativa.</p>
+        </article>
+      </div>
+      <div style="margin-top:38px; max-width:760px; border-top:1px solid rgba(20,18,16,0.12); padding-top:28px">
+        <h3>Como o trabalho começa</h3>
+        <p style="margin:0">Primeiro entendemos a operação: o que vende, para quem, em que canais e com que capacidade. A partir daí definimos as prioridades e acompanhamos a execução. As três frentes acima são estratégicas — não são etapas de contratação.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section id="sobre" class="escuro sec" aria-labelledby="sobre-titulo">
+    <div class="wrap hero-grid" style="display:grid; grid-template-columns:6fr 6fr; gap:clamp(28px,4vw,56px); align-items:center">
+      <div>
+        <p class="rotulo">Sobre a Vegas</p>
+        <h2 id="sobre-titulo">Conheça a equipe por trás da <span class="grad">estratégia</span>.</h2>
+        <p>A Vegas Aceleradora é uma assessoria de marketing especializada em restaurantes e delivery. Seu trabalho conecta aquisição de clientes, conversão e recorrência, considerando a realidade de cada operação e seus canais de venda.</p>
+        <p style="margin-bottom:0">Atendemos operações de alimentação com foco no que muda o caixa: mais pedidos, melhor conversão e clientes que voltam.</p>
+      </div>
+      <div>
+        <img src="/img/equipe-vegas-aceleradora-escritorio-opt.webp" alt="Equipe da Vegas Aceleradora no escritório" width="900" height="862" loading="lazy" decoding="async" style="display:block; width:100%; height:auto; border-radius:20px">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DUVIDAS ===================== -->
+  <section id="duvidas" class="claro sec" aria-labelledby="duvidas-titulo">
+    <div class="wrap">
+      <div style="max-width:900px">
+      <p class="rotulo">Dúvidas</p>
+      <h2 id="duvidas-titulo">Perguntas frequentes</h2>
+      <div class="faq" style="margin-top:26px">
+        <details>
+          <summary>Que tipos de negócios a Vegas atende?</summary>
+          <p>Operações de alimentação: restaurantes, pizzarias, hamburguerias e operações de delivery.</p>
+        </details>
+        <details>
+          <summary>O trabalho contempla salão e delivery?</summary>
+          <p>Sim. O peso de cada canal muda conforme a operação — algumas dependem mais do salão, outras vivem do delivery, e o plano considera essa diferença.</p>
+        </details>
+        <details>
+          <summary>Quais canais de anúncios podem ser utilizados?</summary>
+          <p>Meta Ads e Google Ads. A escolha depende do objetivo, da região de atendimento e do momento da operação.</p>
+        </details>
+        <details>
+          <summary>Como funciona a análise gratuita?</summary>
+          <p>É uma conversa inicial para entender sua operação e apontar onde há espaço para melhorar. Você pode solicitar pelo formulário desta página ou falar com a gente no WhatsApp.</p>
+        </details>
+        <details>
+          <summary>Como os resultados são acompanhados?</summary>
+          <p>Acompanhamos os indicadores das campanhas e do caminho até o pedido, e você recebe o retorno do que está sendo executado.</p>
+        </details>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DIAGNOSTICO + FORMULARIO ===================== -->
+  <section id="analise" class="escuro sec" aria-labelledby="analise-titulo" style="background:#000">
+    <div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:clamp(28px,4vw,56px); align-items:start">
+      <div>
+        <p class="rotulo">Análise gratuita</p>
+        <h2 id="analise-titulo">Vamos entender o que pode melhorar no <span class="grad">marketing da sua operação</span>?</h2>
+        <p class="apoio">Conte um pouco sobre o seu negócio e solicite uma análise gratuita com a Vegas.</p>
+        <p style="margin-top:26px; font-size:16px">Prefere conversar?
+          <a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" style="color:#F49E1D; text-decoration:underline; text-underline-offset:3px">Fale com a Vegas no WhatsApp</a>.
+        </p>
+      </div>
+
+      <div style="background:#F3EDE3; color:#141210; border-radius:20px; padding:clamp(24px,3vw,34px)">
+        <form data-form-analise="" novalidate="">
+          <label class="campo"><span>Nome</span>
+            <input type="text" name="nome" autocomplete="name" required="" placeholder="Seu nome">
+          </label>
+          <label class="campo"><span>WhatsApp</span>
+            <input type="tel" name="whatsapp" autocomplete="tel" required="" placeholder="(DDD) 9 9999-9999">
+          </label>
+          <label class="campo"><span>E-mail</span>
+            <input type="email" name="email" autocomplete="email" required="" placeholder="seu@email.com.br">
+          </label>
+          <label class="campo"><span>Nome do estabelecimento</span>
+            <input type="text" name="estabelecimento" required="" placeholder="Como o seu negócio se chama">
+          </label>
+          <label class="campo"><span>Principal desafio <em style="font-style:normal; font-weight:400; color:#5C574E">(opcional)</em></span>
+            <textarea name="desafio" placeholder="O que mais te incomoda hoje no marketing da operação?"></textarea>
+          </label>
+          <p data-form-erro="" role="alert" style="margin:0 0 12px; font-size:14px; color:#A3231A; min-height:0"></p>
+          <p data-form-ok="" role="status" style="margin:0 0 12px; font-size:14px; color:#1F6B3A; display:none"></p>
+          <button type="submit" class="btn btn-1" style="width:100%">Solicitar minha análise gratuita</button>
+          <p style="font-size:13px; color:#5C574E; margin:14px 0 0; text-align:center">Seus dados são usados apenas para o contato comercial.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RODAPE ===================== -->
+  <footer class="superficie" style="padding:64px clamp(20px,5vw,72px) 36px">
+    <div class="wrap" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap:36px 48px">
+      <div>
+        <img src="/img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" width="371" height="148" loading="lazy" decoding="async" style="height:40px; width:auto; display:block; margin-bottom:16px">
+        <p style="font-size:15px; max-width:38ch; margin:0">Assessoria de marketing especializada em restaurantes e delivery.</p>
+      </div>
+      <div>
+        <h3 style="font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:#F49E1D">Navegação</h3>
+        <nav aria-label="Rodapé" style="display:flex; flex-direction:column; gap:10px; font-size:15px">
+          <a href="#solucoes" style="color:#C9C3B6">Soluções</a>
+          <a href="#para-quem" style="color:#C9C3B6">Para quem</a>
+          <a href="#metodo" style="color:#C9C3B6">Método</a>
+          <a href="#sobre" style="color:#C9C3B6">Sobre a Vegas</a>
+          <a href="#duvidas" style="color:#C9C3B6">Dúvidas</a>
+        </nav>
+      </div>
+      <div>
+        <h3 style="font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:#F49E1D">Contato</h3>
+        <p style="font-size:15px; margin:0 0 8px"><a href="mailto:contato@vegasaceleradora.com.br" style="color:#C9C3B6">contato@vegasaceleradora.com.br</a></p>
+        <p style="font-size:15px; margin:0"><a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" style="color:#C9C3B6">+55 (27) 9 9224-6343</a></p>
+      </div>
+    </div>
+    <div class="wrap" style="border-top:1px solid rgba(243,237,227,0.08); margin-top:36px; padding-top:24px; font-size:14px; color:#7E7A6E">
+      <p style="margin:0">© Vegas Aceleradora — assessoria de marketing para restaurantes e delivery.</p>
+    </div>
+  </footer>
+
+  <a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-float="" aria-label="Falar com a Vegas no WhatsApp" style="position:fixed; right:20px; bottom:20px; z-index:60; width:62px; height:62px; border-radius:50%; overflow:hidden; border:2px solid #25D366; box-shadow:0 10px 30px rgba(0,0,0,0.45)">
+    <img src="/img/atendente-vegas-b.webp" alt="" width="136" height="136" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block">
+  </a>
+
+</main>
+</x-dc>
+</body>
+</html>

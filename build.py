@@ -22,7 +22,15 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).parent
-SRC = ROOT / "src" / "Vegas Aceleradora v2.dc.html"
+# (arquivo de origem, destino, script de interatividade)
+PAGINAS = [
+    (ROOT / "src" / "Vegas Aceleradora v2.dc.html", ROOT / "public" / "index.html", "site.js"),
+    # Home nova do briefing: fica em /nova-home/ para revisao, sem tocar na que
+    # esta no ar. O briefing pede para nao publicar alteracoes no dominio oficial
+    # nesta etapa.
+    (ROOT / "src" / "Home Vegas v3.dc.html", ROOT / "public" / "nova-home" / "index.html", "/nova-home.js"),
+]
+SRC = PAGINAS[0][0]
 PUBLIC = ROOT / "public"
 RUNTIME = ROOT / "runtime"
 OUT = PUBLIC / "index.html"
@@ -46,20 +54,16 @@ ASSETS = ["img", "fonts", "favicon.ico", "favicon-96x96.png", "apple-touch-icon.
           "icon-192.png", "icon-512.png", "site.webmanifest", "robots.txt", "sitemap.xml"]
 
 
-def monta_template() -> str:
-    html = SRC.read_text(encoding="utf-8")
+def monta_template(origem: pathlib.Path) -> str:
+    html = origem.read_text(encoding="utf-8")
     if html.count(NEEDLE) != 1:
         raise SystemExit(f"erro: esperava 1 ocorrencia de {NEEDLE!r}, achei {html.count(NEEDLE)}")
     return html.replace(NEEDLE, SHIM)
 
 
-def main() -> int:
-    template = monta_template()
-
-    if "--so-template" in sys.argv:
-        OUT.write_text(template, encoding="utf-8")
-        print(f"template escrito em {OUT} ({OUT.stat().st_size} bytes) — SEM pre-renderizacao")
-        return 0
+def constroi(origem: pathlib.Path, destino: pathlib.Path, script: str) -> None:
+    template = monta_template(origem)
+    destino.parent.mkdir(parents=True, exist_ok=True)
 
     with tempfile.TemporaryDirectory() as tmp:
         palco = pathlib.Path(tmp) / "palco"
@@ -69,19 +73,48 @@ def main() -> int:
         shutil.copy2(RUNTIME / "support.js", palco / "support.js")
         shutil.copytree(RUNTIME / "vendor", palco / "vendor")
         for nome in ASSETS:
-            origem = PUBLIC / nome
-            if not origem.exists():
+            de = PUBLIC / nome
+            if not de.exists():
                 continue
-            destino = palco / nome
-            if origem.is_dir():
-                shutil.copytree(origem, destino)
+            para = palco / nome
+            if de.is_dir():
+                shutil.copytree(de, para)
             else:
-                shutil.copy2(origem, destino)
+                shutil.copy2(de, para)
 
-        r = subprocess.run(["node", str(ROOT / "prerender.mjs"), str(palco), str(OUT)],
-                           cwd=ROOT)
+        r = subprocess.run(
+            ["node", str(ROOT / "prerender.mjs"), str(palco), str(destino), script], cwd=ROOT)
         if r.returncode != 0:
-            raise SystemExit("erro: a pre-renderizacao falhou; public/index.html nao foi tocado")
+            raise SystemExit(f"erro: a pre-renderizacao de {origem.name} falhou; "
+                             f"{destino} nao foi tocado")
+
+    # Paginas de preview nao podem ser indexadas: o canonical delas aponta para
+    # a Home real, e sem noindex o Google trataria as duas como conteudo
+    # duplicado da mesma URL.
+    if destino.parent.name != "public":
+        html = destino.read_text(encoding="utf-8")
+        html = html.replace('content="index, follow, max-image-preview:large"',
+                            'content="noindex, nofollow"')
+        destino.write_text(html, encoding="utf-8")
+        print(f"  {destino.parent.name}/ marcada como noindex (preview)")
+
+
+def main() -> int:
+    if "--so-template" in sys.argv:
+        OUT.write_text(monta_template(SRC), encoding="utf-8")
+        print(f"template escrito em {OUT} — SEM pre-renderizacao")
+        return 0
+
+    alvo = None
+    for i, a in enumerate(sys.argv):
+        if a == "--pagina" and i + 1 < len(sys.argv):
+            alvo = sys.argv[i + 1]
+
+    for origem, destino, script in PAGINAS:
+        if alvo and alvo not in origem.name:
+            continue
+        print(f"--- {origem.name}")
+        constroi(origem, destino, script)
     return 0
 
 

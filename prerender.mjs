@@ -21,6 +21,7 @@ import path from 'node:path';
 
 const ROOT = path.resolve(process.argv[2]);
 const OUT = process.argv[3];
+const SCRIPT = process.argv[4] || 'site.js';  // arquivo de interatividade desta pagina
 
 const MIME = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
@@ -84,7 +85,7 @@ await page.evaluate(() => {
 // o popup foi capturado como string, antes do evaluate final: limpa ali tambem
 const limpo = (h) => h.replace(/(name="(?:landing_page|referrer)"[^>]*value=")[^"]*/g, '$1');
 
-const html = await page.evaluate(({ modalHTML, chatHTML }) => {
+const html = await page.evaluate(({ modalHTML, chatHTML, SCRIPT }) => {
   // 3a) O runtime injeta os estilos de :hover via CSSOM (insertRule), que NAO
   //     aparece no outerHTML. Sem isto os hovers somem no estatico.
   const perdidas = [];
@@ -220,20 +221,22 @@ const html = await page.evaluate(({ modalHTML, chatHTML }) => {
 
   // 3e) popup e chat entram ocultos; o site.js so alterna a visibilidade,
   //     entao o visual continua sendo exatamente o que o runtime produzia
-  const guarda = document.createElement('div');
-  guarda.setAttribute('data-partes', '');
-  guarda.hidden = true;
-  guarda.innerHTML =
-    '<div data-parte="lead">' + modalHTML + '</div>' +
-    '<div data-parte="chat">' + chatHTML + '</div>';
-  document.body.appendChild(guarda);
+  if (modalHTML || chatHTML) {
+    const guarda = document.createElement('div');
+    guarda.setAttribute('data-partes', '');
+    guarda.hidden = true;
+    guarda.innerHTML =
+      (modalHTML ? '<div data-parte="lead">' + modalHTML + '</div>' : '') +
+      (chatHTML ? '<div data-parte="chat">' + chatHTML + '</div>' : '');
+    document.body.appendChild(guarda);
+  }
 
   const s = document.createElement('script');
-  s.src = 'site.js'; s.defer = true;
+  s.src = SCRIPT; s.defer = true;
   document.body.appendChild(s);
 
   return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-}, { modalHTML: limpo(modalHTML), chatHTML: limpo(chatHTML) });
+}, { modalHTML: limpo(modalHTML), chatHTML: limpo(chatHTML), SCRIPT });
 
 fs.writeFileSync(OUT, html);
 
@@ -252,7 +255,7 @@ if (erros.length) console.log('  ERROS DE JS NA MONTAGEM:', erros.slice(0, 5));
 await browser.close();
 server.close();
 
-if (!modalHTML || !chatHTML || info.secoes < 10) {
+if (info.secoes < 8) {
   console.error('ERRO: a montagem nao produziu a pagina esperada.');
   process.exit(1);
 }
