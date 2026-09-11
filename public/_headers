@@ -20,3 +20,24 @@
 # vendor/ e versionado (react@18.3.1): cache forte
 /site.js
   Cache-Control: public, max-age=604800
+
+# ---------- Landing page do Salao Morenos (/morenos/) ----------
+/morenos/
+  Cache-Control: no-cache, must-revalidate
+
+/morenos/index.html
+  Cache-Control: no-cache, must-revalidate
+
+/morenos/img/*
+  Cache-Control: public, max-age=2592000
+
+/morenos/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# runtime do Claude Design: react@18.3.1 e um support.js que so muda com o
+# proprio runtime — pode ficar em cache forte
+/morenos/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/morenos/support.js
+  Cache-Control: public, max-age=604800

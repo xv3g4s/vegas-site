@@ -1,0 +1,68 @@
+<!-- Entra no <head> do public/morenos/index.html durante o build
+     (build-morenos.py -> prerender-morenos.mjs). Nao e parte do design:
+     o Claude Design pode ser reexportado sem tocar neste arquivo. -->
+
+<meta name="theme-color" content="#0B0B0B" />
+<link rel="icon" type="image/webp" href="img/logo-morenos.webp" />
+
+<!-- AMBIENTE DE REVISAO.
+     Enquanto a pagina mora em vegasaceleradora.com.br/morenos ela fica fora do
+     indice, como pede o item 05 do prompt aprovado ("ambiente de revisao fora
+     do indice, com liberacao conferida no lancamento"). Publicar no dominio do
+     cliente = apagar a linha abaixo e conferir robots.txt e sitemap.xml do
+     dominio novo. -->
+<meta name="robots" content="noindex, nofollow" />
+
+<!-- Dados estruturados por unidade. Sem telefone, sem horario e sem nota de
+     avaliacao: nada disso foi confirmado pelo cliente, e o schema so pode
+     repetir o que esta visivel na pagina. Cada endereco ganha streetAddress
+     quando o numero do imovel chegar. -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "name": "Salão Morenos — Cidade Continental",
+    "brand": { "@type": "Brand", "name": "Salão Morenos" },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Avenida Terceiro Mundo",
+      "addressLocality": "Serra",
+      "addressRegion": "ES",
+      "postalCode": "29163-603",
+      "addressCountry": "BR"
+    },
+    "areaServed": "Serra, ES"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "name": "Salão Morenos — Novo Horizonte, Av. Brasil",
+    "brand": { "@type": "Brand", "name": "Salão Morenos" },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Avenida Brasil",
+      "addressLocality": "Serra",
+      "addressRegion": "ES",
+      "postalCode": "29163-331",
+      "addressCountry": "BR"
+    },
+    "areaServed": "Serra, ES"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "name": "Salão Morenos — Novo Horizonte, Av. Industrial",
+    "brand": { "@type": "Brand", "name": "Salão Morenos" },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Avenida Industrial, 830 — Loja 3",
+      "addressLocality": "Serra",
+      "addressRegion": "ES",
+      "postalCode": "29163-357",
+      "addressCountry": "BR"
+    },
+    "areaServed": "Serra, ES"
+  }
+]
+</script>
