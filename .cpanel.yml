@@ -23,3 +23,23 @@ deployment:
     - /bin/grep -c "sit_6c66a1f9deba" "$DEPLOYPATH/index.html" | /bin/sed "s/^/tags do coletor no index.html  /" >> "$DEPLOYPATH/deploy-info.txt" || /bin/echo "tags do coletor no index.html  0" >> "$DEPLOYPATH/deploy-info.txt"
     # Tambem no log do cPanel, para quem estiver olhando a tela do deploy.
     - /bin/cat "$DEPLOYPATH/deploy-info.txt"
+    # ---------------------------------------------------------------------
+    # Descoberta do document root.
+    #
+    # O carimbo acima deu 404 no navegador: o dominio NAO serve o DEPLOYPATH.
+    # Em vez de adivinhar a pasta certa, o deploy passa a listar os candidatos
+    # aqui no log. Tudo abaixo e leitura, fora uma sonda por pasta — um arquivo
+    # NOVO, que nao sobrescreve nada de nenhum outro site.
+    - /bin/echo "=================== DIAGNOSTICO DO DOCUMENT ROOT ==================="
+    - /bin/echo "HOME  $HOME"
+    - /bin/echo "--- pastas e links no HOME ---"
+    - /bin/ls -la "$HOME" | /bin/grep -E "^d|->" || true
+    - /bin/echo "--- todo index.html ate 3 niveis, com data de modificacao ---"
+    - /usr/bin/find "$HOME" -maxdepth 3 -name index.html -not -path "*/node_modules/*" -printf "%TY-%Tm-%Td %TH:%TM  %s bytes  %p\n" 2>/dev/null | /usr/bin/sort || true
+    - /bin/echo "--- quais deles ja tem a tag do coletor ---"
+    - /usr/bin/find "$HOME" -maxdepth 3 -name index.html -not -path "*/node_modules/*" -exec /bin/grep -l "sit_6c66a1f9deba" {} + 2>/dev/null || /bin/echo "(nenhum)"
+    # Sondas: um arquivo novo por candidato, com o nome da pasta dentro dele.
+    # Abra https://vegasaceleradora.com.br/sonda-vegas.txt — o conteudo diz qual
+    # pasta o dominio esta servindo de verdade.
+    - for d in "$HOME/public_html" "$HOME/vegasaceleradora.com.br" "$HOME/public_html/vegasaceleradora.com.br" "$HOME/domains/vegasaceleradora.com.br/public_html"; do if [ -d "$d" ]; then /bin/echo "document root servido = $d" > "$d/sonda-vegas.txt" 2>/dev/null && /bin/echo "sonda gravada em $d"; fi; done || true
+    - /bin/echo "===================================================================="
