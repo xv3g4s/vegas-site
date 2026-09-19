@@ -13,9 +13,65 @@
   // Inbound Webhook do GoHighLevel. Vazio = o lead fica so no localStorage.
   var GHL_WEBHOOK = '';
 
+  // Painel de Sites: copia do lead, em PARALELO ao destino principal. O GHL
+  // continua sendo quem recebe o lead de verdade — nada aqui pode atrapalhar
+  // aquele envio, entao toda falha desta parte e engolida de proposito.
+  var PAINEL_FORMS = 'https://app.johnyweb.com/api/forms/sit_6c66a1f9deba';
+
   var d = document;
   var $ = function (s, c) { return (c || d).querySelector(s); };
   var $$ = function (s, c) { return [].slice.call((c || d).querySelectorAll(s)); };
+
+  // ------------------------------------------------- copia para o painel ---
+  // Uma chave por formulario PREENCHIDO, nao por tentativa: e ela que impede
+  // que um retry de rede vire um segundo lead. So troca depois de uma entrega
+  // confirmada pelo painel.
+  var chaveEnvio = null;
+  function idempotencia() {
+    if (chaveEnvio) return chaveEnvio;
+    try {
+      if (window.crypto && crypto.randomUUID) { chaveEnvio = crypto.randomUUID(); return chaveEnvio; }
+      if (window.crypto && crypto.getRandomValues) {
+        var a = new Uint8Array(16);
+        crypto.getRandomValues(a);
+        chaveEnvio = [].map.call(a, function (n) { return ('0' + n.toString(16)).slice(-2); }).join('');
+        return chaveEnvio;
+      }
+    } catch (e) { /* cai no de baixo */ }
+    chaveEnvio = 'f' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    return chaveEnvio;
+  }
+
+  function enviaAoPainel(dados) {
+    // Respeita o mesmo interruptor de consentimento que o coletor observa.
+    if (window.painelConsentimento === false) return;
+    var corpo = JSON.stringify({
+      nome: dados.nome || '',
+      email: dados.email || '',
+      telefone: dados.telefone || '',
+      mensagem: dados.mensagem || '',
+      formulario: dados.formulario || '',
+      idempotencia: idempotencia()
+    });
+    try {
+      fetch(PAINEL_FORMS, {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: corpo
+      }).then(function (r) {
+        if (r && r.ok) chaveEnvio = null;  // entregue: o proximo lead usa chave nova
+      })['catch'](function () {
+        // Sem CORS na resposta o fetch falha mesmo tendo saido. O sendBeacon
+        // repete com text/plain, que nao dispara preflight. A chave nao muda:
+        // se as duas chegarem, o painel deduplica por ela.
+        try {
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(PAINEL_FORMS, new Blob([corpo], { type: 'text/plain;charset=UTF-8' }));
+          }
+        } catch (e2) { /* o lead principal ja saiu */ }
+      });
+    } catch (e) { /* idem */ }
+  }
 
   // ---------------------------------------------------------------- UTM ----
   var utm = (function () {
@@ -123,6 +179,14 @@
         }
       }
 
+      enviaAoPainel({
+        nome: v.nome, email: v.email, telefone: telefone,
+        // o painel tem um campo de mensagem so: o estabelecimento entra junto
+        // para nao se perder
+        mensagem: 'Estabelecimento: ' + v.estabelecimento + (v.desafio ? '\nDesafio: ' + v.desafio : ''),
+        formulario: 'Análise gratuita — Home'
+      });
+
       try {
         var leads = JSON.parse(localStorage.getItem('vegas-leads') || '[]');
         leads.push(payload);
@@ -141,6 +205,36 @@
       form.reset();
       ok.focus && ok.focus();
     });
+  }
+
+  // --------------------------------------------------------- menu mobile --
+  // O <details> ja abre e fecha sozinho. O que falta e o comportamento que o
+  // nativo nao tem: como os links sao ancoras da propria pagina, sem isso o
+  // painel ficaria aberto por cima do destino.
+  var menu = $('.sanduiche');
+  if (menu) {
+    var fechaMenu = function () { menu.removeAttribute('open'); };
+    var painel = $('.sanduiche-painel', menu);
+    if (painel) {
+      painel.addEventListener('click', function (ev) {
+        var a = ev.target && ev.target.closest && ev.target.closest('a');
+        if (a) fechaMenu();
+      });
+    }
+    d.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' || ev.keyCode === 27) fechaMenu();
+    });
+    d.addEventListener('click', function (ev) {
+      if (menu.hasAttribute('open') && !menu.contains(ev.target)) fechaMenu();
+    });
+    // acima de 900px os links voltam para a barra: o painel aberto viraria
+    // um bloco solto no meio da tela
+    if (window.matchMedia) {
+      var largo = window.matchMedia('(min-width: 901px)');
+      var aoMudar = function (e) { if (e.matches) fechaMenu(); };
+      if (largo.addEventListener) largo.addEventListener('change', aoMudar);
+      else if (largo.addListener) largo.addListener(aoMudar);
+    }
   }
 
   // -------------------------------------------------------------- reveals --

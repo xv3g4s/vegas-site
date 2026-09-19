@@ -25,6 +25,13 @@
 <link rel="preload" as="font" type="font/woff2" href="fonts/poppins-400-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/poppins-800-latin.woff2" crossorigin>
 <script src="./support.js"></script>
+
+<!-- Coletor do Painel de Sites. Uma unica vez por pagina, no <head> real:
+     o <helmet> so e aplicado depois do runtime, e o runtime nao chega ao
+     visitante. Ele mesmo cuida de pushState/replaceState/popstate, entao nao
+     existe contagem manual de pagina em lugar nenhum — isso duplicaria as
+     visualizacoes. Respeita window.painelConsentimento = false. -->
+<script async src="https://app.johnyweb.com/t.js" data-site="sit_6c66a1f9deba"></script>
 </head>
 <body>
 <x-dc>
@@ -545,7 +552,7 @@
       <a href="#marketing-para-restaurantes" style="color:#9C968A" style-hover="color:#F3EDE3">COMO FUNCIONA</a>
       <a href="#quem-somos" style="color:#9C968A" style-hover="color:#F3EDE3">QUEM SOMOS</a>
       <a href="#faq" style="color:#9C968A" style-hover="color:#F3EDE3">FAQ</a>
-      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="background:linear-gradient(90deg,#D3372B,#F49E1D); color:#FFF; padding:13px 26px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:12px; letter-spacing:0.12em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR COM A VEGAS</a>
+      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-track-id="cta-whatsapp-topo" data-track-pos="Topo" style="background:linear-gradient(90deg,#D3372B,#F49E1D); color:#FFF; padding:13px 26px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:12px; letter-spacing:0.12em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR COM A VEGAS</a>
     </nav>
   </header>
 
@@ -574,7 +581,7 @@
       <h1 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(38px,5.6vw,64px); line-height:1.04; margin:0; letter-spacing:-0.02em; max-width:760px; text-wrap:balance; text-transform:uppercase; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .12s both">Assessoria de marketing para <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:#F04E23; -webkit-text-fill-color:transparent">restaurantes e delivery</span></h1>
       <p style="font-size:20px; line-height:1.65; color:#C9C3B6; margin:0; max-width:480px; text-wrap:pretty; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .24s both">Tráfego pago, funil de vendas no WhatsApp e automação de recompra para aumentar pedidos, ticket médio e faturamento — no delivery e no salão. Sem fidelidade.</p>
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin-top:8px; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .36s both">
-        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:19px 38px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; box-shadow:0 12px 40px rgba(240,78,35,0.35)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CONTRATE A NOSSA ASSESSORIA →</a>
+        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-track-id="cta-whatsapp-hero" data-track-pos="Hero" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:19px 38px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; box-shadow:0 12px 40px rgba(240,78,35,0.35)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CONTRATE A NOSSA ASSESSORIA →</a>
         <a href="#resultados" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(243,237,227,0.25); color:#F3EDE3; padding:19px 34px; border-radius:100px; transition:all .3s ease; font-weight:700; font-size:14px; letter-spacing:0.1em" style-hover="border-color:#F49E1D; color:#F49E1D; transform:translateY(-4px)">VER RESULTADOS</a>
       </div>
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px 28px; margin-top:40px; border-top:1px solid rgba(243,237,227,0.12); padding-top:30px; animation:fadeUp .9s cubic-bezier(.22,.61,.36,1) .5s both">
@@ -626,7 +633,7 @@
       <div data-reveal="left" style="display:flex; flex-direction:column; align-items:flex-start; gap:18px">
         <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:#B4482B">01 — RESULTADOS</div>
         <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(30px,4.2vw,46px); line-height:1.04; margin:0; max-width:720px; text-transform:uppercase; letter-spacing:-0.01em">Resultados reais de <span style="background:linear-gradient(90deg,#D3372B,#F04E23); -webkit-background-clip:text; background-clip:text; color:#D3372B; -webkit-text-fill-color:transparent">donos de delivery</span> que aceleraram com a Vegas</h2>
-        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="flex-shrink:0; background:#141210; color:#F3EDE3; padding:16px 30px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em" style-hover="background:#B4482B; color:#FFF; transform:translateY(-4px)">QUERO ESSES RESULTADOS</a>
+        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-track-id="cta-whatsapp-resultados" data-track-pos="Resultados" style="flex-shrink:0; background:#141210; color:#F3EDE3; padding:16px 30px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em" style-hover="background:#B4482B; color:#FFF; transform:translateY(-4px)">QUERO ESSES RESULTADOS</a>
       </div>
       <p data-reveal="" style="margin:-24px 0 0; font-size:18px; line-height:1.7; color:#5C574E; max-width:760px; text-wrap:pretty">Cada painel abaixo é de um restaurante ou delivery atendido pela Vegas: pizzarias, hamburguerias, restaurantes e operações de delivery que passaram a anunciar com estratégia e acompanhar pedidos, ticket médio e retorno sobre o investimento em anúncios.</p>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:18px">
@@ -648,7 +655,7 @@
       <div style="font-size:13px; font-weight:700; letter-spacing:0.28em; color:#F49E1D">ANÁLISE GRATUITA</div>
       <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(32px,4.8vw,54px); margin:0; line-height:1.04; text-transform:uppercase; text-wrap:balance">Análise gratuita de marketing para o seu delivery</h2>
       <p style="font-size:18px; color:#C9C3B6; margin:0; max-width:480px">Um especialista analisa seu funil de vendas, seus anúncios e seus canais — e mostra onde está o faturamento que você deixa na mesa.</p>
-      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:20px 44px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; margin-top:12px; box-shadow:0 12px 40px rgba(240,78,35,0.4)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">SOLICITAR ANÁLISE GRATUITA →</a>
+      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:20px 44px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; margin-top:12px; box-shadow:0 12px 40px rgba(240,78,35,0.4)" data-track-id="cta-whatsapp-analise" data-track-pos="Análise gratuita" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">SOLICITAR ANÁLISE GRATUITA →</a>
     </div>
   </section>
 
@@ -748,7 +755,7 @@
         </div>
         <div data-reveal="left" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:8px">
           <a href="#resultados" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(243,237,227,0.25); color:#F3EDE3; padding:16px 30px; border-radius:100px; transition:all .3s ease; font-weight:700; font-size:13px; letter-spacing:0.1em" style-hover="border-color:#F49E1D; color:#F49E1D; transform:translateY(-4px)">VER RESULTADOS</a>
-          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:16px 32px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em; box-shadow:0 10px 32px rgba(240,78,35,0.3)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR COM A VEGAS →</a>
+          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:16px 32px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em; box-shadow:0 10px 32px rgba(240,78,35,0.3)" data-track-id="cta-whatsapp-o-que-e" data-track-pos="O que é" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR COM A VEGAS →</a>
         </div>
       </div>
 
@@ -861,7 +868,7 @@
       <div style="font-size:13px; font-weight:700; letter-spacing:0.28em; color:#F49E1D">GARANTIA VEGAS</div>
       <h2 style="font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(34px,5.4vw,60px); margin:0; line-height:1.02; text-transform:uppercase; text-wrap:balance">Resultado ou seu <span style="background:linear-gradient(90deg,#F04E23,#F49E1D); -webkit-background-clip:text; background-clip:text; color:#F04E23; -webkit-text-fill-color:transparent">dinheiro de volta</span></h2>
       <p style="font-size:18px; color:#C9C3B6; margin:0; max-width:520px; text-wrap:pretty">Sem fidelidade, sem multa e com a nossa pele em jogo: investimos no seu anúncio. Se não entregarmos resultado, você não paga.</p>
-      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:20px 44px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; margin-top:12px; box-shadow:0 12px 40px rgba(240,78,35,0.4)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">QUERO ACELERAR MEU DELIVERY →</a>
+      <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:20px 44px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:14px; letter-spacing:0.1em; margin-top:12px; box-shadow:0 12px 40px rgba(240,78,35,0.4)" data-track-id="cta-whatsapp-garantia" data-track-pos="CTA Garantia" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">QUERO ACELERAR MEU DELIVERY →</a>
     </div>
   </section>
 
@@ -924,7 +931,7 @@
             </div>
           </div>
         </div>
-        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="align-self:flex-start; display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:18px 36px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em; margin-top:8px" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CONTRATE A NOSSA ASSESSORIA →</a>
+        <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-track-id="cta-whatsapp-quem-somos" data-track-pos="Quem somos" style="align-self:flex-start; display:inline-flex; align-items:center; gap:12px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:18px 36px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em; margin-top:8px" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CONTRATE A NOSSA ASSESSORIA →</a>
       </div>
       <div data-reveal="right" style="position:relative; min-width:0">
         <div style="position:absolute; inset:-1px; border-radius:26px; background:linear-gradient(135deg, rgba(244,158,29,0.45), rgba(244,158,29,0.04) 60%); pointer-events:none"></div>
@@ -984,7 +991,7 @@
         <div style="margin-top:12px; background:linear-gradient(135deg, rgba(211,55,43,0.14) 0%, #141210 65%); border:1px solid rgba(244,158,29,0.35); border-radius:18px; padding:28px; display:flex; flex-direction:column; gap:14px">
           <div style="font-size:18px; font-weight:800; color:#F3EDE3">Atendimento direto, sem robô.</div>
           <div style="font-size:16px; line-height:1.6; color:#9C968A">Resposta em minutos no horário comercial.</div>
-          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="align-self:flex-start; display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:14px 26px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:12px; letter-spacing:0.1em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CHAMAR NO WHATSAPP →</a>
+          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-track-id="cta-whatsapp-faq" data-track-pos="FAQ" style="align-self:flex-start; display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:14px 26px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:12px; letter-spacing:0.1em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">CHAMAR NO WHATSAPP →</a>
         </div>
       </div>
       <div style="display:flex; flex-direction:column">
@@ -1029,7 +1036,7 @@
           </div>
         </div>
         <div style="display:flex; flex-direction:column; align-items:flex-end; gap:20px">
-          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:16px 32px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR NO WHATSAPP →</a>
+          <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" style="display:inline-flex; align-items:center; gap:10px; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:16px 32px; border-radius:100px; transition:all .3s ease; font-weight:800; font-size:13px; letter-spacing:0.1em" data-track-id="cta-whatsapp-rodape" data-track-pos="Rodapé" style-hover="background:#FFF; color:#0A0908; transform:translateY(-4px)">FALAR NO WHATSAPP →</a>
           <nav style="display:flex; flex-wrap:wrap; gap:16px 28px; font-size:13px; font-weight:700; letter-spacing:0.14em; color:#7E7A6E">
             <a href="#resultados" style="color:#7E7A6E" style-hover="color:#F3EDE3">RESULTADOS</a>
             <a href="#metodo" style="color:#7E7A6E" style-hover="color:#F3EDE3">MÉTODO</a>
@@ -1086,7 +1093,7 @@
           <sc-if value="{{ leadError }}" hint-placeholder-val="{{ false }}">
             <div style="font-size:14px; color:#F04E23; font-weight:600">{{ leadError }}</div>
           </sc-if>
-          <button onClick="{{ submitLead }}" style="all:unset; box-sizing:border-box; cursor:pointer; width:100%; text-align:center; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:18px 0; border-radius:14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; letter-spacing:0.08em; transition:all .3s ease; box-shadow:0 12px 36px rgba(240,78,35,0.35)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-2px)">RECEBER MINHA ANÁLISE GRATUITA →</button>
+          <button onClick="{{ submitLead }}" data-track-id="form-lead-enviar" data-track-pos="Popup de lead" style="all:unset; box-sizing:border-box; cursor:pointer; width:100%; text-align:center; background:linear-gradient(90deg,#D3372B,#F49E1D,#D3372B); background-size:220% 100%; animation:ctaSheen 3.5s ease-in-out infinite; color:#FFF; padding:18px 0; border-radius:14px; font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; letter-spacing:0.08em; transition:all .3s ease; box-shadow:0 12px 36px rgba(240,78,35,0.35)" style-hover="background:#FFF; color:#0A0908; transform:translateY(-2px)">RECEBER MINHA ANÁLISE GRATUITA →</button>
           <div style="font-size:13px; color:#7E7A6E; text-align:center">🔒 Seus dados estão seguros. Nada de spam.</div>
         </div>
       </div>
@@ -1117,7 +1124,7 @@
   </sc-if>
 
   <!-- ===== WHATSAPP FLOAT ===== -->
-  <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-wa-float="" style="position:fixed; bottom:28px; right:28px; z-index:100; width:72px; height:72px; border-radius:50%; padding:0; border:2px solid #25D366; background:#0A0908; overflow:visible; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 28px rgba(37,211,102,0.4); animation:floatPulse 2.6s ease-in-out infinite" style-hover="transform:scale(1.1)">
+  <a href="{{ waLink }}" target="_blank" onClick="{{ openLead }}" data-wa-float="" data-track-id="cta-whatsapp-flutuante" data-track-pos="Flutuante" style="position:fixed; bottom:28px; right:28px; z-index:100; width:72px; height:72px; border-radius:50%; padding:0; border:2px solid #25D366; background:#0A0908; overflow:visible; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 28px rgba(37,211,102,0.4); animation:floatPulse 2.6s ease-in-out infinite" style-hover="transform:scale(1.1)">
     <img src="img/atendente-vegas-b.webp" alt="Falar com especialista da Vegas Aceleradora no WhatsApp" loading="lazy" decoding="async" width="68" height="68" style="width:100%; height:100%; border-radius:50%; object-fit:cover; display:block">
     <span style="position:absolute; bottom:2px; right:2px; width:16px; height:16px; border-radius:50%; background:#25D366; border:2px solid #0A0908"></span>
   </a>

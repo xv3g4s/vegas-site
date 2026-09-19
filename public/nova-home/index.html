@@ -66,6 +66,13 @@
 <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-800-latin.woff2" crossorigin="">
 
 <style>x-dc{display:none!important}</style>
+
+<!-- Coletor do Painel de Sites. Uma unica vez por pagina, no <head> real:
+     o <helmet> so e aplicado depois do runtime, e o runtime nao chega ao
+     visitante. Ele mesmo cuida de pushState/replaceState/popstate, entao nao
+     existe contagem manual de pagina em lugar nenhum — isso duplicaria as
+     visualizacoes. Respeita window.painelConsentimento = false. -->
+<script async="" src="https://app.johnyweb.com/t.js" data-site="sit_6c66a1f9deba"></script>
 <style></style><style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style><title data-dc-tpl="1">Marketing para Restaurantes e Delivery | Vegas Aceleradora</title><meta name="description" content="Conheça a assessoria da Vegas para restaurantes e delivery: tráfego pago, conversão e recompra. Solicite uma análise gratuita da sua operação." data-dc-tpl="2"><meta name="robots" content="noindex, nofollow" data-dc-tpl="3"><link rel="canonical" href="https://vegasaceleradora.com.br/" data-dc-tpl="4"><meta property="og:site_name" content="Vegas Aceleradora" data-dc-tpl="5"><meta property="og:title" content="Marketing para Restaurantes e Delivery | Vegas Aceleradora" data-dc-tpl="6"><meta property="og:description" content="Assessoria de marketing para restaurantes e delivery: tráfego pago, conversão no WhatsApp e estratégias de recompra." data-dc-tpl="7"><meta property="og:type" content="website" data-dc-tpl="8"><meta property="og:locale" content="pt_BR" data-dc-tpl="9"><meta property="og:url" content="https://vegasaceleradora.com.br/" data-dc-tpl="10"><meta property="og:image" content="https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp" data-dc-tpl="11"><meta name="twitter:card" content="summary_large_image" data-dc-tpl="12"><meta name="twitter:title" content="Marketing para Restaurantes e Delivery | Vegas Aceleradora" data-dc-tpl="13"><meta name="twitter:description" content="Tráfego pago, conversão no WhatsApp e recompra para restaurantes e delivery." data-dc-tpl="14"><meta name="twitter:image" content="https://vegasaceleradora.com.br/img/hero-fundador-vegas-hd.webp" data-dc-tpl="15"><script type="application/ld+json" data-dc-tpl="16">
 {
   "@context": "https://schema.org",
@@ -102,9 +109,50 @@
      Os botoes em pilula ficam de fora: tem fundo proprio. */
   p a:not(.btn), li a:not(.btn) { text-decoration: underline; text-underline-offset: 2px; }
 
+  /* ---- Menu sanduiche (ate 900px) ----
+     Usa <details>/<summary> nativo: abre e fecha sem JavaScript, ja vem
+     acessivel e sobrevive a pre-renderizacao. O JavaScript so acrescenta o
+     que o nativo nao faz — fechar ao clicar num link, no Esc e fora dele. */
+  .sanduiche { display: none; }
+  .sanduiche > summary {
+    list-style: none; cursor: pointer; width: 48px; height: 48px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(243,237,227,0.22); border-radius: 12px;
+  }
+  .sanduiche > summary::-webkit-details-marker { display: none; }
+  .sanduiche > summary:focus-visible { outline: 2px solid #F49E1D; outline-offset: 2px; }
+  .barras { position: relative; }
+  .barras, .barras::before, .barras::after {
+    display: block; width: 22px; height: 2px; background: #F3EDE3; border-radius: 2px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  .barras::before, .barras::after { content: ''; position: absolute; }
+  .barras::before { transform: translateY(-7px); }
+  .barras::after { transform: translateY(7px); }
+  .sanduiche[open] .barras { background: transparent; }
+  .sanduiche[open] .barras::before { transform: rotate(45deg); }
+  .sanduiche[open] .barras::after { transform: rotate(-45deg); }
+
+  /* O painel se posiciona pelo <header>, que ja e sticky (logo, posicionado). */
+  .sanduiche-painel {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: flex; flex-direction: column;
+    padding: 4px clamp(20px,5vw,72px) 16px;
+    background: #17130F; border-bottom: 2px solid rgba(244,158,29,0.35);
+    box-shadow: 0 26px 50px rgba(0,0,0,0.65);
+  }
+  .sanduiche-painel a {
+    display: flex; align-items: center; min-height: 52px; color: #F3EDE3;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    border-bottom: 1px solid rgba(243,237,227,0.08);
+  }
+  .sanduiche-painel a:last-child { border-bottom: 0; }
+  .sanduiche-painel a:hover, .sanduiche-painel a:focus-visible { color: #F49E1D; }
+
   @media (max-width: 900px) {
     html { scroll-padding-top: 84px; }
-    header nav a[href^="#"]:not(.btn) { display: none; }
+    header > nav a[href^="#"]:not(.btn) { display: none; }
+    .sanduiche { display: block; }
   }
   @media (max-width: 720px) {
     /* alvo de toque confortavel */
@@ -191,7 +239,8 @@
     .btn { width: 100%; max-width: 420px; }
     /* o CTA do cabecalho nao acompanha os botoes de secao: em largura
        total ele ocupa mais da metade da barra e engole a logo. */
-    header .btn { width: auto; max-width: none; padding: 11px 16px; font-size: 10px; }
+    header .btn { width: auto; max-width: none; padding: 11px 14px; font-size: 10px; }
+    .so-largo { display: none; }
   }
 </style><style data-runtime-css="">/* regras que o runtime criava via CSSOM */
 .scp0:hover { color: rgb(243, 237, 227) !important; }</style></head>
@@ -211,85 +260,95 @@
       <a data-dc-tpl="27" href="#metodo" class="scp0" style="color: rgb(156, 150, 138);">Método</a>
       <a data-dc-tpl="28" href="#sobre" class="scp0" style="color: rgb(156, 150, 138);">Sobre a Vegas</a>
       <a data-dc-tpl="29" href="#duvidas" class="scp0" style="color: rgb(156, 150, 138);">Dúvidas</a>
-      <a data-dc-tpl="30" href="#analise" class="btn btn-1" style="padding: 12px 20px; font-size: 11px;">Solicitar análise gratuita</a>
+      <a data-dc-tpl="30" href="#analise" class="btn btn-1" data-track-id="cta-analise-topo" data-track-pos="Topo" style="padding: 12px 20px; font-size: 11px;"><span data-dc-tpl="31" class="so-largo">Solicitar </span>análise gratuita</a>
     </nav>
+    <details data-dc-tpl="32" class="sanduiche">
+      <summary data-dc-tpl="33" aria-label="Menu"><span data-dc-tpl="34" class="barras" aria-hidden="true"></span></summary>
+      <nav data-dc-tpl="35" class="sanduiche-painel" aria-label="Navegação do menu">
+        <a data-dc-tpl="36" href="#solucoes">Soluções</a>
+        <a data-dc-tpl="37" href="#para-quem">Para quem</a>
+        <a data-dc-tpl="38" href="#metodo">Método</a>
+        <a data-dc-tpl="39" href="#sobre">Sobre a Vegas</a>
+        <a data-dc-tpl="40" href="#duvidas">Dúvidas</a>
+      </nav>
+    </details>
   </header>
 
   
-  <section data-dc-tpl="31" id="conteudo" class="escuro" data-screen-label="Hero" style="position: relative; padding: clamp(40px, 6vw, 90px) clamp(20px, 5vw, 72px) clamp(56px, 7vw, 100px);">
-    <div data-dc-tpl="32" class="wrap hero-grid" style="display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 5vw, 64px); align-items: center;">
-      <div data-dc-tpl="33">
-        <p data-dc-tpl="34" class="rotulo">Marketing para restaurantes e delivery</p>
-        <h1 data-dc-tpl="35">Assessoria de marketing para <span data-dc-tpl="36" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">restaurantes e delivery</span>.</h1>
-        <p data-dc-tpl="37" class="apoio" style="margin: 22px 0px 0px;">Conectamos tráfego pago, conversão no WhatsApp e estratégias de recompra para ajudar sua operação a atrair clientes, gerar pedidos e estimular novas compras.</p>
-        <div data-dc-tpl="38" style="display: flex; flex-wrap: wrap; gap: 14px; margin: 30px 0px 16px;">
-          <a data-dc-tpl="39" href="#analise" class="btn btn-1">Solicitar análise gratuita</a>
-          <a data-dc-tpl="40" href="#solucoes" class="btn btn-2">Conhecer as soluções</a>
+  <section data-dc-tpl="41" id="conteudo" class="escuro" data-screen-label="Hero" style="position: relative; padding: clamp(40px, 6vw, 90px) clamp(20px, 5vw, 72px) clamp(56px, 7vw, 100px);">
+    <div data-dc-tpl="42" class="wrap hero-grid" style="display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 5vw, 64px); align-items: center;">
+      <div data-dc-tpl="43">
+        <p data-dc-tpl="44" class="rotulo">Marketing para restaurantes e delivery</p>
+        <h1 data-dc-tpl="45">Assessoria de marketing para <span data-dc-tpl="46" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">restaurantes e delivery</span>.</h1>
+        <p data-dc-tpl="47" class="apoio" style="margin: 22px 0px 0px;">Conectamos tráfego pago, conversão no WhatsApp e estratégias de recompra para ajudar sua operação a atrair clientes, gerar pedidos e estimular novas compras.</p>
+        <div data-dc-tpl="48" style="display: flex; flex-wrap: wrap; gap: 14px; margin: 30px 0px 16px;">
+          <a data-dc-tpl="49" href="#analise" class="btn btn-1" data-track-id="cta-analise-hero" data-track-pos="Hero">Solicitar análise gratuita</a>
+          <a data-dc-tpl="50" href="#solucoes" class="btn btn-2" data-track-id="cta-solucoes-hero" data-track-pos="Hero">Conhecer as soluções</a>
         </div>
-        <p data-dc-tpl="41" style="font-size: 15px; color: rgb(156, 150, 138); margin: 0px;">Entenda como a Vegas pode atuar no marketing da sua operação.</p>
+        <p data-dc-tpl="51" style="font-size: 15px; color: rgb(156, 150, 138); margin: 0px;">Entenda como a Vegas pode atuar no marketing da sua operação.</p>
       </div>
-      <div data-dc-tpl="42" style="position: relative;">
-        <picture data-dc-tpl="43">
-          <source data-dc-tpl="44" media="(max-width:720px)" srcset="/img/hero-fundador-vegas-mobile-opt.webp" width="826" height="1147">
-          <img data-dc-tpl="45" src="/img/hero-fundador-vegas-retrato.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" width="1152" height="1440" fetchpriority="high" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px;">
+      <div data-dc-tpl="52" style="position: relative;">
+        <picture data-dc-tpl="53">
+          <source data-dc-tpl="54" media="(max-width:720px)" srcset="/img/hero-fundador-vegas-mobile-opt.webp" width="826" height="1147">
+          <img data-dc-tpl="55" src="/img/hero-fundador-vegas-retrato.webp" alt="Fundador da Vegas Aceleradora, assessoria de marketing para restaurantes e delivery" width="1152" height="1440" fetchpriority="high" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px;">
         </picture>
       </div>
     </div>
   </section>
 
   
-  <section data-dc-tpl="46" class="superficie" style="padding: 26px clamp(20px, 5vw, 72px);">
-    <div data-dc-tpl="47" class="wrap" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 40px; font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(201, 195, 182);">
-      <span data-dc-tpl="48">Atrair clientes</span>
-      <span data-dc-tpl="49" aria-hidden="true" style="color: rgb(244, 158, 29);">•</span>
-      <span data-dc-tpl="50">Melhorar a conversão</span>
-      <span data-dc-tpl="51" aria-hidden="true" style="color: rgb(244, 158, 29);">•</span>
-      <span data-dc-tpl="52">Estimular a recompra</span>
+  <section data-dc-tpl="56" class="superficie" style="padding: 26px clamp(20px, 5vw, 72px);">
+    <div data-dc-tpl="57" class="wrap" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 40px; font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(201, 195, 182);">
+      <span data-dc-tpl="58">Atrair clientes</span>
+      <span data-dc-tpl="59" aria-hidden="true" style="color: rgb(244, 158, 29);">•</span>
+      <span data-dc-tpl="60">Melhorar a conversão</span>
+      <span data-dc-tpl="61" aria-hidden="true" style="color: rgb(244, 158, 29);">•</span>
+      <span data-dc-tpl="62">Estimular a recompra</span>
     </div>
   </section>
 
   
-  <section data-dc-tpl="53" class="claro sec" aria-labelledby="marcas-titulo" style="padding-top: clamp(48px, 6vw, 72px); padding-bottom: clamp(48px, 6vw, 72px);">
-    <div data-dc-tpl="54" class="wrap">
-      <h2 data-dc-tpl="55" id="marcas-titulo" class="rotulo" style="text-align: center; margin-bottom: 28px;">Operações que já trabalharam com a Vegas</h2>
-      <ul data-dc-tpl="56" style="list-style: none; margin: 0px; padding: 0px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); align-items: center;">
-        <li data-dc-tpl="57"><img data-dc-tpl="58" src="/img/case-donsini-restaurante-pizzaria.webp" alt="DonSini Restaurante Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
-        <li data-dc-tpl="59"><img data-dc-tpl="60" src="/img/case-la-foods-delivery.webp" alt="La Food's Delivery" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
-        <li data-dc-tpl="61"><img data-dc-tpl="62" src="/img/case-restaurante-da-comadre.webp" alt="Restaurante da Comadre" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
-        <li data-dc-tpl="63"><img data-dc-tpl="64" src="/img/case-sabor-de-casa-pizzaria.webp" alt="Sabor de Casa Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
-        <li data-dc-tpl="65"><img data-dc-tpl="66" src="/img/case-mystic-burger.webp" alt="Mystic Burger" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
-        <li data-dc-tpl="67"><img data-dc-tpl="68" src="/img/case-taz-pizzaria.webp" alt="TAZ Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
+  <section data-dc-tpl="63" class="claro sec" aria-labelledby="marcas-titulo" style="padding-top: clamp(48px, 6vw, 72px); padding-bottom: clamp(48px, 6vw, 72px);">
+    <div data-dc-tpl="64" class="wrap">
+      <h2 data-dc-tpl="65" id="marcas-titulo" class="rotulo" style="text-align: center; margin-bottom: 28px;">Operações que já trabalharam com a Vegas</h2>
+      <ul data-dc-tpl="66" style="list-style: none; margin: 0px; padding: 0px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); align-items: center;">
+        <li data-dc-tpl="67"><img data-dc-tpl="68" src="/img/case-donsini-restaurante-pizzaria.webp" alt="DonSini Restaurante Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
+        <li data-dc-tpl="69"><img data-dc-tpl="70" src="/img/case-la-foods-delivery.webp" alt="La Food's Delivery" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
+        <li data-dc-tpl="71"><img data-dc-tpl="72" src="/img/case-restaurante-da-comadre.webp" alt="Restaurante da Comadre" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
+        <li data-dc-tpl="73"><img data-dc-tpl="74" src="/img/case-sabor-de-casa-pizzaria.webp" alt="Sabor de Casa Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
+        <li data-dc-tpl="75"><img data-dc-tpl="76" src="/img/case-mystic-burger.webp" alt="Mystic Burger" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
+        <li data-dc-tpl="77"><img data-dc-tpl="78" src="/img/case-taz-pizzaria.webp" alt="TAZ Pizzaria" width="756" height="426" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px;"></li>
       </ul>
     </div>
   </section>
 
   
-  <section data-dc-tpl="69" class="escuro sec" aria-labelledby="oportunidades-titulo">
-    <div data-dc-tpl="70" class="wrap">
-      <div data-dc-tpl="71" style="max-width: 900px;">
-      <p data-dc-tpl="72" class="rotulo">Identificação</p>
-      <h2 data-dc-tpl="73" id="oportunidades-titulo">Onde sua operação pode estar <span data-dc-tpl="74" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">perdendo oportunidades</span>?</h2>
-      <p data-dc-tpl="75" class="apoio">Nem toda operação tem o mesmo gargalo. Estes são três pontos que costumam aparecer — vale olhar quais fazem sentido no seu caso.</p>
-      <ul data-dc-tpl="76" class="lista-editorial" data-reveal="" style="margin: 28px 0px 0px; padding: 0px;">
-        <li data-dc-tpl="77">
-          <span data-dc-tpl="78" class="num">01</span>
-          <div data-dc-tpl="79">
-            <h3 data-dc-tpl="80">Anúncios sem clareza do retorno</h3>
-            <p data-dc-tpl="81" style="margin: 0px;">Dificuldade para entender quais campanhas realmente contribuem para os pedidos.</p>
-          </div>
-        </li>
-        <li data-dc-tpl="82">
-          <span data-dc-tpl="83" class="num">02</span>
-          <div data-dc-tpl="84">
-            <h3 data-dc-tpl="85">Interesse que não vira compra</h3>
-            <p data-dc-tpl="86" style="margin: 0px;">Obstáculos entre o anúncio, a oferta e o atendimento que travam o pedido no meio do caminho.</p>
-          </div>
-        </li>
+  <section data-dc-tpl="79" class="escuro sec" aria-labelledby="oportunidades-titulo">
+    <div data-dc-tpl="80" class="wrap">
+      <div data-dc-tpl="81" style="max-width: 900px;">
+      <p data-dc-tpl="82" class="rotulo">Identificação</p>
+      <h2 data-dc-tpl="83" id="oportunidades-titulo">Onde sua operação pode estar <span data-dc-tpl="84" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">perdendo oportunidades</span>?</h2>
+      <p data-dc-tpl="85" class="apoio">Nem toda operação tem o mesmo gargalo. Estes são três pontos que costumam aparecer — vale olhar quais fazem sentido no seu caso.</p>
+      <ul data-dc-tpl="86" class="lista-editorial" data-reveal="" style="margin: 28px 0px 0px; padding: 0px;">
         <li data-dc-tpl="87">
-          <span data-dc-tpl="88" class="num">03</span>
+          <span data-dc-tpl="88" class="num">01</span>
           <div data-dc-tpl="89">
-            <h3 data-dc-tpl="90">Clientes que não voltam</h3>
-            <p data-dc-tpl="91" style="margin: 0px;">Falta de ações organizadas para estimular novas compras de quem já comprou uma vez.</p>
+            <h3 data-dc-tpl="90">Anúncios sem clareza do retorno</h3>
+            <p data-dc-tpl="91" style="margin: 0px;">Dificuldade para entender quais campanhas realmente contribuem para os pedidos.</p>
+          </div>
+        </li>
+        <li data-dc-tpl="92">
+          <span data-dc-tpl="93" class="num">02</span>
+          <div data-dc-tpl="94">
+            <h3 data-dc-tpl="95">Interesse que não vira compra</h3>
+            <p data-dc-tpl="96" style="margin: 0px;">Obstáculos entre o anúncio, a oferta e o atendimento que travam o pedido no meio do caminho.</p>
+          </div>
+        </li>
+        <li data-dc-tpl="97">
+          <span data-dc-tpl="98" class="num">03</span>
+          <div data-dc-tpl="99">
+            <h3 data-dc-tpl="100">Clientes que não voltam</h3>
+            <p data-dc-tpl="101" style="margin: 0px;">Falta de ações organizadas para estimular novas compras de quem já comprou uma vez.</p>
           </div>
         </li>
       </ul>
@@ -298,211 +357,211 @@
   </section>
 
   
-  <section data-dc-tpl="92" id="solucoes" class="claro sec" aria-labelledby="solucoes-titulo">
-    <div data-dc-tpl="93" class="wrap">
-      <div data-dc-tpl="94" style="max-width: 820px; margin-bottom: 38px;">
-        <p data-dc-tpl="95" class="rotulo">Soluções</p>
-        <h2 data-dc-tpl="96" id="solucoes-titulo">Marketing conectado do primeiro contato à <span data-dc-tpl="97" class="grad" style="color: rgb(180, 72, 43); -webkit-text-fill-color: transparent;">próxima compra</span>.</h2>
-        <p data-dc-tpl="98" class="apoio">As três frentes funcionam juntas: atrair quem ainda não conhece, facilitar o caminho até o pedido e manter o relacionamento com quem já comprou.</p>
+  <section data-dc-tpl="102" id="solucoes" class="claro sec" aria-labelledby="solucoes-titulo">
+    <div data-dc-tpl="103" class="wrap">
+      <div data-dc-tpl="104" style="max-width: 820px; margin-bottom: 38px;">
+        <p data-dc-tpl="105" class="rotulo">Soluções</p>
+        <h2 data-dc-tpl="106" id="solucoes-titulo">Marketing conectado do primeiro contato à <span data-dc-tpl="107" class="grad" style="color: rgb(180, 72, 43); -webkit-text-fill-color: transparent;">próxima compra</span>.</h2>
+        <p data-dc-tpl="108" class="apoio">As três frentes funcionam juntas: atrair quem ainda não conhece, facilitar o caminho até o pedido e manter o relacionamento com quem já comprou.</p>
       </div>
-      <div data-dc-tpl="99" class="cards" data-reveal="">
-        <article data-dc-tpl="100" class="card">
-          <h3 data-dc-tpl="101">Tráfego pago para restaurantes e delivery</h3>
-          <p data-dc-tpl="102" style="font-size: 16px;">Campanhas no Meta Ads e no Google Ads alinhadas à área de atendimento, às ofertas e à realidade da operação.</p>
-          <ul data-dc-tpl="103">
-            <li data-dc-tpl="104">Planejamento de campanhas</li>
-            <li data-dc-tpl="105">Criativos e comunicação da oferta</li>
-            <li data-dc-tpl="106">Acompanhamento dos indicadores pertinentes</li>
+      <div data-dc-tpl="109" class="cards" data-reveal="">
+        <article data-dc-tpl="110" class="card">
+          <h3 data-dc-tpl="111">Tráfego pago para restaurantes e delivery</h3>
+          <p data-dc-tpl="112" style="font-size: 16px;">Campanhas no Meta Ads e no Google Ads alinhadas à área de atendimento, às ofertas e à realidade da operação.</p>
+          <ul data-dc-tpl="113">
+            <li data-dc-tpl="114">Planejamento de campanhas</li>
+            <li data-dc-tpl="115">Criativos e comunicação da oferta</li>
+            <li data-dc-tpl="116">Acompanhamento dos indicadores pertinentes</li>
           </ul>
         </article>
-        <article data-dc-tpl="107" class="card">
-          <h3 data-dc-tpl="108">Conversão no WhatsApp e nos canais próprios</h3>
-          <p data-dc-tpl="109" style="font-size: 16px;">Ajustes na oferta, na comunicação e no caminho de compra para reduzir obstáculos entre o interesse e o pedido.</p>
-          <ul data-dc-tpl="110">
-            <li data-dc-tpl="111">Análise do percurso até o pedido</li>
-            <li data-dc-tpl="112">Comunicação da oferta</li>
-            <li data-dc-tpl="113">Melhorias no funil conforme o escopo contratado</li>
+        <article data-dc-tpl="117" class="card">
+          <h3 data-dc-tpl="118">Conversão no WhatsApp e nos canais próprios</h3>
+          <p data-dc-tpl="119" style="font-size: 16px;">Ajustes na oferta, na comunicação e no caminho de compra para reduzir obstáculos entre o interesse e o pedido.</p>
+          <ul data-dc-tpl="120">
+            <li data-dc-tpl="121">Análise do percurso até o pedido</li>
+            <li data-dc-tpl="122">Comunicação da oferta</li>
+            <li data-dc-tpl="123">Melhorias no funil conforme o escopo contratado</li>
           </ul>
         </article>
-        <article data-dc-tpl="114" class="card">
-          <h3 data-dc-tpl="115">Recompra e relacionamento</h3>
-          <p data-dc-tpl="116" style="font-size: 16px;">Estratégias de remarketing e automação para manter o relacionamento com a base e incentivar novas compras.</p>
-          <ul data-dc-tpl="117">
-            <li data-dc-tpl="118">Planejamento de recorrência</li>
-            <li data-dc-tpl="119">Organização das ações</li>
-            <li data-dc-tpl="120">Acompanhamento dos resultados disponíveis</li>
+        <article data-dc-tpl="124" class="card">
+          <h3 data-dc-tpl="125">Recompra e relacionamento</h3>
+          <p data-dc-tpl="126" style="font-size: 16px;">Estratégias de remarketing e automação para manter o relacionamento com a base e incentivar novas compras.</p>
+          <ul data-dc-tpl="127">
+            <li data-dc-tpl="128">Planejamento de recorrência</li>
+            <li data-dc-tpl="129">Organização das ações</li>
+            <li data-dc-tpl="130">Acompanhamento dos resultados disponíveis</li>
           </ul>
         </article>
       </div>
-      <div data-dc-tpl="121" style="margin-top: 36px;">
-        <a data-dc-tpl="122" href="#analise" class="btn btn-1">Solicitar análise gratuita</a>
+      <div data-dc-tpl="131" style="margin-top: 36px;">
+        <a data-dc-tpl="132" href="#analise" class="btn btn-1" data-track-id="cta-analise-solucoes" data-track-pos="Soluções">Solicitar análise gratuita</a>
       </div>
     </div>
   </section>
 
   
-  <section data-dc-tpl="123" id="para-quem" class="superficie sec" aria-labelledby="paraquem-titulo">
-    <div data-dc-tpl="124" class="wrap">
-      <div data-dc-tpl="125" style="max-width: 760px; margin-bottom: 34px;">
-        <p data-dc-tpl="126" class="rotulo">Para quem</p>
-        <h2 data-dc-tpl="127" id="paraquem-titulo">Cada operação exige uma <span data-dc-tpl="128" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">estratégia própria</span>.</h2>
-        <p data-dc-tpl="129" class="apoio">Os exemplos abaixo mostram o que costuma mudar de um tipo de operação para outro. Não são resultados comprovados em todos os grupos.</p>
+  <section data-dc-tpl="133" id="para-quem" class="superficie sec" aria-labelledby="paraquem-titulo">
+    <div data-dc-tpl="134" class="wrap">
+      <div data-dc-tpl="135" style="max-width: 760px; margin-bottom: 34px;">
+        <p data-dc-tpl="136" class="rotulo">Para quem</p>
+        <h2 data-dc-tpl="137" id="paraquem-titulo">Cada operação exige uma <span data-dc-tpl="138" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">estratégia própria</span>.</h2>
+        <p data-dc-tpl="139" class="apoio">Os exemplos abaixo mostram o que costuma mudar de um tipo de operação para outro. Não são resultados comprovados em todos os grupos.</p>
       </div>
-      <ul data-dc-tpl="130" class="lista-editorial rotulos" data-reveal="" style="margin: 0px; padding: 0px;">
-        <li data-dc-tpl="131"><span data-dc-tpl="132" class="num">Restaurantes</span><div data-dc-tpl="133"><p data-dc-tpl="134" style="margin: 0px;">Salão e delivery disputam a mesma cozinha. Horários de movimento e canais de venda pesam na decisão do que anunciar e quando.</p></div></li>
-        <li data-dc-tpl="135"><span data-dc-tpl="136" class="num">Pizzarias</span><div data-dc-tpl="137"><p data-dc-tpl="138" style="margin: 0px;">Dias fracos na semana e oferta certa no momento certo mudam o volume. A recompra costuma ser o ponto com mais espaço.</p></div></li>
-        <li data-dc-tpl="139"><span data-dc-tpl="140" class="num">Hamburguerias</span><div data-dc-tpl="141"><p data-dc-tpl="142" style="margin: 0px;">A comunicação do produto e a montagem de combos influenciam o ticket. Canais próprios reduzem dependência de marketplace.</p></div></li>
-        <li data-dc-tpl="143"><span data-dc-tpl="144" class="num">Delivery</span><div data-dc-tpl="145"><p data-dc-tpl="146" style="margin: 0px;">Área de entrega e percurso até o pedido definem o alcance útil do anúncio. Anunciar longe demais gasta verba sem gerar pedido.</p></div></li>
+      <ul data-dc-tpl="140" class="lista-editorial rotulos" data-reveal="" style="margin: 0px; padding: 0px;">
+        <li data-dc-tpl="141"><span data-dc-tpl="142" class="num">Restaurantes</span><div data-dc-tpl="143"><p data-dc-tpl="144" style="margin: 0px;">Salão e delivery disputam a mesma cozinha. Horários de movimento e canais de venda pesam na decisão do que anunciar e quando.</p></div></li>
+        <li data-dc-tpl="145"><span data-dc-tpl="146" class="num">Pizzarias</span><div data-dc-tpl="147"><p data-dc-tpl="148" style="margin: 0px;">Dias fracos na semana e oferta certa no momento certo mudam o volume. A recompra costuma ser o ponto com mais espaço.</p></div></li>
+        <li data-dc-tpl="149"><span data-dc-tpl="150" class="num">Hamburguerias</span><div data-dc-tpl="151"><p data-dc-tpl="152" style="margin: 0px;">A comunicação do produto e a montagem de combos influenciam o ticket. Canais próprios reduzem dependência de marketplace.</p></div></li>
+        <li data-dc-tpl="153"><span data-dc-tpl="154" class="num">Delivery</span><div data-dc-tpl="155"><p data-dc-tpl="156" style="margin: 0px;">Área de entrega e percurso até o pedido definem o alcance útil do anúncio. Anunciar longe demais gasta verba sem gerar pedido.</p></div></li>
       </ul>
     </div>
   </section>
 
   
-  <section data-dc-tpl="147" id="metodo" class="claro sec" aria-labelledby="metodo-titulo">
-    <div data-dc-tpl="148" class="wrap">
-      <div data-dc-tpl="149" style="max-width: 820px; margin-bottom: 38px;">
-        <p data-dc-tpl="150" class="rotulo">Método</p>
-        <h2 data-dc-tpl="151" id="metodo-titulo">Aquisição, conversão e recorrência <span data-dc-tpl="152" class="grad" style="color: rgb(180, 72, 43); -webkit-text-fill-color: transparent;">trabalhando juntas</span>.</h2>
+  <section data-dc-tpl="157" id="metodo" class="claro sec" aria-labelledby="metodo-titulo">
+    <div data-dc-tpl="158" class="wrap">
+      <div data-dc-tpl="159" style="max-width: 820px; margin-bottom: 38px;">
+        <p data-dc-tpl="160" class="rotulo">Método</p>
+        <h2 data-dc-tpl="161" id="metodo-titulo">Aquisição, conversão e recorrência <span data-dc-tpl="162" class="grad" style="color: rgb(180, 72, 43); -webkit-text-fill-color: transparent;">trabalhando juntas</span>.</h2>
       </div>
-      <div data-dc-tpl="153" class="cards" data-reveal="">
-        <article data-dc-tpl="154" class="card">
-          <p data-dc-tpl="155" class="num" style="font-size: 34px; margin: 0px 0px 10px;">01</p>
-          <h3 data-dc-tpl="156">Aquisição</h3>
-          <p data-dc-tpl="157" style="font-size: 16px; margin: 0px;">Alcançar potenciais clientes com campanhas e comunicação contextualizadas à operação e à região.</p>
+      <div data-dc-tpl="163" class="cards" data-reveal="">
+        <article data-dc-tpl="164" class="card">
+          <p data-dc-tpl="165" class="num" style="font-size: 34px; margin: 0px 0px 10px;">01</p>
+          <h3 data-dc-tpl="166">Aquisição</h3>
+          <p data-dc-tpl="167" style="font-size: 16px; margin: 0px;">Alcançar potenciais clientes com campanhas e comunicação contextualizadas à operação e à região.</p>
         </article>
-        <article data-dc-tpl="158" class="card">
-          <p data-dc-tpl="159" class="num" style="font-size: 34px; margin: 0px 0px 10px;">02</p>
-          <h3 data-dc-tpl="160">Conversão</h3>
-          <p data-dc-tpl="161" style="font-size: 16px; margin: 0px;">Alinhar oferta e caminho de compra para facilitar o pedido, do anúncio ao atendimento.</p>
+        <article data-dc-tpl="168" class="card">
+          <p data-dc-tpl="169" class="num" style="font-size: 34px; margin: 0px 0px 10px;">02</p>
+          <h3 data-dc-tpl="170">Conversão</h3>
+          <p data-dc-tpl="171" style="font-size: 16px; margin: 0px;">Alinhar oferta e caminho de compra para facilitar o pedido, do anúncio ao atendimento.</p>
         </article>
-        <article data-dc-tpl="162" class="card">
-          <p data-dc-tpl="163" class="num" style="font-size: 34px; margin: 0px 0px 10px;">03</p>
-          <h3 data-dc-tpl="164">Recorrência</h3>
-          <p data-dc-tpl="165" style="font-size: 16px; margin: 0px;">Criar ações para estimular o retorno de quem já comprou e manter a base ativa.</p>
+        <article data-dc-tpl="172" class="card">
+          <p data-dc-tpl="173" class="num" style="font-size: 34px; margin: 0px 0px 10px;">03</p>
+          <h3 data-dc-tpl="174">Recorrência</h3>
+          <p data-dc-tpl="175" style="font-size: 16px; margin: 0px;">Criar ações para estimular o retorno de quem já comprou e manter a base ativa.</p>
         </article>
       </div>
-      <div data-dc-tpl="166" style="margin-top: 38px; max-width: 760px; border-top: 1px solid rgba(20, 18, 16, 0.12); padding-top: 28px;">
-        <h3 data-dc-tpl="167">Como o trabalho começa</h3>
-        <p data-dc-tpl="168" style="margin: 0px;">Primeiro entendemos a operação: o que vende, para quem, em que canais e com que capacidade. A partir daí definimos as prioridades e acompanhamos a execução. As três frentes acima são estratégicas — não são etapas de contratação.</p>
+      <div data-dc-tpl="176" style="margin-top: 38px; max-width: 760px; border-top: 1px solid rgba(20, 18, 16, 0.12); padding-top: 28px;">
+        <h3 data-dc-tpl="177">Como o trabalho começa</h3>
+        <p data-dc-tpl="178" style="margin: 0px;">Primeiro entendemos a operação: o que vende, para quem, em que canais e com que capacidade. A partir daí definimos as prioridades e acompanhamos a execução. As três frentes acima são estratégicas — não são etapas de contratação.</p>
       </div>
     </div>
   </section>
 
   
-  <section data-dc-tpl="169" id="sobre" class="escuro sec" aria-labelledby="sobre-titulo">
-    <div data-dc-tpl="170" class="wrap hero-grid" style="display: grid; grid-template-columns: 6fr 6fr; gap: clamp(28px, 4vw, 56px); align-items: center;">
-      <div data-dc-tpl="171">
-        <p data-dc-tpl="172" class="rotulo">Sobre a Vegas</p>
-        <h2 data-dc-tpl="173" id="sobre-titulo">Conheça a equipe por trás da <span data-dc-tpl="174" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">estratégia</span>.</h2>
-        <p data-dc-tpl="175">A Vegas Aceleradora é uma assessoria de marketing especializada em restaurantes e delivery. Seu trabalho conecta aquisição de clientes, conversão e recorrência, considerando a realidade de cada operação e seus canais de venda.</p>
-        <p data-dc-tpl="176" style="margin-bottom: 0px;">Atendemos operações de alimentação com foco no que muda o caixa: mais pedidos, melhor conversão e clientes que voltam.</p>
+  <section data-dc-tpl="179" id="sobre" class="escuro sec" aria-labelledby="sobre-titulo">
+    <div data-dc-tpl="180" class="wrap hero-grid" style="display: grid; grid-template-columns: 6fr 6fr; gap: clamp(28px, 4vw, 56px); align-items: center;">
+      <div data-dc-tpl="181">
+        <p data-dc-tpl="182" class="rotulo">Sobre a Vegas</p>
+        <h2 data-dc-tpl="183" id="sobre-titulo">Conheça a equipe por trás da <span data-dc-tpl="184" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">estratégia</span>.</h2>
+        <p data-dc-tpl="185">A Vegas Aceleradora é uma assessoria de marketing especializada em restaurantes e delivery. Seu trabalho conecta aquisição de clientes, conversão e recorrência, considerando a realidade de cada operação e seus canais de venda.</p>
+        <p data-dc-tpl="186" style="margin-bottom: 0px;">Atendemos operações de alimentação com foco no que muda o caixa: mais pedidos, melhor conversão e clientes que voltam.</p>
       </div>
-      <div data-dc-tpl="177">
-        <img data-dc-tpl="178" src="/img/equipe-vegas-aceleradora-escritorio-opt.webp" alt="Equipe da Vegas Aceleradora no escritório" width="900" height="862" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; border-radius: 20px;">
-      </div>
-    </div>
-  </section>
-
-  
-  <section data-dc-tpl="179" id="duvidas" class="claro sec" aria-labelledby="duvidas-titulo">
-    <div data-dc-tpl="180" class="wrap">
-      <div data-dc-tpl="181" style="max-width: 900px;">
-      <p data-dc-tpl="182" class="rotulo">Dúvidas</p>
-      <h2 data-dc-tpl="183" id="duvidas-titulo">Perguntas frequentes</h2>
-      <div data-dc-tpl="184" class="faq" style="margin-top: 26px;">
-        <details data-dc-tpl="185">
-          <summary data-dc-tpl="186">Que tipos de negócios a Vegas atende?</summary>
-          <p data-dc-tpl="187">Operações de alimentação: restaurantes, pizzarias, hamburguerias e operações de delivery.</p>
-        </details>
-        <details data-dc-tpl="188">
-          <summary data-dc-tpl="189">O trabalho contempla salão e delivery?</summary>
-          <p data-dc-tpl="190">Sim. O peso de cada canal muda conforme a operação — algumas dependem mais do salão, outras vivem do delivery, e o plano considera essa diferença.</p>
-        </details>
-        <details data-dc-tpl="191">
-          <summary data-dc-tpl="192">Quais canais de anúncios podem ser utilizados?</summary>
-          <p data-dc-tpl="193">Meta Ads e Google Ads. A escolha depende do objetivo, da região de atendimento e do momento da operação.</p>
-        </details>
-        <details data-dc-tpl="194">
-          <summary data-dc-tpl="195">Como funciona a análise gratuita?</summary>
-          <p data-dc-tpl="196">É uma conversa inicial para entender sua operação e apontar onde há espaço para melhorar. Você pode solicitar pelo formulário desta página ou falar com a gente no WhatsApp.</p>
-        </details>
-        <details data-dc-tpl="197">
-          <summary data-dc-tpl="198">Como os resultados são acompanhados?</summary>
-          <p data-dc-tpl="199">Acompanhamos os indicadores das campanhas e do caminho até o pedido, e você recebe o retorno do que está sendo executado.</p>
-        </details>
-      </div>
+      <div data-dc-tpl="187">
+        <img data-dc-tpl="188" src="/img/equipe-vegas-aceleradora-escritorio-opt.webp" alt="Equipe da Vegas Aceleradora no escritório" width="900" height="862" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; border-radius: 20px;">
       </div>
     </div>
   </section>
 
   
-  <section data-dc-tpl="200" id="analise" class="escuro sec" aria-labelledby="analise-titulo" style="background: rgb(0, 0, 0);">
-    <div data-dc-tpl="201" class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 4vw, 56px); align-items: start;">
-      <div data-dc-tpl="202">
-        <p data-dc-tpl="203" class="rotulo">Análise gratuita</p>
-        <h2 data-dc-tpl="204" id="analise-titulo">Vamos entender o que pode melhorar no <span data-dc-tpl="205" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">marketing da sua operação</span>?</h2>
-        <p data-dc-tpl="206" class="apoio">Conte um pouco sobre o seu negócio e solicite uma análise gratuita com a Vegas.</p>
-        <p data-dc-tpl="207" style="margin-top: 26px; font-size: 16px;">Prefere conversar?
-          <a data-dc-tpl="208" href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" style="color: rgb(244, 158, 29); text-decoration: underline; text-underline-offset: 3px;">Fale com a Vegas no WhatsApp</a>.
+  <section data-dc-tpl="189" id="duvidas" class="claro sec" aria-labelledby="duvidas-titulo">
+    <div data-dc-tpl="190" class="wrap">
+      <div data-dc-tpl="191" style="max-width: 900px;">
+      <p data-dc-tpl="192" class="rotulo">Dúvidas</p>
+      <h2 data-dc-tpl="193" id="duvidas-titulo">Perguntas frequentes</h2>
+      <div data-dc-tpl="194" class="faq" style="margin-top: 26px;">
+        <details data-dc-tpl="195">
+          <summary data-dc-tpl="196">Que tipos de negócios a Vegas atende?</summary>
+          <p data-dc-tpl="197">Operações de alimentação: restaurantes, pizzarias, hamburguerias e operações de delivery.</p>
+        </details>
+        <details data-dc-tpl="198">
+          <summary data-dc-tpl="199">O trabalho contempla salão e delivery?</summary>
+          <p data-dc-tpl="200">Sim. O peso de cada canal muda conforme a operação — algumas dependem mais do salão, outras vivem do delivery, e o plano considera essa diferença.</p>
+        </details>
+        <details data-dc-tpl="201">
+          <summary data-dc-tpl="202">Quais canais de anúncios podem ser utilizados?</summary>
+          <p data-dc-tpl="203">Meta Ads e Google Ads. A escolha depende do objetivo, da região de atendimento e do momento da operação.</p>
+        </details>
+        <details data-dc-tpl="204">
+          <summary data-dc-tpl="205">Como funciona a análise gratuita?</summary>
+          <p data-dc-tpl="206">É uma conversa inicial para entender sua operação e apontar onde há espaço para melhorar. Você pode solicitar pelo formulário desta página ou falar com a gente no WhatsApp.</p>
+        </details>
+        <details data-dc-tpl="207">
+          <summary data-dc-tpl="208">Como os resultados são acompanhados?</summary>
+          <p data-dc-tpl="209">Acompanhamos os indicadores das campanhas e do caminho até o pedido, e você recebe o retorno do que está sendo executado.</p>
+        </details>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section data-dc-tpl="210" id="analise" class="escuro sec" aria-labelledby="analise-titulo" style="background: rgb(0, 0, 0);">
+    <div data-dc-tpl="211" class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 4vw, 56px); align-items: start;">
+      <div data-dc-tpl="212">
+        <p data-dc-tpl="213" class="rotulo">Análise gratuita</p>
+        <h2 data-dc-tpl="214" id="analise-titulo">Vamos entender o que pode melhorar no <span data-dc-tpl="215" class="grad" style="color: rgb(244, 158, 29); -webkit-text-fill-color: transparent;">marketing da sua operação</span>?</h2>
+        <p data-dc-tpl="216" class="apoio">Conte um pouco sobre o seu negócio e solicite uma análise gratuita com a Vegas.</p>
+        <p data-dc-tpl="217" style="margin-top: 26px; font-size: 16px;">Prefere conversar?
+          <a data-dc-tpl="218" href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" data-track-id="cta-whatsapp-analise" data-track-pos="Análise gratuita" style="color: rgb(244, 158, 29); text-decoration: underline; text-underline-offset: 3px;">Fale com a Vegas no WhatsApp</a>.
         </p>
       </div>
 
-      <div data-dc-tpl="209" style="background: rgb(243, 237, 227); color: rgb(20, 18, 16); border-radius: 20px; padding: clamp(24px, 3vw, 34px);">
-        <form data-dc-tpl="210" data-form-analise="" novalidate="">
-          <label data-dc-tpl="211" class="campo"><span data-dc-tpl="212">Nome</span>
-            <input data-dc-tpl="213" type="text" name="nome" autocomplete="name" placeholder="Seu nome">
+      <div data-dc-tpl="219" style="background: rgb(243, 237, 227); color: rgb(20, 18, 16); border-radius: 20px; padding: clamp(24px, 3vw, 34px);">
+        <form data-dc-tpl="220" data-form-analise="" novalidate="">
+          <label data-dc-tpl="221" class="campo"><span data-dc-tpl="222">Nome</span>
+            <input data-dc-tpl="223" type="text" name="nome" autocomplete="name" placeholder="Seu nome">
           </label>
-          <label data-dc-tpl="214" class="campo"><span data-dc-tpl="215">WhatsApp</span>
-            <input data-dc-tpl="216" type="tel" name="whatsapp" autocomplete="tel" placeholder="(DDD) 9 9999-9999">
+          <label data-dc-tpl="224" class="campo"><span data-dc-tpl="225">WhatsApp</span>
+            <input data-dc-tpl="226" type="tel" name="whatsapp" autocomplete="tel" placeholder="(DDD) 9 9999-9999">
           </label>
-          <label data-dc-tpl="217" class="campo"><span data-dc-tpl="218">E-mail</span>
-            <input data-dc-tpl="219" type="email" name="email" autocomplete="email" placeholder="seu@email.com.br">
+          <label data-dc-tpl="227" class="campo"><span data-dc-tpl="228">E-mail</span>
+            <input data-dc-tpl="229" type="email" name="email" autocomplete="email" placeholder="seu@email.com.br">
           </label>
-          <label data-dc-tpl="220" class="campo"><span data-dc-tpl="221">Nome do estabelecimento</span>
-            <input data-dc-tpl="222" type="text" name="estabelecimento" placeholder="Como o seu negócio se chama">
+          <label data-dc-tpl="230" class="campo"><span data-dc-tpl="231">Nome do estabelecimento</span>
+            <input data-dc-tpl="232" type="text" name="estabelecimento" placeholder="Como o seu negócio se chama">
           </label>
-          <label data-dc-tpl="223" class="campo"><span data-dc-tpl="224">Principal desafio <em data-dc-tpl="225" style="font-style: normal; font-weight: 400; color: rgb(92, 87, 78);">(opcional)</em></span>
-            <textarea data-dc-tpl="226" name="desafio" placeholder="O que mais te incomoda hoje no marketing da operação?"></textarea>
+          <label data-dc-tpl="233" class="campo"><span data-dc-tpl="234">Principal desafio <em data-dc-tpl="235" style="font-style: normal; font-weight: 400; color: rgb(92, 87, 78);">(opcional)</em></span>
+            <textarea data-dc-tpl="236" name="desafio" placeholder="O que mais te incomoda hoje no marketing da operação?"></textarea>
           </label>
-          <p data-dc-tpl="227" data-form-erro="" role="alert" style="margin: 0px 0px 12px; font-size: 14px; color: rgb(163, 35, 26); min-height: 0px;"></p>
-          <p data-dc-tpl="228" data-form-ok="" role="status" style="margin: 0px 0px 12px; font-size: 14px; color: rgb(31, 107, 58); display: none;"></p>
-          <button data-dc-tpl="229" type="submit" class="btn btn-1" style="width: 100%;">Solicitar minha análise gratuita</button>
-          <p data-dc-tpl="230" style="font-size: 13px; color: rgb(92, 87, 78); margin: 14px 0px 0px; text-align: center;">Seus dados são usados apenas para o contato comercial.</p>
+          <p data-dc-tpl="237" data-form-erro="" role="alert" style="margin: 0px 0px 12px; font-size: 14px; color: rgb(163, 35, 26); min-height: 0px;"></p>
+          <p data-dc-tpl="238" data-form-ok="" role="status" style="margin: 0px 0px 12px; font-size: 14px; color: rgb(31, 107, 58); display: none;"></p>
+          <button data-dc-tpl="239" type="submit" class="btn btn-1" data-track-id="form-analise-enviar" data-track-pos="Análise gratuita" style="width: 100%;">Solicitar minha análise gratuita</button>
+          <p data-dc-tpl="240" style="font-size: 13px; color: rgb(92, 87, 78); margin: 14px 0px 0px; text-align: center;">Seus dados são usados apenas para o contato comercial.</p>
         </form>
       </div>
     </div>
   </section>
 
   
-  <footer data-dc-tpl="231" class="superficie" style="padding: 64px clamp(20px, 5vw, 72px) 36px;">
-    <div data-dc-tpl="232" class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 36px 48px;">
-      <div data-dc-tpl="233">
-        <img data-dc-tpl="234" src="/img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" width="371" height="148" loading="lazy" decoding="async" style="height: 40px; width: auto; display: block; margin-bottom: 16px;">
-        <p data-dc-tpl="235" style="font-size: 15px; max-width: 38ch; margin: 0px;">Assessoria de marketing especializada em restaurantes e delivery.</p>
+  <footer data-dc-tpl="241" class="superficie" style="padding: 64px clamp(20px, 5vw, 72px) 36px;">
+    <div data-dc-tpl="242" class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 36px 48px;">
+      <div data-dc-tpl="243">
+        <img data-dc-tpl="244" src="/img/logo-vegas-aceleradora.webp" alt="Vegas Aceleradora" width="371" height="148" loading="lazy" decoding="async" style="height: 40px; width: auto; display: block; margin-bottom: 16px;">
+        <p data-dc-tpl="245" style="font-size: 15px; max-width: 38ch; margin: 0px;">Assessoria de marketing especializada em restaurantes e delivery.</p>
       </div>
-      <div data-dc-tpl="236">
-        <h3 data-dc-tpl="237" style="font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(244, 158, 29);">Navegação</h3>
-        <nav data-dc-tpl="238" aria-label="Rodapé" style="display: flex; flex-direction: column; gap: 10px; font-size: 15px;">
-          <a data-dc-tpl="239" href="#solucoes" style="color: rgb(201, 195, 182);">Soluções</a>
-          <a data-dc-tpl="240" href="#para-quem" style="color: rgb(201, 195, 182);">Para quem</a>
-          <a data-dc-tpl="241" href="#metodo" style="color: rgb(201, 195, 182);">Método</a>
-          <a data-dc-tpl="242" href="#sobre" style="color: rgb(201, 195, 182);">Sobre a Vegas</a>
-          <a data-dc-tpl="243" href="#duvidas" style="color: rgb(201, 195, 182);">Dúvidas</a>
+      <div data-dc-tpl="246">
+        <h3 data-dc-tpl="247" style="font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(244, 158, 29);">Navegação</h3>
+        <nav data-dc-tpl="248" aria-label="Rodapé" style="display: flex; flex-direction: column; gap: 10px; font-size: 15px;">
+          <a data-dc-tpl="249" href="#solucoes" style="color: rgb(201, 195, 182);">Soluções</a>
+          <a data-dc-tpl="250" href="#para-quem" style="color: rgb(201, 195, 182);">Para quem</a>
+          <a data-dc-tpl="251" href="#metodo" style="color: rgb(201, 195, 182);">Método</a>
+          <a data-dc-tpl="252" href="#sobre" style="color: rgb(201, 195, 182);">Sobre a Vegas</a>
+          <a data-dc-tpl="253" href="#duvidas" style="color: rgb(201, 195, 182);">Dúvidas</a>
         </nav>
       </div>
-      <div data-dc-tpl="244">
-        <h3 data-dc-tpl="245" style="font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(244, 158, 29);">Contato</h3>
-        <p data-dc-tpl="246" style="font-size: 15px; margin: 0px 0px 8px;"><a data-dc-tpl="247" href="mailto:contato@vegasaceleradora.com.br" style="color: rgb(201, 195, 182);">contato@vegasaceleradora.com.br</a></p>
-        <p data-dc-tpl="248" style="font-size: 15px; margin: 0px;"><a data-dc-tpl="249" href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" style="color: rgb(201, 195, 182);">+55 (27) 9 9224-6343</a></p>
+      <div data-dc-tpl="254">
+        <h3 data-dc-tpl="255" style="font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(244, 158, 29);">Contato</h3>
+        <p data-dc-tpl="256" style="font-size: 15px; margin: 0px 0px 8px;"><a data-dc-tpl="257" href="mailto:contato@vegasaceleradora.com.br" data-track-id="contato-email-rodape" data-track-pos="Rodapé" style="color: rgb(201, 195, 182);">contato@vegasaceleradora.com.br</a></p>
+        <p data-dc-tpl="258" style="font-size: 15px; margin: 0px;"><a data-dc-tpl="259" href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" data-track-id="cta-whatsapp-rodape" data-track-pos="Rodapé" style="color: rgb(201, 195, 182);">+55 (27) 9 9224-6343</a></p>
       </div>
     </div>
-    <div data-dc-tpl="250" class="wrap" style="border-top: 1px solid rgba(243, 237, 227, 0.08); margin-top: 36px; padding-top: 24px; font-size: 14px; color: rgb(126, 122, 110);">
-      <p data-dc-tpl="251" style="margin: 0px;">© Vegas Aceleradora — assessoria de marketing para restaurantes e delivery.</p>
+    <div data-dc-tpl="260" class="wrap" style="border-top: 1px solid rgba(243, 237, 227, 0.08); margin-top: 36px; padding-top: 24px; font-size: 14px; color: rgb(126, 122, 110);">
+      <p data-dc-tpl="261" style="margin: 0px;">© Vegas Aceleradora — assessoria de marketing para restaurantes e delivery.</p>
     </div>
   </footer>
 
-  <a data-dc-tpl="252" href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-float="" aria-label="Falar com a Vegas no WhatsApp" style="position: fixed; right: 20px; bottom: 20px; z-index: 60; width: 62px; height: 62px; border-radius: 50%; overflow: hidden; border: 2px solid rgb(37, 211, 102); box-shadow: rgba(0, 0, 0, 0.45) 0px 10px 30px;">
-    <img data-dc-tpl="253" src="/img/atendente-vegas-b.webp" alt="" width="136" height="136" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+  <a data-dc-tpl="262" href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-float="" data-track-id="cta-whatsapp-flutuante" data-track-pos="Flutuante" aria-label="Falar com a Vegas no WhatsApp" style="position: fixed; right: 20px; bottom: 20px; z-index: 60; width: 62px; height: 62px; border-radius: 50%; overflow: hidden; border: 2px solid rgb(37, 211, 102); box-shadow: rgba(0, 0, 0, 0.45) 0px 10px 30px;">
+    <img data-dc-tpl="263" src="/img/atendente-vegas-b.webp" alt="" width="136" height="136" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
   </a></main></div></div>
 
 

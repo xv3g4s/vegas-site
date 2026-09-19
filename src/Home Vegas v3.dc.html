@@ -21,6 +21,13 @@
 <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-800-latin.woff2" crossorigin>
 <script src="./support.js"></script>
+
+<!-- Coletor do Painel de Sites. Uma unica vez por pagina, no <head> real:
+     o <helmet> so e aplicado depois do runtime, e o runtime nao chega ao
+     visitante. Ele mesmo cuida de pushState/replaceState/popstate, entao nao
+     existe contagem manual de pagina em lugar nenhum — isso duplicaria as
+     visualizacoes. Respeita window.painelConsentimento = false. -->
+<script async src="https://app.johnyweb.com/t.js" data-site="sit_6c66a1f9deba"></script>
 </head>
 <body>
 <x-dc>
@@ -77,9 +84,50 @@
      Os botoes em pilula ficam de fora: tem fundo proprio. */
   p a:not(.btn), li a:not(.btn) { text-decoration: underline; text-underline-offset: 2px; }
 
+  /* ---- Menu sanduiche (ate 900px) ----
+     Usa <details>/<summary> nativo: abre e fecha sem JavaScript, ja vem
+     acessivel e sobrevive a pre-renderizacao. O JavaScript so acrescenta o
+     que o nativo nao faz — fechar ao clicar num link, no Esc e fora dele. */
+  .sanduiche { display: none; }
+  .sanduiche > summary {
+    list-style: none; cursor: pointer; width: 48px; height: 48px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(243,237,227,0.22); border-radius: 12px;
+  }
+  .sanduiche > summary::-webkit-details-marker { display: none; }
+  .sanduiche > summary:focus-visible { outline: 2px solid #F49E1D; outline-offset: 2px; }
+  .barras { position: relative; }
+  .barras, .barras::before, .barras::after {
+    display: block; width: 22px; height: 2px; background: #F3EDE3; border-radius: 2px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  .barras::before, .barras::after { content: ''; position: absolute; }
+  .barras::before { transform: translateY(-7px); }
+  .barras::after { transform: translateY(7px); }
+  .sanduiche[open] .barras { background: transparent; }
+  .sanduiche[open] .barras::before { transform: rotate(45deg); }
+  .sanduiche[open] .barras::after { transform: rotate(-45deg); }
+
+  /* O painel se posiciona pelo <header>, que ja e sticky (logo, posicionado). */
+  .sanduiche-painel {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: flex; flex-direction: column;
+    padding: 4px clamp(20px,5vw,72px) 16px;
+    background: #17130F; border-bottom: 2px solid rgba(244,158,29,0.35);
+    box-shadow: 0 26px 50px rgba(0,0,0,0.65);
+  }
+  .sanduiche-painel a {
+    display: flex; align-items: center; min-height: 52px; color: #F3EDE3;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    border-bottom: 1px solid rgba(243,237,227,0.08);
+  }
+  .sanduiche-painel a:last-child { border-bottom: 0; }
+  .sanduiche-painel a:hover, .sanduiche-painel a:focus-visible { color: #F49E1D; }
+
   @media (max-width: 900px) {
     html { scroll-padding-top: 84px; }
-    header nav a[href^="#"]:not(.btn) { display: none; }
+    header > nav a[href^="#"]:not(.btn) { display: none; }
+    .sanduiche { display: block; }
   }
   @media (max-width: 720px) {
     /* alvo de toque confortavel */
@@ -167,7 +215,8 @@
     .btn { width: 100%; max-width: 420px; }
     /* o CTA do cabecalho nao acompanha os botoes de secao: em largura
        total ele ocupa mais da metade da barra e engole a logo. */
-    header .btn { width: auto; max-width: none; padding: 11px 16px; font-size: 10px; }
+    header .btn { width: auto; max-width: none; padding: 11px 14px; font-size: 10px; }
+    .so-largo { display: none; }
   }
 </style>
 </helmet>
@@ -187,8 +236,18 @@
       <a href="#metodo" style="color:#9C968A" style-hover="color:#F3EDE3">Método</a>
       <a href="#sobre" style="color:#9C968A" style-hover="color:#F3EDE3">Sobre a Vegas</a>
       <a href="#duvidas" style="color:#9C968A" style-hover="color:#F3EDE3">Dúvidas</a>
-      <a href="#analise" class="btn btn-1" style="padding:12px 20px; font-size:11px">Solicitar análise gratuita</a>
+      <a href="#analise" class="btn btn-1" data-track-id="cta-analise-topo" data-track-pos="Topo" style="padding:12px 20px; font-size:11px"><span class="so-largo">Solicitar </span>análise gratuita</a>
     </nav>
+    <details class="sanduiche">
+      <summary aria-label="Menu"><span class="barras" aria-hidden="true"></span></summary>
+      <nav class="sanduiche-painel" aria-label="Navegação do menu">
+        <a href="#solucoes">Soluções</a>
+        <a href="#para-quem">Para quem</a>
+        <a href="#metodo">Método</a>
+        <a href="#sobre">Sobre a Vegas</a>
+        <a href="#duvidas">Dúvidas</a>
+      </nav>
+    </details>
   </header>
 
   <!-- ===================== HERO ===================== -->
@@ -199,8 +258,8 @@
         <h1>Assessoria de marketing para <span class="grad">restaurantes e delivery</span>.</h1>
         <p class="apoio" style="margin:22px 0 0">Conectamos tráfego pago, conversão no WhatsApp e estratégias de recompra para ajudar sua operação a atrair clientes, gerar pedidos e estimular novas compras.</p>
         <div style="display:flex; flex-wrap:wrap; gap:14px; margin:30px 0 16px">
-          <a href="#analise" class="btn btn-1">Solicitar análise gratuita</a>
-          <a href="#solucoes" class="btn btn-2">Conhecer as soluções</a>
+          <a href="#analise" class="btn btn-1" data-track-id="cta-analise-hero" data-track-pos="Hero">Solicitar análise gratuita</a>
+          <a href="#solucoes" class="btn btn-2" data-track-id="cta-solucoes-hero" data-track-pos="Hero">Conhecer as soluções</a>
         </div>
         <p style="font-size:15px; color:#9C968A; margin:0">Entenda como a Vegas pode atuar no marketing da sua operação.</p>
       </div>
@@ -311,7 +370,7 @@
         </article>
       </div>
       <div style="margin-top:36px">
-        <a href="#analise" class="btn btn-1">Solicitar análise gratuita</a>
+        <a href="#analise" class="btn btn-1" data-track-id="cta-analise-solucoes" data-track-pos="Soluções">Solicitar análise gratuita</a>
       </div>
     </div>
   </section>
@@ -419,7 +478,7 @@
         <h2 id="analise-titulo">Vamos entender o que pode melhorar no <span class="grad">marketing da sua operação</span>?</h2>
         <p class="apoio">Conte um pouco sobre o seu negócio e solicite uma análise gratuita com a Vegas.</p>
         <p style="margin-top:26px; font-size:16px">Prefere conversar?
-          <a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" style="color:#F49E1D; text-decoration:underline; text-underline-offset:3px">Fale com a Vegas no WhatsApp</a>.
+          <a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" data-track-id="cta-whatsapp-analise" data-track-pos="Análise gratuita" style="color:#F49E1D; text-decoration:underline; text-underline-offset:3px">Fale com a Vegas no WhatsApp</a>.
         </p>
       </div>
 
@@ -442,7 +501,7 @@
           </label>
           <p data-form-erro="" role="alert" style="margin:0 0 12px; font-size:14px; color:#A3231A; min-height:0"></p>
           <p data-form-ok="" role="status" style="margin:0 0 12px; font-size:14px; color:#1F6B3A; display:none"></p>
-          <button type="submit" class="btn btn-1" style="width:100%">Solicitar minha análise gratuita</button>
+          <button type="submit" class="btn btn-1" data-track-id="form-analise-enviar" data-track-pos="Análise gratuita" style="width:100%">Solicitar minha análise gratuita</button>
           <p style="font-size:13px; color:#5C574E; margin:14px 0 0; text-align:center">Seus dados são usados apenas para o contato comercial.</p>
         </form>
       </div>
@@ -468,8 +527,8 @@
       </div>
       <div>
         <h3 style="font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:#F49E1D">Contato</h3>
-        <p style="font-size:15px; margin:0 0 8px"><a href="mailto:contato@vegasaceleradora.com.br" style="color:#C9C3B6">contato@vegasaceleradora.com.br</a></p>
-        <p style="font-size:15px; margin:0"><a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" style="color:#C9C3B6">+55 (27) 9 9224-6343</a></p>
+        <p style="font-size:15px; margin:0 0 8px"><a href="mailto:contato@vegasaceleradora.com.br" data-track-id="contato-email-rodape" data-track-pos="Rodapé" style="color:#C9C3B6">contato@vegasaceleradora.com.br</a></p>
+        <p style="font-size:15px; margin:0"><a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-direto="" data-track-id="cta-whatsapp-rodape" data-track-pos="Rodapé" style="color:#C9C3B6">+55 (27) 9 9224-6343</a></p>
       </div>
     </div>
     <div class="wrap" style="border-top:1px solid rgba(243,237,227,0.08); margin-top:36px; padding-top:24px; font-size:14px; color:#7E7A6E">
@@ -477,7 +536,7 @@
     </div>
   </footer>
 
-  <a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-float="" aria-label="Falar com a Vegas no WhatsApp" style="position:fixed; right:20px; bottom:20px; z-index:60; width:62px; height:62px; border-radius:50%; overflow:hidden; border:2px solid #25D366; box-shadow:0 10px 30px rgba(0,0,0,0.45)">
+  <a href="https://api.whatsapp.com/send?phone=5527992246343&amp;text=Ol%C3%A1!%20Conheci%20a%20Vegas%20pelo%20site%20e%20gostaria%20de%20uma%20an%C3%A1lise%20de%20marketing%20para%20o%20meu%20restaurante%20ou%20delivery." target="_blank" rel="noopener" data-wa-float="" data-track-id="cta-whatsapp-flutuante" data-track-pos="Flutuante" aria-label="Falar com a Vegas no WhatsApp" style="position:fixed; right:20px; bottom:20px; z-index:60; width:62px; height:62px; border-radius:50%; overflow:hidden; border:2px solid #25D366; box-shadow:0 10px 30px rgba(0,0,0,0.45)">
     <img src="/img/atendente-vegas-b.webp" alt="" width="136" height="136" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block">
   </a>
 

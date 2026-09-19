@@ -46,6 +46,15 @@ const base = `http://127.0.0.1:${server.address().port}/`;
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 
+// A pre-renderizacao roda num Chromium de verdade. Sem bloquear o que e
+// externo, o coletor de analytics registraria uma visita a cada build, vinda
+// da maquina que compila. A tag continua no HTML publicado — so nao executa
+// aqui. De quebra, o build fica reprodutivel e sem depender de rede.
+await page.route('**/*', (rota) => {
+  if (rota.request().url().startsWith(base)) rota.continue();
+  else rota.abort();
+});
+
 const erros = [];
 page.on('pageerror', (e) => erros.push(String(e.message)));
 await page.goto(base, { waitUntil: 'networkidle' });
