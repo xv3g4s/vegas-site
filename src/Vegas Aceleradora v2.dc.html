@@ -32,6 +32,13 @@
      existe contagem manual de pagina em lugar nenhum — isso duplicaria as
      visualizacoes. Respeita window.painelConsentimento = false. -->
 <script async src="https://app.johnyweb.com/t.js" data-site="sit_6c66a1f9deba"></script>
+
+<!-- Coletor de formularios. Aqui ele NAO enxerga o popup de lead sozinho: o
+     popup nao tem <form>, e sem <form> nao existe evento de submit para ele
+     escutar. Quem alimenta o painel e a saida oficial do proprio arquivo,
+     window.painelFormulario.enviar(), chamada no site.js. Esta tag continua
+     valendo para qualquer <form> que a pagina venha a ter. -->
+<script async src="https://app.johnyweb.com/f.js" data-site="sit_6c66a1f9deba"></script>
 </head>
 <body>
 <x-dc>

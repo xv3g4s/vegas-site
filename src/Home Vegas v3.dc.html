@@ -28,6 +28,13 @@
      existe contagem manual de pagina em lugar nenhum — isso duplicaria as
      visualizacoes. Respeita window.painelConsentimento = false. -->
 <script async src="https://app.johnyweb.com/t.js" data-site="sit_6c66a1f9deba"></script>
+
+<!-- Coletor de formularios. Escuta o submit no documento em fase de captura,
+     entao ele ve o envio antes do preventDefault do nova-home.js. Reconhece os
+     campos sem renomear nada: name="nome", name="whatsapp" (o padrao dele
+     inclui /whats/), type="email" e o <textarea> viram nome, telefone, email e
+     mensagem. Nao cancela o envio: o GoHighLevel continua recebendo igual. -->
+<script async src="https://app.johnyweb.com/f.js" data-site="sit_6c66a1f9deba"></script>
 </head>
 <body>
 <x-dc>

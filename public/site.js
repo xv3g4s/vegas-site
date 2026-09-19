@@ -15,19 +15,22 @@
   // Inbound Webhook do GoHighLevel. Vazio = lead so no localStorage + WhatsApp.
   var GHL_WEBHOOK = '';
 
-  // Painel de Sites: copia do lead, em PARALELO ao destino principal. O GHL
-  // continua sendo quem recebe o lead de verdade — nada aqui pode atrapalhar
-  // aquele envio nem o WhatsApp que abre em seguida, entao toda falha desta
-  // parte e engolida de proposito.
-  var PAINEL_FORMS = 'https://app.johnyweb.com/api/forms/sit_6c66a1f9deba';
-
   var d = document;
   var $ = function (s, ctx) { return (ctx || d).querySelector(s); };
   var $$ = function (s, ctx) { return [].slice.call((ctx || d).querySelectorAll(s)); };
 
   // ------------------------------------------------- copia para o painel ---
-  // UUID v4 de verdade: o servidor valida a chave com z.string().uuid() e
-  // recusa o envio INTEIRO com 422 se ela nao tiver esse formato.
+  // O popup de lead nao tem <form>: sao tres <input> soltos e um <button>. Sem
+  // <form> nao existe evento de submit, entao o f.js nao tem o que escutar
+  // aqui. Para exatamente este caso ele publica uma saida manual,
+  // window.painelFormulario.enviar(), e e ela que usamos.
+  //
+  // O popup em si continua intocado: mesmos campos, mesmo destino, mesma
+  // sequencia. Isto e uma copia a mais, nada aqui pode atrapalhar o GHL nem a
+  // aba do WhatsApp que abre logo depois.
+
+  // UUID v4: o servidor valida a chave com z.string().uuid() e recusa o envio
+  // inteiro com 422 se ela nao tiver esse formato.
   function uuid() {
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -36,57 +39,28 @@
     });
   }
 
-  // Uma chave por formulario PREENCHIDO, nao por tentativa: e ela que impede
-  // que um retry de rede vire um segundo lead. So troca depois de uma entrega
-  // confirmada pelo servidor.
+  // Uma chave por conteudo preenchido: duas tentativas do mesmo contato
+  // chegam com a mesma chave e o servidor grava UM lead. Mudou o que esta
+  // escrito, e contato novo e a chave muda junto. Mesma regra do f.js.
+  var ultimaAssinatura = null;
   var chaveEnvio = null;
-  function idempotencia() {
-    if (!chaveEnvio) chaveEnvio = uuid();
+  function idempotencia(assinatura) {
+    if (assinatura !== ultimaAssinatura) {
+      ultimaAssinatura = assinatura;
+      chaveEnvio = uuid();
+    }
     return chaveEnvio;
   }
 
-  // O popup de lead nao e tocado: continua com os mesmos campos e o mesmo
-  // destino. Ele nem tem um <form> de verdade — sao tres <input> soltos e um
-  // <button> —, entao a traducao para os nomes que o painel espera acontece
-  // aqui, montando um FormData na mao na hora do envio.
-  //
-  // FormData de proposito: o endpoint aceita multipart, e assim o navegador
-  // nao precisa de preflight.
   function enviaAoPainel(dados) {
     // Respeita o mesmo interruptor de consentimento que o coletor observa.
     if (window.painelConsentimento === false) return;
-
-    var fd = new FormData();
-    // Campo vazio NAO vai. Os opcionais do servidor tem formato proprio
-    // (visitante e min(8), diagnostico casa /^diag_[a-f0-9]{8,64}$/), entao
-    // mandar string vazia derruba a submissao inteira com 422.
-    var junta = function (chave, valor) { if (valor) fd.append(chave, valor); };
-
-    junta('nome', dados.nome);
-    junta('email', dados.email);
-    junta('telefone', dados.telefone);
-    junta('mensagem', dados.mensagem);
-    junta('formulario', dados.formulario);
-    junta('caminho', location.pathname || '/');
-    // Vem do coletor quando ele existe. Sem coletor — bloqueador, consentimento
-    // negado, arquivo fora do ar — o campo simplesmente nao vai, e o contato
-    // continua valendo.
-    junta('visitante', window.painel && window.painel.visitante && window.painel.visitante());
-    junta('diagnostico', window.painel && window.painel.diagnostico && window.painel.diagnostico());
-    junta('idempotencia', idempotencia());
-
+    // O f.js entra com async: se o popup for enviado antes de ele carregar,
+    // nao ha o que chamar. O lead principal segue o caminho dele de qualquer
+    // forma — esta copia e que se perde, e isso e preferivel a quebrar o envio.
+    if (!window.painelFormulario || !window.painelFormulario.enviar) return;
     try {
-      // keepalive e essencial aqui: logo depois deste envio a pagina navega
-      // para o WhatsApp, e sem isso o pedido morreria no meio.
-      fetch(PAINEL_FORMS, { method: 'POST', body: fd, keepalive: true })
-        .then(function (r) {
-          // So o servidor confirma. O evento de submit do navegador nao prova
-          // que alguem recebeu, entao a chave so troca a partir daqui.
-          if (r && r.ok) chaveEnvio = null;
-        })['catch'](function () {
-          // A chave fica de pe: a proxima tentativa repete a mesma e o painel
-          // deduplica, em vez de abrir um segundo lead.
-        });
+      window.painelFormulario.enviar(dados);
     } catch (e) { /* o lead principal ja saiu para o GHL */ }
   }
 
@@ -253,7 +227,8 @@
 
     enviaAoPainel({
       nome: nome, email: email, telefone: telefone,
-      mensagem: '', formulario: 'Popup de lead — Home'
+      formulario: 'Popup de lead — Home',
+      idempotencia: idempotencia([nome, email, telefone].join('|'))
     });
 
     try {

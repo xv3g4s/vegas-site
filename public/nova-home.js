@@ -13,79 +13,18 @@
   // Inbound Webhook do GoHighLevel. Vazio = o lead fica so no localStorage.
   var GHL_WEBHOOK = '';
 
-  // Painel de Sites: copia do lead, em PARALELO ao destino principal. O GHL
-  // continua sendo quem recebe o lead de verdade — nada aqui pode atrapalhar
-  // aquele envio, entao toda falha desta parte e engolida de proposito.
-  var PAINEL_FORMS = 'https://app.johnyweb.com/api/forms/sit_6c66a1f9deba';
+  // A copia para o Painel de Sites NAO e feita aqui. Quem faz e o f.js, que
+  // escuta o submit no documento em fase de captura — ou seja, antes do
+  // preventDefault logo abaixo. Ele reconhece os campos deste formulario sem
+  // renomear nada: nome, whatsapp (o padrao dele inclui /whats/), o input de
+  // e-mail e o <textarea>.
+  //
+  // Um envio proprio daqui chegaria com OUTRA chave de idempotencia, e duas
+  // chaves diferentes para o mesmo contato viram dois leads no painel.
 
   var d = document;
   var $ = function (s, c) { return (c || d).querySelector(s); };
   var $$ = function (s, c) { return [].slice.call((c || d).querySelectorAll(s)); };
-
-  // ------------------------------------------------- copia para o painel ---
-  // UUID v4 de verdade: o servidor valida a chave com z.string().uuid() e
-  // recusa o envio INTEIRO com 422 se ela nao tiver esse formato.
-  function uuid() {
-    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (Math.random() * 16) | 0;
-      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
-    });
-  }
-
-  // Uma chave por formulario PREENCHIDO, nao por tentativa: e ela que impede
-  // que um retry de rede vire um segundo lead. So troca depois de uma entrega
-  // confirmada pelo servidor.
-  var chaveEnvio = null;
-  function idempotencia() {
-    if (!chaveEnvio) chaveEnvio = uuid();
-    return chaveEnvio;
-  }
-
-  // O formulario da pagina nao e tocado: continua com os campos e o destino
-  // que ja tinha. A traducao para os nomes que o painel espera acontece aqui,
-  // montando um FormData na mao na hora do envio.
-  //
-  // FormData de proposito: o endpoint aceita multipart, e assim o navegador
-  // nao precisa de preflight.
-  function enviaAoPainel(dados) {
-    // Respeita o mesmo interruptor de consentimento que o coletor observa.
-    if (window.painelConsentimento === false) return;
-
-    var fd = new FormData();
-    // Campo vazio NAO vai. Os opcionais do servidor tem formato proprio
-    // (visitante e min(8), diagnostico casa /^diag_[a-f0-9]{8,64}$/), entao
-    // mandar string vazia derruba a submissao inteira com 422.
-    var junta = function (chave, valor) { if (valor) fd.append(chave, valor); };
-
-    junta('nome', dados.nome);
-    junta('email', dados.email);
-    junta('telefone', dados.telefone);
-    junta('mensagem', dados.mensagem);
-    junta('formulario', dados.formulario);
-    junta('caminho', location.pathname || '/');
-    // Vem do coletor quando ele existe. Sem coletor — bloqueador, consentimento
-    // negado, arquivo fora do ar — o campo simplesmente nao vai, e o contato
-    // continua valendo. window.painel por extenso de proposito: `painel`
-    // sozinho bateria na variavel local do menu sanduiche, que e um elemento
-    // do DOM.
-    junta('visitante', window.painel && window.painel.visitante && window.painel.visitante());
-    junta('diagnostico', window.painel && window.painel.diagnostico && window.painel.diagnostico());
-    junta('idempotencia', idempotencia());
-
-    try {
-      // keepalive: o pedido precisa sobreviver a pagina mudar embaixo dele.
-      fetch(PAINEL_FORMS, { method: 'POST', body: fd, keepalive: true })
-        .then(function (r) {
-          // So o servidor confirma. O evento de submit do navegador nao prova
-          // que alguem recebeu, entao a chave so troca a partir daqui.
-          if (r && r.ok) chaveEnvio = null;
-        })['catch'](function () {
-          // A chave fica de pe: a proxima tentativa repete a mesma e o painel
-          // deduplica, em vez de abrir um segundo lead.
-        });
-    } catch (e) { /* o lead principal ja saiu para o GHL */ }
-  }
 
   // ---------------------------------------------------------------- UTM ----
   var utm = (function () {
@@ -192,14 +131,6 @@
           } catch (e) { /* segue */ }
         }
       }
-
-      enviaAoPainel({
-        nome: v.nome, email: v.email, telefone: telefone,
-        // o painel tem um campo de mensagem so: o estabelecimento entra junto
-        // para nao se perder
-        mensagem: 'Estabelecimento: ' + v.estabelecimento + (v.desafio ? '\nDesafio: ' + v.desafio : ''),
-        formulario: 'Análise gratuita — Home'
-      });
 
       try {
         var leads = JSON.parse(localStorage.getItem('vegas-leads') || '[]');
