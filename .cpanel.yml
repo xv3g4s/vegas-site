@@ -13,3 +13,13 @@ deployment:
     - export DEPLOYPATH=$HOME/vegasaceleradora.com.br
     - /bin/mkdir -p "$DEPLOYPATH"
     - /bin/cp -R -f public/. "$DEPLOYPATH/"
+    # Carimbo de publicacao. Serve para responder, do navegador, a pergunta que
+    # nenhuma consulta feita daqui responde: o que o dominio serve e o que este
+    # deploy escreveu, ou e uma copia antiga em outra pasta?
+    # Abra https://vegasaceleradora.com.br/deploy-info.txt — se nao existir, ou
+    # se a data for antiga, o DEPLOYPATH acima NAO e o document root do dominio.
+    - /bin/date -u +"publicado em %Y-%m-%dT%H:%M:%SZ" > "$DEPLOYPATH/deploy-info.txt"
+    - /bin/echo "destino  $DEPLOYPATH" >> "$DEPLOYPATH/deploy-info.txt"
+    - /bin/grep -c "sit_6c66a1f9deba" "$DEPLOYPATH/index.html" | /bin/sed "s/^/tags do coletor no index.html  /" >> "$DEPLOYPATH/deploy-info.txt" || /bin/echo "tags do coletor no index.html  0" >> "$DEPLOYPATH/deploy-info.txt"
+    # Tambem no log do cPanel, para quem estiver olhando a tela do deploy.
+    - /bin/cat "$DEPLOYPATH/deploy-info.txt"

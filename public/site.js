@@ -26,22 +26,22 @@
   var $$ = function (s, ctx) { return [].slice.call((ctx || d).querySelectorAll(s)); };
 
   // ------------------------------------------------- copia para o painel ---
+  // UUID v4 de verdade: o servidor valida a chave com z.string().uuid() e
+  // recusa o envio INTEIRO com 422 se ela nao tiver esse formato.
+  function uuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0;
+      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
+  }
+
   // Uma chave por formulario PREENCHIDO, nao por tentativa: e ela que impede
   // que um retry de rede vire um segundo lead. So troca depois de uma entrega
-  // confirmada pelo painel.
+  // confirmada pelo servidor.
   var chaveEnvio = null;
   function idempotencia() {
-    if (chaveEnvio) return chaveEnvio;
-    try {
-      if (window.crypto && crypto.randomUUID) { chaveEnvio = crypto.randomUUID(); return chaveEnvio; }
-      if (window.crypto && crypto.getRandomValues) {
-        var a = new Uint8Array(16);
-        crypto.getRandomValues(a);
-        chaveEnvio = [].map.call(a, function (n) { return ('0' + n.toString(16)).slice(-2); }).join('');
-        return chaveEnvio;
-      }
-    } catch (e) { /* cai no de baixo */ }
-    chaveEnvio = 'f' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    if (!chaveEnvio) chaveEnvio = uuid();
     return chaveEnvio;
   }
 
@@ -50,26 +50,30 @@
   // <button> —, entao a traducao para os nomes que o painel espera acontece
   // aqui, montando um FormData na mao na hora do envio.
   //
-  // FormData de proposito, e nao JSON: multipart/form-data e content-type
-  // simples, entao o navegador NAO manda o OPTIONS de preflight. Com
-  // application/json mandava — e um preflight sem resposta derruba o envio
-  // inteiro sem deixar rastro no console.
+  // FormData de proposito: o endpoint aceita multipart, e assim o navegador
+  // nao precisa de preflight.
   function enviaAoPainel(dados) {
     // Respeita o mesmo interruptor de consentimento que o coletor observa.
     if (window.painelConsentimento === false) return;
 
     var fd = new FormData();
-    fd.append('nome', dados.nome || '');
-    fd.append('email', dados.email || '');
-    fd.append('telefone', dados.telefone || '');
-    fd.append('mensagem', dados.mensagem || '');
-    fd.append('formulario', dados.formulario || '');
-    // O visitante vem do coletor quando ele existe. Sem coletor — ou com
-    // bloqueador de anuncios — vai vazio, e o envio continua valendo: quem
-    // bloqueia analytics precisa conseguir mandar a mensagem do mesmo jeito.
-    fd.append('visitante', (window.painel && window.painel.visitante &&
-      window.painel.visitante()) || '');
-    fd.append('idempotencia', idempotencia());
+    // Campo vazio NAO vai. Os opcionais do servidor tem formato proprio
+    // (visitante e min(8), diagnostico casa /^diag_[a-f0-9]{8,64}$/), entao
+    // mandar string vazia derruba a submissao inteira com 422.
+    var junta = function (chave, valor) { if (valor) fd.append(chave, valor); };
+
+    junta('nome', dados.nome);
+    junta('email', dados.email);
+    junta('telefone', dados.telefone);
+    junta('mensagem', dados.mensagem);
+    junta('formulario', dados.formulario);
+    junta('caminho', location.pathname || '/');
+    // Vem do coletor quando ele existe. Sem coletor — bloqueador, consentimento
+    // negado, arquivo fora do ar — o campo simplesmente nao vai, e o contato
+    // continua valendo.
+    junta('visitante', window.painel && window.painel.visitante && window.painel.visitante());
+    junta('diagnostico', window.painel && window.painel.diagnostico && window.painel.diagnostico());
+    junta('idempotencia', idempotencia());
 
     try {
       // keepalive e essencial aqui: logo depois deste envio a pagina navega
@@ -258,6 +262,9 @@
       localStorage.setItem('vegas-leads', JSON.stringify(leads));
     } catch (e) { /* modo privado */ }
 
+    // A aba do WhatsApp abre SINCRONAMENTE dentro do clique: enviaAoPainel so
+    // dispara o fetch e retorna, sem esperar. Se algum dia alguem colocar um
+    // await antes daqui, o bloqueador de pop-up barra a aba.
     fechaLead();
     var wa = 'https://api.whatsapp.com/send?phone=5527992246343&text=' +
       encodeURIComponent('Olá! Vim pelo seu site e quero escalar meu Restaurante/Delivery.');
