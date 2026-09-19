@@ -42,35 +42,45 @@
     return chaveEnvio;
   }
 
+  // O formulario da pagina nao e tocado: continua com os campos e o destino
+  // que ja tinha. A traducao para os nomes que o painel espera acontece aqui,
+  // montando um FormData na mao na hora do envio.
+  //
+  // FormData de proposito, e nao JSON: multipart/form-data e content-type
+  // simples, entao o navegador NAO manda o OPTIONS de preflight. Com
+  // application/json mandava — e um preflight sem resposta derruba o envio
+  // inteiro sem deixar rastro no console.
   function enviaAoPainel(dados) {
     // Respeita o mesmo interruptor de consentimento que o coletor observa.
     if (window.painelConsentimento === false) return;
-    var corpo = JSON.stringify({
-      nome: dados.nome || '',
-      email: dados.email || '',
-      telefone: dados.telefone || '',
-      mensagem: dados.mensagem || '',
-      formulario: dados.formulario || '',
-      idempotencia: idempotencia()
-    });
+
+    var fd = new FormData();
+    fd.append('nome', dados.nome || '');
+    fd.append('email', dados.email || '');
+    fd.append('telefone', dados.telefone || '');
+    fd.append('mensagem', dados.mensagem || '');
+    fd.append('formulario', dados.formulario || '');
+    // O visitante vem do coletor quando ele existe. Sem coletor — ou com
+    // bloqueador de anuncios — vai vazio, e o envio continua valendo: quem
+    // bloqueia analytics precisa conseguir mandar a mensagem do mesmo jeito.
+    // window.painel escrito por extenso de proposito: `painel` sozinho bateria
+    // na variavel local do menu sanduiche mais abaixo, que e um elemento do DOM.
+    fd.append('visitante', (window.painel && window.painel.visitante &&
+      window.painel.visitante()) || '');
+    fd.append('idempotencia', idempotencia());
+
     try {
-      fetch(PAINEL_FORMS, {
-        method: 'POST', keepalive: true,
-        headers: { 'Content-Type': 'application/json' },
-        body: corpo
-      }).then(function (r) {
-        if (r && r.ok) chaveEnvio = null;  // entregue: o proximo lead usa chave nova
-      })['catch'](function () {
-        // Sem CORS na resposta o fetch falha mesmo tendo saido. O sendBeacon
-        // repete com text/plain, que nao dispara preflight. A chave nao muda:
-        // se as duas chegarem, o painel deduplica por ela.
-        try {
-          if (navigator.sendBeacon) {
-            navigator.sendBeacon(PAINEL_FORMS, new Blob([corpo], { type: 'text/plain;charset=UTF-8' }));
-          }
-        } catch (e2) { /* o lead principal ja saiu */ }
-      });
-    } catch (e) { /* idem */ }
+      // keepalive: o pedido precisa sobreviver a pagina mudar embaixo dele.
+      fetch(PAINEL_FORMS, { method: 'POST', body: fd, keepalive: true })
+        .then(function (r) {
+          // So o servidor confirma. O evento de submit do navegador nao prova
+          // que alguem recebeu, entao a chave so troca a partir daqui.
+          if (r && r.ok) chaveEnvio = null;
+        })['catch'](function () {
+          // A chave fica de pe: a proxima tentativa repete a mesma e o painel
+          // deduplica, em vez de abrir um segundo lead.
+        });
+    } catch (e) { /* o lead principal ja saiu para o GHL */ }
   }
 
   // ---------------------------------------------------------------- UTM ----
@@ -214,9 +224,9 @@
   var menu = $('.sanduiche');
   if (menu) {
     var fechaMenu = function () { menu.removeAttribute('open'); };
-    var painel = $('.sanduiche-painel', menu);
-    if (painel) {
-      painel.addEventListener('click', function (ev) {
+    var painelMenu = $('.sanduiche-painel', menu);
+    if (painelMenu) {
+      painelMenu.addEventListener('click', function (ev) {
         var a = ev.target && ev.target.closest && ev.target.closest('a');
         if (a) fechaMenu();
       });
