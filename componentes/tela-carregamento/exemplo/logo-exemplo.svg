@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 300" width="320" height="300">
+  <!-- Logo de exemplo. Troque pelo arquivo do cliente: o que importa e o
+       canal alfa (a forma), porque ela entra como mascara CSS. -->
+  <g fill="#fff">
+    <path d="M40 40h52l68 150L228 40h52L186 256h-52z"/>
+    <rect x="40" y="276" width="240" height="10" rx="5" opacity=".7"/>
+  </g>
+</svg>

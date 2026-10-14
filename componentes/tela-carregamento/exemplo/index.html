@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tela de carregamento — exemplo</title>
+
+<!-- 1. cor de fundo antes de tudo, contra o flash branco -->
+<style>html,body{background:#080908;margin:0}</style>
+
+<!-- 2. a logo chega junto com o HTML, nao depois -->
+<link rel="preload" as="image" href="logo-exemplo.svg">
+
+<!-- 3. a tela de carregamento, o mais cedo possivel no <head> -->
+<script src="../tela-carregamento.js"
+        data-logo="logo-exemplo.svg"
+        data-logo-w="320" data-logo-h="300"
+        data-cor="#B79A6A"
+        data-texto="Carregando o site"></script>
+
+<style>
+  body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;color:#E8E5DF}
+  header{position:sticky;top:0;z-index:60;display:flex;gap:18px;align-items:center;
+    padding:18px 24px;background:rgba(8,9,8,.85);backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,.1)}
+  header b{letter-spacing:.2em;text-transform:uppercase;font-size:13px;color:#B79A6A}
+  main{max-width:900px;margin:0 auto;padding:0 24px 120px}
+  .hero{position:relative;min-height:70vh;display:flex;flex-direction:column;justify-content:center;gap:18px}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35;border-radius:24px}
+  .hero > *{position:relative}
+  h1{font-size:clamp(34px,6vw,64px);line-height:1.02;margin:0;letter-spacing:-.03em}
+  h2{font-size:clamp(22px,3vw,32px);margin:64px 0 12px;letter-spacing:-.02em}
+  p{color:#C5C2BB;max-width:62ch}
+  a.botao{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;
+    background:#F6F4EF;color:#0B0B0B;font-weight:700;text-decoration:none;font-size:14px;
+    letter-spacing:.1em;text-transform:uppercase}
+  code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:5px;font-size:14px}
+</style>
+</head>
+<body>
+<header><b>Exemplo</b> <span>tela de carregamento</span></header>
+
+<main id="conteudo">
+  <section class="hero">
+    <img fetchpriority="high" alt=""
+      src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23B79A6A'/%3E%3Cstop offset='1' stop-color='%23101010'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='16' height='9' fill='url(%23g)'/%3E%3C/svg%3E">
+    <h1>A marca do cliente enquanto a página carrega.</h1>
+    <p>Esta é uma página de teste. Recarregue para ver o <strong>modo curto</strong>:
+      da segunda carga em diante a logo entra na hora e a tela sai assim que a
+      página fica pronta.</p>
+    <p><a class="botao" href="?intro">Ver a intro completa de novo</a></p>
+  </section>
+
+  <h2>Como testar</h2>
+  <p>Primeira carga desta aba: intro completa. Recarregue: modo curto.
+    <code>?intro</code> na URL volta a intro completa.
+    Ligue “reduzir movimento” no sistema e recarregue: a tela aparece parada e sai rápido.</p>
+
+  <h2>O que a tela espera</h2>
+  <p>DOM pronto, a logo da própria tela, as fontes, a imagem principal
+    (<code>fetchpriority="high"</code>) e o <code>window.load</code>. Imagem com
+    <code>loading="lazy"</code> fora da primeira dobra não entra na conta — senão a
+    tela ficaria presa esperando algo que o navegador só busca na rolagem.</p>
+
+  <h2>Rolagem</h2>
+  <p>Enquanto a tela cobre a página, a rolagem fica travada sem mexer no layout.
+    Role aqui depois que ela sair.</p>
+  <p style="height:60vh"></p>
+  <p>Fim.</p>
+</main>
+</body>
+</html>
