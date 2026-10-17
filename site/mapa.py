@@ -70,21 +70,21 @@ SERVICOS  = Pag("/servicos/", "Serviços", "/#servicos")
 SERVICOS_FILHOS = [
     Pag("/servicos/trafego-pago-restaurantes/",   "Tráfego pago para restaurantes", "/#servicos"),
     Pag("/servicos/marketing-para-delivery/",     "Marketing para delivery",        "/#servicos"),
-    Pag("/servicos/google-ads-restaurantes/",     "Google Ads para restaurantes",   "/#servicos"),
-    Pag("/servicos/automacao-whatsapp-delivery/", "Automação no WhatsApp",          "/#servicos"),
-    Pag("/servicos/remarketing-restaurantes/",    "Remarketing e recompra",         "/#servicos"),
+    Pag("/servicos/google-ads-restaurantes/",     "Google Ads para restaurantes",   "/#servicos", publicada=True),
+    Pag("/servicos/automacao-whatsapp-delivery/", "Automação no WhatsApp",          "/#servicos", publicada=True),
+    Pag("/servicos/remarketing-restaurantes/",    "Remarketing e recompra",         "/#servicos", publicada=True),
 ]
 
 # Grupo C — segmentos
 SEGMENTOS = Pag("/segmentos/", "Para quem", "/#segmentos")
 SEGMENTOS_FILHOS = [
     Pag("/marketing-para-restaurantes/",           "Restaurantes",         "/#segmentos"),
-    Pag("/marketing-para-pizzarias/",              "Pizzarias",            "/#segmentos"),
-    Pag("/marketing-para-hamburguerias/",          "Hamburguerias",        "/#segmentos"),
-    Pag("/marketing-para-restaurantes-japoneses/", "Restaurantes japoneses", "/#segmentos"),
-    Pag("/marketing-para-cafeterias/",             "Cafeterias",           "/#segmentos"),
-    Pag("/marketing-para-dark-kitchens/",          "Dark kitchens",        "/#segmentos"),
-    Pag("/marketing-para-bares/",                  "Bares",                "/#segmentos"),
+    Pag("/marketing-para-pizzarias/",              "Pizzarias",            "/#segmentos", publicada=True),
+    Pag("/marketing-para-hamburguerias/",          "Hamburguerias",        "/#segmentos", publicada=True),
+    Pag("/marketing-para-restaurantes-japoneses/", "Restaurantes japoneses", "/#segmentos", publicada=True),
+    Pag("/marketing-para-cafeterias/",             "Cafeterias",           "/#segmentos", publicada=True),
+    Pag("/marketing-para-dark-kitchens/",          "Dark kitchens",        "/#segmentos", publicada=True),
+    Pag("/marketing-para-bares/",                  "Bares",                "/#segmentos", publicada=True),
 ]
 
 # Grupo D — resultados. As paginas de case dependem de material real; ficam

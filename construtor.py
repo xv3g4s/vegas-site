@@ -48,49 +48,95 @@ PUBLIC = RAIZ / "public"
 PREFIXO_PREVIA = "/v3"
 
 
+# Indice url -> Pag, para resolver link interno pelo registro.
+_POR_URL = {pg.url: pg for pg in mapa.TODAS}
+
+
+# Links internos que o conteudo pode usar sem estar no registro de paginas.
+_FORA_DO_REGISTRO = {"/"}
+
+_desconhecidos = set()
+
+
+def resolve(destino: str) -> str:
+    """Troca link para pagina ainda nao publicada pela ancora equivalente.
+
+    O conteudo das paginas escreve sempre a URL final (/servicos/x/). Enquanto
+    aquela pagina nao existe, mandar o visitante para la e 404 — e 404 vindo de
+    link interno o Google le como site mal cuidado.
+
+    Entao o link e resolvido no build: pagina publicada vira link de verdade,
+    pagina ainda nao publicada vira a ancora correspondente na Home, que tem o
+    conteudo. Quando a pagina nascer, o mesmo link passa a apontar para ela sem
+    que nenhum arquivo de conteudo mude.
+    """
+    pg = _POR_URL.get(destino)
+    if pg:
+        return pg.destino if not pg.publicada else destino
+    # URL que nao esta no mapa: quase sempre erro de digitacao no conteudo, e
+    # viraria 404 silencioso. Em 36 paginas isso nao se acha na mao.
+    if destino not in _FORA_DO_REGISTRO and not destino.startswith(("/img/", "/fonts/")):
+        _desconhecidos.add(destino)
+    return destino
+
+
+def link(destino: str) -> str:
+    """Prefixa links internos enquanto o site esta em previa.
+
+    Sem isto a previa nasce quebrada: o menu aponta para /servicos/..., que so
+    existe na raiz. Com o prefixo, /v3/ e um site inteiro navegavel, e publicar
+    continua sendo trocar PREFIXO_PREVIA por "".
+
+    Ancora pura (#x), link externo e mailto passam intactos.
+    """
+    if not PREFIXO_PREVIA or not destino.startswith("/"):
+        return destino
+    return PREFIXO_PREVIA + destino
+
+
 # ============================================================== cabecalho ===
 def menu_desktop():
     itens = []
     for pag, filhos in mapa.MENU:
         if filhos:
             sub = "".join(
-                f'<li><a href="{f.destino}">{f.menu}</a></li>' for f in filhos
+                f'<li><a href="{link(f.destino)}">{f.menu}</a></li>' for f in filhos
             )
             itens.append(
                 f'<li class="tem-sub"><button type="button" aria-expanded="false">{pag.menu}</button>'
                 f'<ul class="sub">'
-                f'<li><a href="{pag.destino}"><strong>Ver {pag.menu.lower()}</strong></a></li>'
+                f'<li><a href="{link(pag.destino)}"><strong>Ver {pag.menu.lower()}</strong></a></li>'
                 f'{sub}</ul></li>'
             )
         else:
-            itens.append(f'<li><a href="{pag.destino}">{pag.menu}</a></li>')
+            itens.append(f'<li><a href="{link(pag.destino)}">{pag.menu}</a></li>')
     return "".join(itens)
 
 
 def menu_mobile():
     linhas = []
     for pag, filhos in mapa.MENU:
-        linhas.append(f'<li><a href="{pag.destino}">{pag.menu}</a></li>')
+        linhas.append(f'<li><a href="{link(pag.destino)}">{pag.menu}</a></li>')
         if filhos:
-            dentro = "".join(f'<li><a href="{f.destino}">{f.menu}</a></li>' for f in filhos)
+            dentro = "".join(f'<li><a href="{link(f.destino)}">{f.menu}</a></li>' for f in filhos)
             linhas.append(f'<li><ul class="sub-mobile">{dentro}</ul></li>')
     return "".join(linhas)
 
 
 def cabecalho():
     return f'''<header class="topo">
-  <a class="topo-logo" href="/" aria-label="Vegas Aceleradora — página inicial">
+  <a class="topo-logo" href="{link("/")}" aria-label="Vegas Aceleradora — página inicial">
     <img src="{mapa.MARCA['logo']}" alt="Vegas Aceleradora" width="371" height="148" fetchpriority="high">
   </a>
   <nav class="topo-nav" aria-label="Navegação principal">
     <ul>{menu_desktop()}</ul>
-    <a href="{mapa.DIAGNOSTICO.destino}" class="btn btn-1" data-track-id="cta-diagnostico-topo" data-track-pos="Topo"><span class="so-largo">Solicitar&nbsp;</span>diagnóstico</a>
+    <a href="{link(mapa.DIAGNOSTICO.destino)}" class="btn btn-1" data-track-id="cta-diagnostico-topo" data-track-pos="Topo"><span class="so-largo">Solicitar&nbsp;</span>diagnóstico</a>
   </nav>
   <details class="sanduiche">
     <summary aria-label="Menu"><span class="barras" aria-hidden="true"></span></summary>
     <nav class="sanduiche-painel" aria-label="Navegação do menu">
       <ul>{menu_mobile()}</ul>
-      <a href="{mapa.DIAGNOSTICO.destino}" class="btn btn-1" data-track-id="cta-diagnostico-menu" data-track-pos="Menu">Solicitar diagnóstico</a>
+      <a href="{link(mapa.DIAGNOSTICO.destino)}" class="btn btn-1" data-track-id="cta-diagnostico-menu" data-track-pos="Menu">Solicitar diagnóstico</a>
     </nav>
   </details>
 </header>'''
@@ -100,7 +146,7 @@ def cabecalho():
 def rodape():
     colunas = []
     for titulo, pags in mapa.RODAPE:
-        itens = "".join(f'<li><a href="{p.destino}">{p.menu}</a></li>' for p in pags)
+        itens = "".join(f'<li><a href="{link(p.destino)}">{p.menu}</a></li>' for p in pags)
         colunas.append(f'<div><h2>{titulo}</h2><ul>{itens}</ul></div>')
     m = mapa.MARCA
     return f'''<footer class="rodape">
@@ -121,7 +167,7 @@ def rodape():
     </div>
     <div class="rodape-fim">
       <span>© {date.today().year} {m['nome']} — marketing para restaurantes e delivery.</span>
-      <a href="{mapa.PRIVACIDADE.destino}">Política de privacidade</a>
+      <a href="{link(mapa.PRIVACIDADE.destino)}">Política de privacidade</a>
     </div>
   </div>
 </footer>
@@ -145,7 +191,7 @@ def trilha(d):
     itens, ld = [], []
     for i, (nome, url) in enumerate(partes, start=1):
         if url:
-            itens.append(f'<li><a href="{url}">{nome}</a></li>')
+            itens.append(f'<li><a href="{link(resolve(url))}">{nome}</a></li>')
             destino = mapa.DOMINIO + url
         else:
             itens.append(f'<li><span aria-current="page">{nome}</span></li>')
@@ -225,6 +271,12 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
         raise SystemExit(f"erro: {arquivo.name} nao tem o bloco <!--dados ... -->")
     d = json.loads(m.group(1))
     corpo = m.group(2)
+
+    # O conteudo das paginas escreve as URLs reais (/servicos/..., /blog/...).
+    # Na previa elas precisam do prefixo, senao cada link interno cai em 404.
+    # Reescrever aqui, uma vez, evita ter de lembrar disso em 36 arquivos.
+    corpo = re.sub(r'href="(/(?!/)[^"#][^"]*|/)"',
+                   lambda m: f'href="{link(resolve(m.group(1)))}"', corpo)
 
     url = d["url"]
     canonical = mapa.DOMINIO + url
@@ -341,6 +393,11 @@ def main():
         destino = monta(f)
         kb = destino.stat().st_size // 1024
         print(f"  {f.name} -> {destino.relative_to(RAIZ)} ({kb} KB)")
+    if _desconhecidos:
+        print("\n  ERRO: link interno fora do mapa de paginas:")
+        for u in sorted(_desconhecidos):
+            print(f"    {u}")
+        raise SystemExit("corrija o link ou acrescente a pagina em site/mapa.py")
     sitemap()
     if PREFIXO_PREVIA:
         print(f"\n  previa em {PREFIXO_PREVIA}/ — marcada noindex.")
