@@ -285,6 +285,21 @@ def cards_de_artigos():
     return f'<div class="grade grade-blog">{cards}</div>'
 
 
+def cards_de(pags, rotulo="Ver página"):
+    """Cards de uma lista de paginas do registro, so as publicadas.
+
+    Mesmo motivo do indice do blog: o indice de servicos e o de segmentos
+    precisam mostrar o que existe. Escrito a mao, cada pagina nova exigiria
+    editar o indice — e e exatamente esse tipo de esquecimento que produz link
+    morto em site grande.
+    """
+    cards = "".join(
+        f'<a class="card" href="{a.url}"><h3>{a.menu}</h3>'
+        f'<p>{a.resumo}</p><span class="btn btn-3">{rotulo}</span></a>'
+        for a in pags if a.publicada)
+    return f'<div class="grade grade-3">{cards}</div>'
+
+
 def lista_de_categorias():
     """Categorias com pelo menos um artigo publicado, com a contagem real."""
     contagem = {}
@@ -315,6 +330,8 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     # O conteudo das paginas escreve as URLs reais (/servicos/..., /blog/...).
     # Na previa elas precisam do prefixo, senao cada link interno cai em 404.
     # Reescrever aqui, uma vez, evita ter de lembrar disso em 36 arquivos.
+    corpo = corpo.replace("{{SERVICOS}}", cards_de(mapa.SERVICOS_FILHOS, "Ver serviço"))
+    corpo = corpo.replace("{{SEGMENTOS}}", cards_de(mapa.SEGMENTOS_FILHOS))
     corpo = corpo.replace("{{ARTIGOS}}", cards_de_artigos())
     corpo = corpo.replace("{{CATEGORIAS}}", lista_de_categorias())
 

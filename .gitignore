@@ -34,3 +34,7 @@ id_ed25519*
 # --- build temporario ---
 .cache/
 tmp/
+
+# cache do Python gerado pelo construtor
+__pycache__/
+*.pyc

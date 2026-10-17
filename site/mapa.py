@@ -64,30 +64,42 @@ class Pag:
 
 # Grupo A — institucional
 HOME      = Pag("/", "Home", publicada=True, prioridade="1.0")
-SOBRE     = Pag("/sobre/", "Sobre a Vegas", "/#sobre")
-METODO    = Pag("/metodo/", "Método", "/#metodo")
-CONTATO   = Pag("/contato/", "Contato", "/#diagnostico")
+SOBRE     = Pag("/sobre/", "Sobre a Vegas", "/#sobre", publicada=True)
+METODO    = Pag("/metodo/", "Método", "/#metodo", publicada=True)
+CONTATO   = Pag("/contato/", "Contato", "/#diagnostico", publicada=True)
 
 # Grupo B — servicos
-SERVICOS  = Pag("/servicos/", "Serviços", "/#servicos")
+SERVICOS  = Pag("/servicos/", "Serviços", "/#servicos", publicada=True)
 SERVICOS_FILHOS = [
-    Pag("/servicos/trafego-pago-restaurantes/",   "Tráfego pago para restaurantes", "/#servicos"),
-    Pag("/servicos/marketing-para-delivery/",     "Marketing para delivery",        "/#servicos"),
-    Pag("/servicos/google-ads-restaurantes/",     "Google Ads para restaurantes",   "/#servicos", publicada=True),
-    Pag("/servicos/automacao-whatsapp-delivery/", "Automação no WhatsApp",          "/#servicos", publicada=True),
-    Pag("/servicos/remarketing-restaurantes/",    "Remarketing e recompra",         "/#servicos", publicada=True),
+    Pag("/servicos/trafego-pago-restaurantes/",   "Tráfego pago para restaurantes", "/#servicos", publicada=True,
+        resumo="Planejamento e gestão de campanhas no Meta Ads e no Google Ads, com segmentação pela área real de atendimento e leitura do que muda o caixa."),
+    Pag("/servicos/marketing-para-delivery/",     "Marketing para delivery",        "/#servicos", publicada=True,
+        resumo="A estratégia completa para operações que vivem de entrega: alcance útil, equilíbrio entre marketplace e canal próprio, e recompra."),
+    Pag("/servicos/google-ads-restaurantes/",     "Google Ads para restaurantes",   "/#servicos", publicada=True,
+        resumo="Aparecer para quem já digitou que quer comer. Campanhas de pesquisa, raio, retirada e o que precisa estar medido antes."),
+    Pag("/servicos/automacao-whatsapp-delivery/", "Automação no WhatsApp",          "/#servicos", publicada=True,
+        resumo="Organizar o caminho entre a conversa e o pedido: resposta no pico, informação sem fricção e recompra no canal próprio."),
+    Pag("/servicos/remarketing-restaurantes/",    "Remarketing e recompra",         "/#servicos", publicada=True,
+        resumo="Falar de novo com quem já conhece a casa, separando quem nunca pediu de quem pede toda semana — sem queimar margem."),
 ]
 
 # Grupo C — segmentos
-SEGMENTOS = Pag("/segmentos/", "Para quem", "/#segmentos")
+SEGMENTOS = Pag("/segmentos/", "Para quem", "/#segmentos", publicada=True)
 SEGMENTOS_FILHOS = [
-    Pag("/marketing-para-restaurantes/",           "Restaurantes",         "/#segmentos"),
-    Pag("/marketing-para-pizzarias/",              "Pizzarias",            "/#segmentos", publicada=True),
-    Pag("/marketing-para-hamburguerias/",          "Hamburguerias",        "/#segmentos", publicada=True),
-    Pag("/marketing-para-restaurantes-japoneses/", "Restaurantes japoneses", "/#segmentos", publicada=True),
-    Pag("/marketing-para-cafeterias/",             "Cafeterias",           "/#segmentos", publicada=True),
-    Pag("/marketing-para-dark-kitchens/",          "Dark kitchens",        "/#segmentos", publicada=True),
-    Pag("/marketing-para-bares/",                  "Bares",                "/#segmentos", publicada=True),
+    Pag("/marketing-para-restaurantes/",           "Restaurantes",         "/#segmentos", publicada=True,
+        resumo="Salão e delivery dividindo a mesma cozinha, com canais e horários que competem entre si."),
+    Pag("/marketing-para-pizzarias/",              "Pizzarias",            "/#segmentos", publicada=True,
+        resumo="Demanda concentrada em duas noites e o resultado do mês decidido nos outros cinco dias."),
+    Pag("/marketing-para-hamburguerias/",          "Hamburguerias",        "/#segmentos", publicada=True,
+        resumo="Praça disputada, produto visual e ticket que cresce pelo combo, não pelo preço."),
+    Pag("/marketing-para-restaurantes-japoneses/", "Restaurantes japoneses", "/#segmentos", publicada=True,
+        resumo="Ticket alto, decisão planejada e percepção de valor no lugar do desconto."),
+    Pag("/marketing-para-cafeterias/",             "Cafeterias",           "/#segmentos", publicada=True,
+        resumo="Ticket baixo com frequência alta: a conta só fecha pela recorrência."),
+    Pag("/marketing-para-dark-kitchens/",          "Dark kitchens",        "/#segmentos", publicada=True,
+        resumo="Sem fachada, todo cliente é conquistado digitalmente — e o custo de aquisição vira a métrica central."),
+    Pag("/marketing-para-bares/",                  "Bares",                "/#segmentos", publicada=True,
+        resumo="Agenda, decisão coletiva e o dia de menor movimento como maior oportunidade."),
 ]
 
 # Grupo D — resultados. As paginas de case dependem de material real; ficam
@@ -138,7 +150,7 @@ ARTIGOS = [
 ]
 
 # Grupo F — conversao e transparencia
-DIAGNOSTICO = Pag("/diagnostico/", "Diagnóstico gratuito", "/#diagnostico", prioridade="0.9")
+DIAGNOSTICO = Pag("/diagnostico/", "Diagnóstico gratuito", "/#diagnostico", publicada=True, prioridade="0.9")
 PRIVACIDADE = Pag("/politica-de-privacidade/", "Política de privacidade", publicada=True, prioridade="0.3")
 
 TODAS = ([HOME, SOBRE, METODO, CONTATO, SERVICOS] + SERVICOS_FILHOS +
