@@ -43,9 +43,10 @@ RAIZ = pathlib.Path(__file__).parent
 PAGINAS = RAIZ / "site" / "paginas"
 PUBLIC = RAIZ / "public"
 
-# Enquanto a Home nova esta em revisao ela sai em /v3/. Trocar para "" publica
-# na raiz, e nenhum outro arquivo precisa mudar.
-PREFIXO_PREVIA = "/v3"
+# Prefixo de previa. "" publica na raiz; "/v3" (ou qualquer outro) joga o site
+# inteiro para dentro desse diretorio e marca tudo como noindex, sem que nenhum
+# outro arquivo precise mudar. Hoje o site esta publicado na raiz.
+PREFIXO_PREVIA = ""
 
 
 # Indice url -> Pag, para resolver link interno pelo registro.
@@ -372,7 +373,9 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     og = d.get("og", "/img/hero-fundador-vegas-hd.webp")
     # Previa nao pode ser indexada: o canonical dela aponta para a URL real, e
     # sem noindex o Google trataria as duas como conteudo duplicado.
-    robots = ("noindex, nofollow" if PREFIXO_PREVIA
+    # "indexavel": false serve para pagina de servico (404), que existe como
+    # arquivo mas nao e conteudo a ser encontrado na busca.
+    robots = ("noindex, nofollow" if PREFIXO_PREVIA or d.get("indexavel") is False
               else "index, follow, max-image-preview:large")
 
     html = f'''<!DOCTYPE html>
@@ -427,7 +430,13 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
 '''
 
     destino = PUBLIC / (PREFIXO_PREVIA.strip("/") if PREFIXO_PREVIA else "")
-    destino = destino / url.strip("/") / "index.html"
+    # "arquivo" grava num caminho literal, em vez de <url>/index.html. E o que
+    # a pagina de erro precisa: o ErrorDocument do Apache aponta para um
+    # arquivo, nao para um diretorio com indice.
+    # lstrip: na Home url.strip("/") e "", e "/index.html" com barra na frente
+    # faria o pathlib descartar PUBLIC e escrever na raiz do disco.
+    destino = destino / (d["arquivo"] if d.get("arquivo")
+                         else (url.strip("/") + "/index.html").lstrip("/"))
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(html, encoding="utf-8")
     return destino
@@ -455,6 +464,56 @@ def sitemap():
     print(f"  sitemap.xml com {sum(1 for p in mapa.TODAS if p.publicada)} URL(s)")
 
 
+# ================================================================= _headers ===
+def cabecalhos():
+    """Reescreve public/_headers com uma regra por rota de HTML.
+
+    O .htaccess resolve isso num `<FilesMatch "\\.html$">`, mas o _headers da
+    Cloudflare nao tem equivalente por extensao: ele casa caminho de
+    requisicao, e /sobre/ nao termina em .html. Confiar numa regra `/*` ampla
+    com excecoes depende da ordem de precedencia entre regras, que nao e
+    garantida. Enumerar as rotas a partir do registro e deterministico — e, como
+    e gerado, nao fica desatualizado quando uma pagina entra ou sai.
+    """
+    if PREFIXO_PREVIA:
+        print("  _headers nao reescrito (modo previa)")
+        return
+    rotas = "\n".join(
+        f"{p.url}\n  Cache-Control: no-cache, must-revalidate"
+        for p in mapa.TODAS if p.publicada)
+    (PUBLIC / "_headers").write_text(f'''# GERADO POR construtor.py — nao editar a mao.
+# Equivalente Cloudflare do public/.htaccess (que so a HostGator/Apache le).
+# HTTPS e o redirect www->apex ficam por conta da Cloudflare, nao daqui.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=86400
+
+# Assets de nome estavel: cache longo.
+/img/*
+  Cache-Control: public, max-age=2592000
+/fonts/*
+  Cache-Control: public, max-age=2592000
+/vegas.css
+  Cache-Control: public, max-age=604800
+/vegas.js
+  Cache-Control: public, max-age=604800
+/site.js
+  Cache-Control: public, max-age=604800
+
+# HTML sempre revalidado: um deploy novo aparece na hora. Uma linha por rota
+# publicada em site/mapa.py.
+{rotas}
+/404.html
+  Cache-Control: no-cache, must-revalidate
+''', encoding="utf-8")
+    print(f"  _headers com {sum(1 for p in mapa.TODAS if p.publicada) + 1} rota(s) de HTML")
+
+
 def main():
     alvo = None
     for i, a in enumerate(sys.argv):
@@ -479,6 +538,7 @@ def main():
             print(f"    {u}")
         raise SystemExit("corrija o link ou acrescente a pagina em site/mapa.py")
     sitemap()
+    cabecalhos()
     if PREFIXO_PREVIA:
         print(f"\n  previa em {PREFIXO_PREVIA}/ — marcada noindex.")
         print("  Para publicar na raiz: PREFIXO_PREVIA = \"\" em construtor.py")

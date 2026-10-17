@@ -1,4 +1,5 @@
-# Cloudflare Pages — equivalente ao .htaccess (que so a HostGator/Apache le).
+# GERADO POR construtor.py — nao editar a mao.
+# Equivalente Cloudflare do public/.htaccess (que so a HostGator/Apache le).
 # HTTPS e o redirect www->apex ficam por conta da Cloudflare, nao daqui.
 
 /*
@@ -9,14 +10,85 @@
   Cross-Origin-Opener-Policy: same-origin
   Strict-Transport-Security: max-age=86400
 
-# HTML sempre revalidado: um deploy novo aparece na hora
-/index.html
-  Cache-Control: no-cache, must-revalidate
-
-# imagens: nomes estaveis, cache longo
+# Assets de nome estavel: cache longo.
 /img/*
   Cache-Control: public, max-age=2592000
-
-# vendor/ e versionado (react@18.3.1): cache forte
+/fonts/*
+  Cache-Control: public, max-age=2592000
+/vegas.css
+  Cache-Control: public, max-age=604800
+/vegas.js
+  Cache-Control: public, max-age=604800
 /site.js
   Cache-Control: public, max-age=604800
+
+# HTML sempre revalidado: um deploy novo aparece na hora. Uma linha por rota
+# publicada em site/mapa.py.
+/
+  Cache-Control: no-cache, must-revalidate
+/sobre/
+  Cache-Control: no-cache, must-revalidate
+/metodo/
+  Cache-Control: no-cache, must-revalidate
+/contato/
+  Cache-Control: no-cache, must-revalidate
+/servicos/
+  Cache-Control: no-cache, must-revalidate
+/servicos/trafego-pago-restaurantes/
+  Cache-Control: no-cache, must-revalidate
+/servicos/marketing-para-delivery/
+  Cache-Control: no-cache, must-revalidate
+/servicos/google-ads-restaurantes/
+  Cache-Control: no-cache, must-revalidate
+/servicos/automacao-whatsapp-delivery/
+  Cache-Control: no-cache, must-revalidate
+/servicos/remarketing-restaurantes/
+  Cache-Control: no-cache, must-revalidate
+/segmentos/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-restaurantes/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-pizzarias/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-hamburguerias/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-restaurantes-japoneses/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-cafeterias/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-dark-kitchens/
+  Cache-Control: no-cache, must-revalidate
+/marketing-para-bares/
+  Cache-Control: no-cache, must-revalidate
+/resultados/
+  Cache-Control: no-cache, must-revalidate
+/blog/
+  Cache-Control: no-cache, must-revalidate
+/blog/como-aumentar-vendas-delivery/
+  Cache-Control: no-cache, must-revalidate
+/blog/marketing-para-restaurantes/
+  Cache-Control: no-cache, must-revalidate
+/blog/trafego-pago-delivery/
+  Cache-Control: no-cache, must-revalidate
+/blog/como-vender-mais-ifood/
+  Cache-Control: no-cache, must-revalidate
+/blog/como-atrair-clientes-restaurante/
+  Cache-Control: no-cache, must-revalidate
+/blog/quanto-investir-anuncios-restaurante/
+  Cache-Control: no-cache, must-revalidate
+/blog/como-aumentar-ticket-medio/
+  Cache-Control: no-cache, must-revalidate
+/blog/como-fidelizar-clientes-delivery/
+  Cache-Control: no-cache, must-revalidate
+/blog/ifood-ou-delivery-proprio/
+  Cache-Control: no-cache, must-revalidate
+/blog/como-calcular-roas-restaurante/
+  Cache-Control: no-cache, must-revalidate
+/blog/whatsapp-para-restaurantes/
+  Cache-Control: no-cache, must-revalidate
+/diagnostico/
+  Cache-Control: no-cache, must-revalidate
+/politica-de-privacidade/
+  Cache-Control: no-cache, must-revalidate
+/404.html
+  Cache-Control: no-cache, must-revalidate

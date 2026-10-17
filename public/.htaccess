@@ -2,6 +2,11 @@
 
 DirectoryIndex index.html
 
+# Endereco errado ou link velho cai numa pagina da Vegas, com os caminhos
+# principais, em vez da tela padrao do Apache. A pagina e gerada pelo
+# construtor.py a partir de site/paginas/erro-404.html, com noindex.
+ErrorDocument 404 /404.html
+
 # ---------- HTTPS + dominio canonico (sem www) ----------
 <IfModule mod_rewrite.c>
   RewriteEngine On

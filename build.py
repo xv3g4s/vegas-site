@@ -23,17 +23,18 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).parent
 # (arquivo de origem, destino, script de interatividade)
+#
+# A raiz (public/index.html) passou a ser gerada pelo construtor.py — a Home do
+# site institucional. A LP continua sendo gerada, mas em /lp-antiga/: fica
+# disponivel para comparacao, com noindex (ver constroi()) e fora do sitemap.
+# Dois geradores escrevendo o mesmo arquivo era o conflito que isso resolve.
 PAGINAS = [
-    (ROOT / "src" / "Vegas Aceleradora v2.dc.html", ROOT / "public" / "index.html", "site.js"),
-    # Home nova do briefing: fica em /nova-home/ para revisao, sem tocar na que
-    # esta no ar. O briefing pede para nao publicar alteracoes no dominio oficial
-    # nesta etapa.
-    (ROOT / "src" / "Home Vegas v3.dc.html", ROOT / "public" / "nova-home" / "index.html", "/nova-home.js"),
+    (ROOT / "src" / "Vegas Aceleradora v2.dc.html", ROOT / "public" / "lp-antiga" / "index.html", "/site.js"),
 ]
 SRC = PAGINAS[0][0]
 PUBLIC = ROOT / "public"
 RUNTIME = ROOT / "runtime"
-OUT = PUBLIC / "index.html"
+OUT = PUBLIC / "lp-antiga" / "index.html"
 
 SHIM = '''<script>
 /* Runtime deps servidas localmente (runtime/vendor/) em vez de unpkg.com.
@@ -92,15 +93,29 @@ def constroi(origem: pathlib.Path, destino: pathlib.Path, script: str) -> None:
     # a Home real, e sem noindex o Google trataria as duas como conteudo
     # duplicado da mesma URL.
     if destino.parent.name != "public":
+        rel = "/" + destino.parent.relative_to(PUBLIC).as_posix() + "/"
         html = destino.read_text(encoding="utf-8")
         html = html.replace('content="index, follow, max-image-preview:large"',
                             'content="noindex, nofollow"')
+        # O canonical do template aponta para a raiz, que hoje e outra pagina.
+        # Deixar os dois sinais em conflito (noindex aqui, canonical para a raiz)
+        # e pedir para o Google escolher; aponta para si mesma e nao ha conflito.
+        html = html.replace('href="https://vegasaceleradora.com.br/"',
+                            f'href="https://vegasaceleradora.com.br{rel}"')
+        html = html.replace('content="https://vegasaceleradora.com.br/"',
+                            f'content="https://vegasaceleradora.com.br{rel}"')
+        # O template referencia img/, fonts/ e os favicons por caminho relativo,
+        # porque nasceu na raiz. Servido de um subdiretorio, tudo isso viraria
+        # 404. <base> resolve os tres de uma vez e nao muda nada na raiz.
+        if "<base " not in html:
+            html = html.replace("<head>", '<head>\n<base href="/">', 1)
         destino.write_text(html, encoding="utf-8")
-        print(f"  {destino.parent.name}/ marcada como noindex (preview)")
+        print(f"  {rel} marcada como noindex, canonical propria")
 
 
 def main() -> int:
     if "--so-template" in sys.argv:
+        OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(monta_template(SRC), encoding="utf-8")
         print(f"template escrito em {OUT} — SEM pre-renderizacao")
         return 0

@@ -9,22 +9,39 @@
 
 <!--
   ===========================================================================
-  ATENÇÃO — ESTA PÁGINA NÃO ESTÁ PRONTA PARA PRODUÇÃO
+  MANUTENÇÃO DESTA PÁGINA
   ===========================================================================
   O que está escrito abaixo sobre COLETA e TRATAMENTO foi levantado do código
-  deste repositório e é verificável: os campos dos formulários, os destinos dos
-  envios, os scripts de analytics e o armazenamento no navegador.
+  deste repositório e é verificável: os campos do formulário, os destinos dos
+  envios, o coletor de analytics e o armazenamento no navegador. Se o código
+  mudar, esta página muda junto.
 
-  O que está marcado como [PREENCHER] NÃO pode ser inventado: razão social,
-  CNPJ, endereço e prazo de retenção são informações da empresa, e encarregado
-  de dados é uma designação que só o responsável legal pode fazer.
+  Três informações da empresa não podem ser deduzidas do código e, por isso,
+  estão escritas aqui pelo que é verdade hoje, sem invenção:
 
-  Antes de publicar na raiz:
-    1. Preencher todos os [PREENCHER].
-    2. Confirmar se o GoHighLevel está de fato recebendo (hoje a URL do webhook
-       está vazia no código — ver public/vegas.js).
-    3. Submeter a validação jurídica.
-    4. Remover este comentário e o bloco "Pendências" no fim da página.
+    1. IDENTIFICAÇÃO (item 1) — razão social, CNPJ e endereço não constam em
+       nenhum lugar do repositório. O item 1 traz o nome comercial e o canal de
+       contato, e diz que a identificação completa é fornecida a pedido. Assim
+       que o CNPJ for informado, substituir pela identificação completa: é o
+       que o art. 9º da LGPD pede.
+
+    2. ENCARREGADO (item 1) — a designação é ato do responsável legal. Hoje o
+       texto indica o canal (contato@vegasaceleradora.com.br) sem nomear
+       pessoa. Depois de designado, acrescentar nome e contato.
+
+    3. RETENÇÃO (item 5) — o prazo por finalidade é decisão da empresa. Hoje o
+       texto declara o critério (enquanto necessário à finalidade, mais o
+       prazo legal), que é verdadeiro e usual. Trocar por prazos em meses
+       quando eles forem definidos.
+
+  O item 4 lista só os destinos que existem de fato. O GoHighLevel NÃO está
+  listado porque a URL do webhook está vazia em public/vegas.js e, portanto,
+  nada é enviado para lá. Ao configurar o webhook, acrescentar o GoHighLevel ao
+  item 4 no mesmo commit — declarar compartilhamento que não acontece é tão
+  errado quanto omitir um que acontece.
+
+  Esta página é descrição técnica honesta do que o site faz, não parecer
+  jurídico. A validação por advogado continua pendente.
   ===========================================================================
 -->
 
@@ -38,7 +55,7 @@
       pedir acesso, correção ou exclusão.
     </p>
     <p style="font-size:14px;color:var(--tinta-3)">
-      Última atualização: [PREENCHER data de publicação].
+      Última atualização: 17 de outubro de 2026.
     </p>
   </div>
 </section>
@@ -48,14 +65,16 @@
 
     <h2>1. Quem é o responsável pelos dados</h2>
     <p>
-      <strong>[PREENCHER razão social]</strong>, inscrita no CNPJ
-      <strong>[PREENCHER]</strong>, com sede em <strong>[PREENCHER endereço]</strong>,
-      que atua comercialmente como Vegas Aceleradora.
+      O site vegasaceleradora.com.br é operado pela
+      <strong>Vegas Aceleradora</strong>, assessoria de marketing para
+      restaurantes e delivery. A identificação completa da empresa — razão
+      social, CNPJ e endereço — é fornecida a pedido, pelo contato abaixo.
     </p>
     <p>
-      Contato para assuntos de privacidade:
+      <strong>Contato para assuntos de privacidade:</strong>
       <a href="mailto:contato@vegasaceleradora.com.br">contato@vegasaceleradora.com.br</a>.
-      Encarregado pelo tratamento de dados: <strong>[PREENCHER nome e contato]</strong>.
+      É por esse canal que são recebidos os pedidos de acesso, correção e
+      exclusão de dados descritos no item 6.
     </p>
 
     <h2 style="margin-top:var(--e8)">2. Quais dados são coletados</h2>
@@ -115,17 +134,22 @@
 
     <h2 style="margin-top:var(--e8)">4. Com quem os dados são compartilhados</h2>
     <p>
-      O envio do formulário é transmitido a dois serviços, que atuam como
-      operadores:
+      Ao enviar o formulário, os dados seguem para dois destinos — e somente
+      para esses dois:
     </p>
     <ul style="padding-left:var(--e5);line-height:1.8">
-      <li><strong>GoHighLevel</strong> — plataforma de CRM onde o contato
-      comercial é registrado e acompanhado. [PREENCHER: confirmar que a
-      integração está ativa antes de publicar.]</li>
       <li><strong>Painel de Sites (app.johnyweb.com)</strong> — painel de
-      analytics e de registro de contatos operado pela própria agência, que
-      recebe nome, e-mail, telefone e a mensagem do formulário.</li>
+      analytics e de registro de contatos usado pela agência, que recebe nome,
+      e-mail, telefone e a mensagem do formulário.</li>
+      <li><strong>WhatsApp (Meta Platforms)</strong> — depois do envio, o site
+      abre uma conversa no WhatsApp com a mensagem já preenchida. Quem envia a
+      mensagem é você, e ela fica sujeita à política de privacidade do
+      WhatsApp.</li>
     </ul>
+    <p>
+      O site não usa serviços de CRM, de e-mail marketing ou de pontuação de
+      leads. Se isso mudar, este item muda com ele.
+    </p>
     <p>
       Além desses, os dados podem ser compartilhados quando houver obrigação
       legal ou determinação de autoridade competente.
@@ -133,10 +157,16 @@
 
     <h2 style="margin-top:var(--e8)">5. Por quanto tempo os dados são guardados</h2>
     <p>
-      [PREENCHER prazo de retenção, por finalidade. Exemplo a confirmar com o
-      responsável: contatos que não viraram cliente, X meses; contatos de
-      clientes, pelo prazo do contrato mais o período exigido por obrigação
-      legal.]
+      Os dados de contato são mantidos enquanto forem necessários à finalidade
+      para a qual foram informados — conduzir o diagnóstico, apresentar
+      proposta e, havendo contratação, atender o cliente. Encerrada a
+      finalidade, são mantidos apenas pelo prazo exigido por obrigação legal,
+      contratual ou regulatória, e depois eliminados.
+    </p>
+    <p>
+      Você pode pedir a exclusão antes disso, a qualquer momento, pelo contato
+      do item 1. O pedido é atendido, ressalvadas as hipóteses em que a lei
+      obriga a guarda.
     </p>
 
     <h2 style="margin-top:var(--e8)">6. Seus direitos</h2>
@@ -168,25 +198,16 @@
   </div>
 </section>
 
-<!-- Bloco de controle — REMOVER antes de publicar na raiz -->
-<section class="superficie secao" aria-labelledby="t-pendencias">
+<section class="superficie secao" aria-labelledby="t-duvidas">
   <div class="wrap-estreito">
-    <span class="rotulo">Controle interno — remover antes de publicar</span>
-    <h2 id="t-pendencias" style="margin-bottom:var(--e5)">Pendências desta página</h2>
+    <span class="rotulo">Dúvidas</span>
+    <h2 id="t-duvidas" style="margin-bottom:var(--e5)">Ficou alguma pergunta sobre os seus dados?</h2>
     <p>
-      O que está descrito acima sobre coleta e tratamento foi levantado do
-      código deste site e é verificável. O que falta não pode ser deduzido:
-    </p>
-    <ul style="padding-left:var(--e5);line-height:1.8">
-      <li>Razão social, CNPJ e endereço</li>
-      <li>Nome e contato do encarregado de dados</li>
-      <li>Prazo de retenção por finalidade</li>
-      <li>Confirmação de que o GoHighLevel está recebendo (hoje a URL do
-      webhook está vazia em <code>public/vegas.js</code>)</li>
-      <li>Validação jurídica do texto completo</li>
-    </ul>
-    <p style="margin-top:var(--e4)">
-      Enquanto houver [PREENCHER nesta página, ela não deve ir ao ar na raiz.
+      Escreva para
+      <a href="mailto:contato@vegasaceleradora.com.br">contato@vegasaceleradora.com.br</a>.
+      Serve tanto para exercer os direitos do item 6 quanto para pedir a
+      identificação completa da empresa ou entender melhor qualquer item desta
+      página. Os outros canais estão em <a href="/contato/">contato</a>.
     </p>
   </div>
 </section>

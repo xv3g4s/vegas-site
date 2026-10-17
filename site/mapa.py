@@ -112,7 +112,7 @@ CASES = [
 ]
 
 # Grupo E — conteudo
-BLOG = Pag("/blog/", "Blog", "/#conteudo", publicada=True, prioridade="0.8")
+BLOG = Pag("/blog/", "Blog", "/#conteudo-especializado", publicada=True, prioridade="0.8")
 ARTIGOS = [
     Pag("/blog/como-aumentar-vendas-delivery/", "Como aumentar vendas no delivery",
         publicada=True, categoria="Delivery",

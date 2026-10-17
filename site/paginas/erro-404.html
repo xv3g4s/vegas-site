@@ -1,0 +1,88 @@
+<!--dados
+{
+  "url": "/404.html",
+  "arquivo": "404.html",
+  "indexavel": false,
+  "titulo": "Página não encontrada | Vegas Aceleradora",
+  "descricao": "O endereço que você abriu não existe neste site. Veja os caminhos principais ou use a busca do seu navegador."
+}
+-->
+
+<!--
+  Pagina de erro, servida pelo ErrorDocument do Apache (public/.htaccess) e
+  pela convencao 404.html da Cloudflare. Nao entra no sitemap nem no registro
+  de paginas: nao e conteudo a ser encontrado, e um desvio util quando o
+  visitante erra o endereco ou chega por um link velho.
+
+  Os links daqui sao absolutos e passam pelo reescritor do construtor, igual aos
+  do resto do site — e por isso nao enferrujam quando uma pagina muda de lugar.
+-->
+
+<section class="escuro secao" style="padding-bottom:var(--e7)">
+  <div class="wrap-estreito">
+    <span class="rotulo">Erro 404</span>
+    <h1>Esta página não existe</h1>
+    <p class="apoio" style="margin-top:var(--e5);font-size:clamp(18px,1.5vw,21px)">
+      O endereço que você abriu não está neste site. Pode ser um link antigo,
+      um endereço digitado com um caractere trocado, ou uma página que mudou de
+      lugar. Os caminhos principais estão abaixo.
+    </p>
+    <div class="linha-botoes" style="margin-top:var(--e6)">
+      <a href="/" class="btn btn-1">Ir para a Home</a>
+      <a href="/contato/" class="btn btn-2">Falar com a Vegas</a>
+    </div>
+  </div>
+</section>
+
+<section class="claro secao" aria-labelledby="t-caminhos">
+  <div class="wrap">
+    <div class="cabeca-secao">
+      <span class="rotulo">Para onde ir</span>
+      <h2 id="t-caminhos">Os caminhos principais</h2>
+    </div>
+    <div class="grade grade-3">
+      <a class="card" href="/servicos/">
+        <h3>Serviços</h3>
+        <p>Tráfego pago, Google Ads, automação no WhatsApp e remarketing.</p>
+        <span class="btn btn-3">Ver serviços</span>
+      </a>
+      <a class="card" href="/segmentos/">
+        <h3>Para quem</h3>
+        <p>Restaurantes, pizzarias, hamburguerias, japoneses, cafeterias, dark
+        kitchens e bares.</p>
+        <span class="btn btn-3">Ver segmentos</span>
+      </a>
+      <a class="card" href="/metodo/">
+        <h3>Método</h3>
+        <p>Aquisição, conversão e recorrência — e por que funcionam juntas.</p>
+        <span class="btn btn-3">Ver método</span>
+      </a>
+      <a class="card" href="/blog/">
+        <h3>Blog</h3>
+        <p>Guias sobre marketing de restaurante e delivery, sem receita de bolo.</p>
+        <span class="btn btn-3">Ler o blog</span>
+      </a>
+      <a class="card" href="/resultados/">
+        <h3>Resultados</h3>
+        <p>O que a Vegas mede, como mede e quais são os limites da medição.</p>
+        <span class="btn btn-3">Ver resultados</span>
+      </a>
+      <a class="card" href="/diagnostico/">
+        <h3>Diagnóstico</h3>
+        <p>A conversa inicial sobre a sua operação, sem custo.</p>
+        <span class="btn btn-3">Solicitar diagnóstico</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="secao" style="background:#000">
+  <div class="wrap-estreito" style="text-align:center">
+    <h2 style="margin-bottom:var(--e4)">Procurava alguma coisa específica?</h2>
+    <p class="apoio" style="margin:0 auto var(--e6)">
+      Se era sobre o marketing da sua operação, o diagnóstico é o caminho mais
+      curto — e a conversa já começa com contexto.
+    </p>
+    <a href="/diagnostico/" class="btn btn-1" data-track-id="cta-diagnostico-404" data-track-pos="Erro 404">Solicitar diagnóstico gratuito</a>
+  </div>
+</section>
