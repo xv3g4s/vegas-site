@@ -305,6 +305,13 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     d = json.loads(m.group(1))
     corpo = m.group(2)
 
+    # Modelo: fica no repositorio como forma pronta, mas NAO vira URL.
+    # Os cases dependem de dado real de cliente — periodo, investimento,
+    # metricas, autorizacao. Publicar a casca criaria pagina vazia no ar e no
+    # sitemap, que e exatamente o que o briefing proibe.
+    if d.get("rascunho"):
+        return None
+
     # O conteudo das paginas escreve as URLs reais (/servicos/..., /blog/...).
     # Na previa elas precisam do prefixo, senao cada link interno cai em 404.
     # Reescrever aqui, uma vez, evita ter de lembrar disso em 36 arquivos.
@@ -444,6 +451,9 @@ def main():
         if alvo and alvo not in f.stem:
             continue
         destino = monta(f)
+        if destino is None:
+            print(f"  {f.name} -> modelo, nao publicado (aguarda dado real)")
+            continue
         kb = destino.stat().st_size // 1024
         print(f"  {f.name} -> {destino.relative_to(RAIZ)} ({kb} KB)")
     if _desconhecidos:

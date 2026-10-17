@@ -92,7 +92,7 @@ SEGMENTOS_FILHOS = [
 
 # Grupo D — resultados. As paginas de case dependem de material real; ficam
 # declaradas, mas nao nascem vazias.
-RESULTADOS = Pag("/resultados/", "Resultados", "/#resultados")
+RESULTADOS = Pag("/resultados/", "Resultados", "/#resultados", publicada=True, prioridade="0.8")
 CASES = [
     Pag("/cases/pizzaria/",      "Case — pizzaria",      "/#resultados"),
     Pag("/cases/hamburgueria/",  "Case — hamburgueria",  "/#resultados"),
@@ -114,18 +114,32 @@ ARTIGOS = [
     Pag("/blog/como-vender-mais-ifood/", "Como vender mais no iFood",
         publicada=True, categoria="Delivery",
         resumo="Cardápio, foto, reputação e operação: o que está sob o seu controle dentro do aplicativo, e o que não está."),
-    Pag("/blog/como-atrair-clientes-restaurante/",     "Como atrair clientes para restaurante", categoria="Estratégias de vendas"),
-    Pag("/blog/quanto-investir-anuncios-restaurante/", "Quanto investir em anúncios", categoria="Gestão de marketing"),
-    Pag("/blog/como-aumentar-ticket-medio/",           "Como aumentar o ticket médio", categoria="Estratégias de vendas"),
-    Pag("/blog/como-fidelizar-clientes-delivery/",     "Como fidelizar clientes de delivery", categoria="Fidelização"),
-    Pag("/blog/ifood-ou-delivery-proprio/",            "iFood ou delivery próprio?", categoria="Delivery"),
-    Pag("/blog/como-calcular-roas-restaurante/",       "Como calcular o ROAS", categoria="Gestão de marketing"),
-    Pag("/blog/whatsapp-para-restaurantes/",           "WhatsApp para restaurantes", categoria="Fidelização"),
+    Pag("/blog/como-atrair-clientes-restaurante/", "Como atrair clientes para restaurante",
+        publicada=True, categoria="Estratégias de vendas",
+        resumo="Ser encontrável, ser lembrado e ser recomendado — nessa ordem, porque investir em alcance antes da primeira é desperdício."),
+    Pag("/blog/quanto-investir-anuncios-restaurante/", "Quanto investir em anúncios",
+        publicada=True, categoria="Gestão de marketing",
+        resumo="A conta sai da capacidade da cozinha e da margem, não de um percentual do faturamento. Com exemplo numérico e hipóteses declaradas."),
+    Pag("/blog/como-aumentar-ticket-medio/", "Como aumentar o ticket médio",
+        publicada=True, categoria="Estratégias de vendas",
+        resumo="Complemento, upsell, combo e cardápio: o que faz o mesmo pedido valer mais sem arriscar volume."),
+    Pag("/blog/como-fidelizar-clientes-delivery/", "Como fidelizar clientes de delivery",
+        publicada=True, categoria="Fidelização",
+        resumo="Consistência, lembrança e facilidade. Por que desconto compra o próximo pedido e não o hábito."),
+    Pag("/blog/ifood-ou-delivery-proprio/", "iFood ou delivery próprio?",
+        publicada=True, categoria="Delivery",
+        resumo="Não é escolher um lado: é saber onde cada canal tem vantagem de custo — descoberta no aplicativo, recompra no canal próprio."),
+    Pag("/blog/como-calcular-roas-restaurante/", "Como calcular o ROAS",
+        publicada=True, categoria="Gestão de marketing",
+        resumo="A fórmula, um exemplo passo a passo e por que ROAS 5 pode fechar o mês no vermelho."),
+    Pag("/blog/whatsapp-para-restaurantes/", "WhatsApp para restaurantes",
+        publicada=True, categoria="Fidelização",
+        resumo="As três funções do canal — dúvida, pedido e relacionamento — e por que tratá-las como uma só vira bagunça."),
 ]
 
 # Grupo F — conversao e transparencia
 DIAGNOSTICO = Pag("/diagnostico/", "Diagnóstico gratuito", "/#diagnostico", prioridade="0.9")
-PRIVACIDADE = Pag("/politica-de-privacidade/", "Política de privacidade")
+PRIVACIDADE = Pag("/politica-de-privacidade/", "Política de privacidade", publicada=True, prioridade="0.3")
 
 TODAS = ([HOME, SOBRE, METODO, CONTATO, SERVICOS] + SERVICOS_FILHOS +
          [SEGMENTOS] + SEGMENTOS_FILHOS + [RESULTADOS] + CASES +

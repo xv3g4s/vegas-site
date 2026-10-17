@@ -1,0 +1,170 @@
+<!--dados
+{
+  "rascunho": true,
+  "url": "/cases/MODELO/",
+  "titulo": "PREENCHER — Case [tipo de operação] | Vegas Aceleradora",
+  "descricao": "PREENCHER — uma frase com o tipo de operação, o problema e o indicador que mudou. Sem número que não esteja no corpo da página.",
+  "trilha": [["Home", "/"], ["Resultados", "/resultados/"], ["PREENCHER", null]]
+}
+-->
+
+<!--
+  ===========================================================================
+  MODELO DE CASE — não publicado
+  ===========================================================================
+
+  Este arquivo existe como forma pronta. Ele NÃO vira URL: o campo
+  "rascunho": true faz o construtor pular a página. Sem isso, /cases/pizzaria/
+  iria ao ar vazia e entraria no sitemap — exatamente o que não pode acontecer.
+
+  POR QUE NENHUM CASE FOI PUBLICADO
+  Não existe no repositório um único dado real de cliente: nem período, nem
+  investimento, nem métrica antes/depois, nem autorização por escrito. Inventar
+  qualquer um desses números transformaria a página mais sensível do site numa
+  peça de ficção — e é o tipo de coisa que, descoberta, derruba a credibilidade
+  de todo o resto.
+
+  COMO PUBLICAR UM CASE
+  1. Reúna os oito campos obrigatórios listados em /resultados/.
+  2. Copie este arquivo para site/paginas/case-<slug>.html.
+  3. Preencha tudo que está como PREENCHER e remova "rascunho": true.
+  4. Em site/mapa.py, marque a Pag correspondente com publicada=True.
+  5. Rode `python3 construtor.py` — a página entra no menu e no sitemap sozinha.
+
+  REGRAS QUE NÃO PODEM SER FLEXIBILIZADAS
+  - Período e investimento sempre explícitos. Sem os dois, o número não
+    significa nada e não deve ir ao ar.
+  - Receita atribuída não é lucro. Não escreva "lucrou X" a partir de ROAS.
+  - Variação percentual sem valor-base é propaganda. Diga de quanto para
+    quanto, não só "+X%".
+  - A seção de limitações é obrigatória, não opcional. Todo período tem outras
+    variáveis; omiti-las é mentir por seleção.
+  - Depoimento só com autorização por escrito, com nome e cargo reais.
+  ===========================================================================
+-->
+
+<article>
+<section class="escuro secao" style="padding-bottom:var(--e7)">
+  <div class="wrap-estreito">
+    <span class="rotulo">Case · PREENCHER tipo de operação</span>
+    <h1>PREENCHER — o que mudou, em uma frase, sem número solto</h1>
+    <p class="apoio" style="margin-top:var(--e5);font-size:clamp(18px,1.5vw,21px)">
+      PREENCHER — resumo de duas a três linhas: tipo de operação, região,
+      período analisado e qual indicador se moveu.
+    </p>
+  </div>
+</section>
+
+<section class="superficie secao-curta">
+  <div class="wrap-estreito">
+    <h2 style="font-size:var(--t-h3);margin-bottom:var(--e3)">Ficha do case</h2>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:var(--t-peq);min-width:460px">
+        <tbody>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha)"><strong>Operação</strong></td><td style="padding:var(--e3);border-bottom:1px solid var(--linha)">PREENCHER</td></tr>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha)"><strong>Região</strong></td><td style="padding:var(--e3);border-bottom:1px solid var(--linha)">PREENCHER</td></tr>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha)"><strong>Período analisado</strong></td><td style="padding:var(--e3);border-bottom:1px solid var(--linha)">PREENCHER — data de início e de fim</td></tr>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha)"><strong>Investimento em mídia</strong></td><td style="padding:var(--e3);border-bottom:1px solid var(--linha)">PREENCHER — total no período</td></tr>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha)"><strong>Frentes aplicadas</strong></td><td style="padding:var(--e3);border-bottom:1px solid var(--linha)">PREENCHER</td></tr>
+          <tr><td style="padding:var(--e3)"><strong>Autorização</strong></td><td style="padding:var(--e3)">PREENCHER — data da autorização por escrito</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="claro secao">
+  <div class="wrap-estreito">
+    <span class="rotulo">Contexto</span>
+    <h2 style="margin-bottom:var(--e4)">Como a operação estava</h2>
+    <p>PREENCHER — canais em uso, de onde vinha o faturamento, qual era a
+    dependência de marketplace, o que o dono identificava como problema.</p>
+
+    <h3 style="margin-top:var(--e6)">O objetivo acordado</h3>
+    <p>PREENCHER — qual indicador se queria mover e por quê. Um objetivo, não
+    uma lista de desejos.</p>
+  </div>
+</section>
+
+<section class="escuro secao">
+  <div class="wrap">
+    <div class="cabeca-secao">
+      <span class="rotulo">Estratégia</span>
+      <h2>O que foi feito</h2>
+    </div>
+    <ul class="editorial editorial-num">
+      <li><span class="marca">01</span><div><h3>PREENCHER</h3><p>PREENCHER — a ação e o raciocínio por trás dela.</p></div></li>
+      <li><span class="marca">02</span><div><h3>PREENCHER</h3><p>PREENCHER</p></div></li>
+      <li><span class="marca">03</span><div><h3>PREENCHER</h3><p>PREENCHER</p></div></li>
+    </ul>
+    <p style="margin-top:var(--e6);max-width:70ch">
+      PREENCHER — o que foi deliberadamente deixado de fora e por quê. Essa
+      parte costuma ser a mais útil para quem está lendo.
+    </p>
+  </div>
+</section>
+
+<section class="claro secao">
+  <div class="wrap">
+    <div class="cabeca-secao">
+      <span class="rotulo">Números</span>
+      <h2>Antes e depois</h2>
+      <p class="apoio">
+        Mesmos indicadores, medidos da mesma forma, nos dois momentos. Sempre
+        com o valor-base — nunca só a variação percentual.
+      </p>
+    </div>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:var(--t-peq);min-width:560px">
+        <thead>
+          <tr style="text-align:left">
+            <th style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Indicador</th>
+            <th style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Antes</th>
+            <th style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Depois</th>
+            <th style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Fonte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Pedidos no período</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td></tr>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Ticket médio</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td></tr>
+          <tr><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">Custo por pedido</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td><td style="padding:var(--e3);border-bottom:1px solid var(--linha-clara)">PREENCHER</td></tr>
+          <tr><td style="padding:var(--e3)">Taxa de recompra</td><td style="padding:var(--e3)">PREENCHER</td><td style="padding:var(--e3)">PREENCHER</td><td style="padding:var(--e3)">PREENCHER</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="superficie secao">
+  <div class="wrap-estreito">
+    <span class="rotulo">Honestidade metodológica</span>
+    <h2 style="margin-bottom:var(--e4)">Limitações desta análise</h2>
+    <p>PREENCHER — obrigatório. O que mais mudou no período e que pode ter
+    influenciado: cardápio novo, data comemorativa, concorrente que fechou,
+    mudança de preço, sazonalidade, clima.</p>
+    <p>PREENCHER — o que não foi possível medir, e por quê. Em operação com
+    marketplace, dizer explicitamente que parte dos pedidos não tem origem
+    rastreável.</p>
+  </div>
+</section>
+
+<section class="escuro secao">
+  <div class="wrap-estreito">
+    <span class="rotulo">Depoimento</span>
+    <blockquote style="margin:0;border-left:3px solid var(--ouro);padding-left:var(--e5)">
+      <p style="font-size:var(--t-corpo-g)">PREENCHER — depoimento literal, com
+      autorização por escrito. Não editar o sentido da fala.</p>
+      <footer style="font-size:var(--t-peq);color:var(--tinta-3)">
+        PREENCHER nome · PREENCHER cargo · PREENCHER operação
+      </footer>
+    </blockquote>
+  </div>
+</section>
+
+<section class="secao" style="background:#000">
+  <div class="wrap-estreito" style="text-align:center">
+    <h2 style="margin-bottom:var(--e4)">PREENCHER — chamada conectada ao problema deste case</h2>
+    <a href="/diagnostico/" class="btn btn-1" data-track-id="cta-diagnostico-case" data-track-pos="Case">Solicitar diagnóstico gratuito</a>
+  </div>
+</section>
+</article>
