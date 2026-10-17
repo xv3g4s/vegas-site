@@ -144,6 +144,10 @@ h3 { font-size: var(--t-h3); letter-spacing: -0.01em; line-height: 1.3; }
 p { margin: 0 0 var(--e4); text-wrap: pretty; }
 p:last-child { margin-bottom: 0; }
 
+/* Titulo tem margem zero para o espaco ser decidido pelo bloco. O paragrafo
+   que vem logo depois e a excecao: sem isso ele cola no titulo. */
+h1 + p, h2 + p, h3 + p, h2 + ul, h3 + ul { margin-top: var(--e3); }
+
 /* Foco visivel em tudo que recebe teclado. */
 a:focus-visible, button:focus-visible, summary:focus-visible,
 input:focus-visible, select:focus-visible, textarea:focus-visible {
@@ -188,6 +192,9 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .grade-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
 .grade-3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
 .grade-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+/* Indice do blog: coluna larga, leitura editorial. Com minimo menor a
+   grade cabe tres por linha e deixa card orfao em numero par. */
+.grade-blog { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
 
 .cabeca-secao { max-width: 760px; margin-bottom: var(--e7); }
 
@@ -240,7 +247,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .claro .btn-2:hover { border-color: var(--acento-claro); color: var(--acento-claro); }
 
 .btn-3 { /* link com seta, para dentro de card */
-  min-height: 0; padding: 0; border-radius: 0;
+  /* 44px de altura mesmo sem fundo visivel: e o alvo de toque minimo, e sem
+     isso o link fica com 24px de altura no celular. */
+  min-height: 44px; padding: 0; border-radius: 0;
+  justify-content: flex-start;
   letter-spacing: 0.06em; font-size: 13px;
 }
 .escuro .btn-3, .superficie .btn-3 { color: var(--ouro); }
@@ -298,7 +308,7 @@ a.card:hover, .card-interativo:hover { transform: translateY(-3px); }
 /* ---- chips ---- */
 .chips { display: flex; flex-wrap: wrap; gap: var(--e2); list-style: none; margin: 0; padding: 0; }
 .chip {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
   padding: 7px var(--e3); border-radius: var(--r-pill);
   border: 1px solid var(--linha); color: var(--tinta-3);
 }

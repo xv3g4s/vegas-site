@@ -197,7 +197,7 @@ def trilha(d):
             itens.append(f'<li><span aria-current="page">{nome}</span></li>')
             destino = mapa.DOMINIO + d["url"]
         ld.append({"@type": "ListItem", "position": i, "name": nome, "item": destino})
-    html = f'<nav class="trilha" aria-label="Você está em"><div class="wrap"><ol>{"".join(itens)}</ol></div></nav>'
+    html = f'<nav class="trilha" aria-label="Você está em"><div class="wrap-estreito"><ol>{"".join(itens)}</ol></div></nav>'
     bloco = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": ld}
     return html, json.dumps(bloco, ensure_ascii=False)
 
@@ -263,6 +263,39 @@ def faq_ld(html):
     }
 
 
+# ============================================================ blog ==========
+def cards_de_artigos():
+    """Monta a lista do indice do blog a partir do registro.
+
+    Gerado, e nao escrito a mao, por um motivo pratico: o indice precisa
+    mostrar o que EXISTE. Lista fixa com os 12 artigos planejados deixaria 8
+    links levando a lugar nenhum, e lista fixa com os 4 publicados teria de ser
+    editada toda vez que um artigo nascer. Aqui, publicar o artigo ja o coloca
+    no indice.
+    """
+    pubs = [a for a in mapa.ARTIGOS if a.publicada]
+    cards = "".join(
+        # URL crua de proposito: quem prefixa e resolve e o reescritor do
+        # corpo, logo adiante. Prefixar aqui faria o link passar duas vezes.
+        f'<a class="card" href="{a.url}">'
+        f'<span class="rotulo" style="margin-bottom:var(--e2)">{a.categoria}</span>'
+        f'<h3>{a.menu}</h3><p>{a.resumo}</p>'
+        f'<span class="btn btn-3">Ler o artigo</span></a>'
+        for a in pubs)
+    return f'<div class="grade grade-blog">{cards}</div>'
+
+
+def lista_de_categorias():
+    """Categorias com pelo menos um artigo publicado, com a contagem real."""
+    contagem = {}
+    for a in mapa.ARTIGOS:
+        if a.publicada and a.categoria:
+            contagem[a.categoria] = contagem.get(a.categoria, 0) + 1
+    return "".join(
+        f'<li class="chip">{c} <span style="opacity:.6">{n}</span></li>'
+        for c, n in sorted(contagem.items()))
+
+
 # ================================================================== pagina ===
 def monta(arquivo: pathlib.Path) -> pathlib.Path:
     bruto = arquivo.read_text(encoding="utf-8")
@@ -275,6 +308,9 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     # O conteudo das paginas escreve as URLs reais (/servicos/..., /blog/...).
     # Na previa elas precisam do prefixo, senao cada link interno cai em 404.
     # Reescrever aqui, uma vez, evita ter de lembrar disso em 36 arquivos.
+    corpo = corpo.replace("{{ARTIGOS}}", cards_de_artigos())
+    corpo = corpo.replace("{{CATEGORIAS}}", lista_de_categorias())
+
     corpo = re.sub(r'href="(/(?!/)[^"#][^"]*|/)"',
                    lambda m: f'href="{link(resolve(m.group(1)))}"', corpo)
 
@@ -288,6 +324,23 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     faq = faq_ld(corpo)
     if faq:
         blocos.append(faq)
+    if d.get("tipo") == "artigo":
+        # Autoria e a organizacao, que e o que da para afirmar com verdade: nao
+        # ha um autor pessoa confirmado. A data e a de escrita do arquivo, que
+        # tambem e verdadeira — melhor isso do que uma data inventada para
+        # parecer conteudo antigo.
+        blocos.append({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": d.get("h1") or d["titulo"],
+            "description": d["descricao"],
+            "inLanguage": "pt-BR",
+            "author": {"@id": mapa.DOMINIO + "/#organizacao"},
+            "publisher": {"@id": mapa.DOMINIO + "/#organizacao"},
+            "datePublished": d.get("data", date.today().isoformat()),
+            "dateModified": d.get("data", date.today().isoformat()),
+            "mainEntityOfPage": mapa.DOMINIO + d["url"],
+        })
     ld = "\n".join(
         f'<script type="application/ld+json">{json.dumps(b, ensure_ascii=False)}</script>'
         for b in blocos)

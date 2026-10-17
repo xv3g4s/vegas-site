@@ -47,9 +47,12 @@ def whatsapp(texto=None):
 # ------------------------------------------------------------- as paginas ---
 # (url, titulo no menu, ancora na Home enquanto nao existe, publicada)
 class Pag:
-    def __init__(self, url, menu, ancora=None, publicada=False, prioridade="0.7"):
+    def __init__(self, url, menu, ancora=None, publicada=False, prioridade="0.7",
+                 resumo="", categoria=""):
         self.url, self.menu, self.ancora = url, menu, ancora
         self.publicada, self.prioridade = publicada, prioridade
+        # usados pelo indice do blog; vazios nas demais paginas
+        self.resumo, self.categoria = resumo, categoria
 
     @property
     def destino(self):
@@ -97,19 +100,27 @@ CASES = [
 ]
 
 # Grupo E — conteudo
-BLOG = Pag("/blog/", "Blog", "/#conteudo")
+BLOG = Pag("/blog/", "Blog", "/#conteudo", publicada=True, prioridade="0.8")
 ARTIGOS = [
-    Pag("/blog/como-aumentar-vendas-delivery/",        "Como aumentar vendas no delivery"),
-    Pag("/blog/marketing-para-restaurantes/",          "Marketing para restaurantes"),
-    Pag("/blog/trafego-pago-delivery/",                "Tráfego pago para delivery"),
-    Pag("/blog/como-vender-mais-ifood/",               "Como vender mais no iFood"),
-    Pag("/blog/como-atrair-clientes-restaurante/",     "Como atrair clientes para restaurante"),
-    Pag("/blog/quanto-investir-anuncios-restaurante/", "Quanto investir em anúncios"),
-    Pag("/blog/como-aumentar-ticket-medio/",           "Como aumentar o ticket médio"),
-    Pag("/blog/como-fidelizar-clientes-delivery/",     "Como fidelizar clientes de delivery"),
-    Pag("/blog/ifood-ou-delivery-proprio/",            "iFood ou delivery próprio?"),
-    Pag("/blog/como-calcular-roas-restaurante/",       "Como calcular o ROAS"),
-    Pag("/blog/whatsapp-para-restaurantes/",           "WhatsApp para restaurantes"),
+    Pag("/blog/como-aumentar-vendas-delivery/", "Como aumentar vendas no delivery",
+        publicada=True, categoria="Delivery",
+        resumo="O caminho completo, de quem ainda não te conhece até quem pede toda semana — e os indicadores que dizem onde está o gargalo."),
+    Pag("/blog/marketing-para-restaurantes/", "Marketing para restaurantes: o guia",
+        publicada=True, categoria="Marketing gastronômico",
+        resumo="Os canais que existem, o que cada um resolve e em que ordem faz sentido montar a operação de marketing de um restaurante."),
+    Pag("/blog/trafego-pago-delivery/", "Tráfego pago para delivery: como planejar campanhas",
+        publicada=True, categoria="Tráfego pago",
+        resumo="Estrutura de campanha, orçamento pela capacidade da cozinha, criativo que dá fome e o que otimizar — sem achismo."),
+    Pag("/blog/como-vender-mais-ifood/", "Como vender mais no iFood",
+        publicada=True, categoria="Delivery",
+        resumo="Cardápio, foto, reputação e operação: o que está sob o seu controle dentro do aplicativo, e o que não está."),
+    Pag("/blog/como-atrair-clientes-restaurante/",     "Como atrair clientes para restaurante", categoria="Estratégias de vendas"),
+    Pag("/blog/quanto-investir-anuncios-restaurante/", "Quanto investir em anúncios", categoria="Gestão de marketing"),
+    Pag("/blog/como-aumentar-ticket-medio/",           "Como aumentar o ticket médio", categoria="Estratégias de vendas"),
+    Pag("/blog/como-fidelizar-clientes-delivery/",     "Como fidelizar clientes de delivery", categoria="Fidelização"),
+    Pag("/blog/ifood-ou-delivery-proprio/",            "iFood ou delivery próprio?", categoria="Delivery"),
+    Pag("/blog/como-calcular-roas-restaurante/",       "Como calcular o ROAS", categoria="Gestão de marketing"),
+    Pag("/blog/whatsapp-para-restaurantes/",           "WhatsApp para restaurantes", categoria="Fidelização"),
 ]
 
 # Grupo F — conversao e transparencia
