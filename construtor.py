@@ -388,6 +388,14 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     robots = ("noindex, nofollow" if PREFIXO_PREVIA or d.get("indexavel") is False
               else "index, follow, max-image-preview:large")
 
+    # A palavra-chave alvo vai para o HTML como comentario, nao como <meta
+    # keywords>: nenhum buscador le meta keywords ha mais de quinze anos, e
+    # declarar alvo para concorrente ler nao ajuda em nada. Aqui ela serve a
+    # analise-seo.py, que confere se a chave aparece onde deveria e acusa duas
+    # paginas disputando o mesmo termo.
+    chave_meta = (f'<!-- chave-alvo: {d["chave"]} -->' if d.get("chave") else
+                  '<!-- chave-alvo: (sem alvo de busca) -->')
+
     html = f'''<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -397,6 +405,7 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
 <meta name="description" content="{d["descricao"]}">
 <link rel="canonical" href="{canonical}">
 <meta name="robots" content="{robots}">
+{chave_meta}
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">

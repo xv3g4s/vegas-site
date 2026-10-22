@@ -254,6 +254,23 @@ def proximos_e_cta(*args):
     return continua + cta(titulo, apoio, posicao)
 
 
+# ------------------------------------------------------------- atalhos -----
+def atalhos(conjunto="segmentos"):
+    """So os nomes, em pilulas que linkam. Serve onde a pagina precisa APONTAR
+    para um conjunto sem repetir o texto dele.
+
+    Nasceu de uma duplicata real: /servicos/ trazia os sete cards de segmento
+    inteiros, com o mesmo texto de /segmentos/ — 29% do conteudo da menor das
+    duas repetido. Duas paginas dizendo a mesma coisa disputam o mesmo termo e
+    nenhuma das duas sai mais forte.
+    """
+    fonte = {"segmentos": mapa.SEGMENTOS_FILHOS,
+             "servicos": mapa.SERVICOS_FILHOS}[conjunto]
+    itens = "".join(f'<li><a class="chip" href="{p.url}">{p.menu}</a></li>'
+                    for p in fonte if p.publicada)
+    return f'<ul class="chips chips-link">{itens}</ul>'
+
+
 # --------------------------------------------------------------- despacho ---
 # Os quatro primeiros ja existiam no construtor como replace simples; entraram
 # aqui para que exista um registro so de marcadores.
@@ -268,6 +285,7 @@ def _indices(construtor):
         "FORM": form,
         "CTA": cta,
         "CTA-FORM": cta_form,
+        "ATALHOS": atalhos,
         "PROXIMOS": proximos,
         "PROXIMOS-CTA": proximos_e_cta,
         "PASSOS": passos,

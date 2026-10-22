@@ -731,3 +731,11 @@ a.card:hover, .card-interativo:hover { transform: translateY(-3px); }
   .topo, .zap, .sanduiche, .rodape { display: none; }
   body { background: #FFF; color: #000; }
 }
+
+/* Pilula que e link: atalho para um conjunto de paginas sem repetir o texto
+   delas. Usado no /servicos/ para apontar os segmentos. */
+.chips-link .chip { transition: border-color var(--transicao), color var(--transicao); }
+.escuro .chips-link .chip:hover, .superficie .chips-link .chip:hover {
+  border-color: var(--ouro); color: var(--ouro);
+}
+.claro .chips-link .chip:hover { border-color: var(--acento-claro); color: var(--acento-claro); }
