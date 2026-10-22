@@ -147,20 +147,35 @@ navegador, se aquela pasta e mesmo o document root do dominio.
 
 ## Leads
 
-O formulario de `/diagnostico/` valida no navegador, guarda uma copia no
-`localStorage` e abre o WhatsApp com a mensagem pronta. O coletor do Painel de
-Sites (`f.js`) captura o envio pela fase de captura do evento `submit`, antes
-do `preventDefault()`.
+O formulario de `/diagnostico/` — e o mesmo formulario no popup que os CTAs
+abrem — valida no navegador, guarda uma copia no `localStorage` e abre o
+WhatsApp com a mensagem pronta. O coletor do Painel de Sites (`f.js`) captura
+o envio pela fase de captura do evento `submit`, antes do `preventDefault()`.
 
-Existe tambem um envio para um **Inbound Webhook do GoHighLevel**, na constante
-`GHL_WEBHOOK` no topo de `public/vegas.js` (e de `public/site.js`, para a LP).
-**Hoje ela esta vazia**, entao nada e enviado ao CRM — o lead so chega pelo
-WhatsApp e pelo painel. Preencher a URL ativa o envio; nesse dia, acrescentar o
-GoHighLevel ao item 4 da politica de privacidade, no mesmo commit.
+### A planilha
 
-O envio usa `sendBeacon` com `text/plain`, que evita o preflight de CORS — com
-`application/json` o navegador manda um OPTIONS antes, que o webhook do GHL nao
-responde. `fetch` com `keepalive` fica como reserva.
+Tudo cai em **uma planilha so**: `[VEGAS] Leads do site`, com as abas `Leads` e
+`Resumo`. Quem recebe e um App da Web do Apps Script; o codigo e o passo a
+passo de implantacao estao em `integracoes/planilha-de-leads.gs`.
 
-O `src/apps-script-vegas-leads.gs` e a integracao anterior, com Google Sheets.
-Fica no repositorio como historico; nao esta mais em uso.
+A URL `/exec` da implantacao vai na constante `PLANILHA`, no topo de
+`public/vegas.js` e de `public/site.js`. **Enquanto ela estiver vazia nada e
+gravado** — o lead so chega pelo WhatsApp e pelo painel.
+
+O script aceita os dois formatos de envio (JSON no corpo, do site novo; e
+parametros soltos, da LP antiga) e descarta repetido pelo campo `id`, porque o
+`sendBeacon` pode entregar duas vezes.
+
+### GoHighLevel
+
+A constante `GHL_WEBHOOK`, nos mesmos dois arquivos, e um destino adicional e
+independente da planilha. Tambem esta vazia. Ao preencher, acrescentar o
+GoHighLevel ao item 4 da politica de privacidade no mesmo commit — a pagina
+lista os destinos que existem de fato.
+
+### Por que `sendBeacon` com `text/plain`
+
+Evita o preflight de CORS: com `application/json` o navegador manda um OPTIONS
+antes, que nem o Apps Script nem o webhook do GHL respondem. E o envio
+sobrevive a navegacao, que acontece logo em seguida quando o WhatsApp abre.
+`fetch` com `keepalive` fica como reserva.

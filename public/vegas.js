@@ -15,8 +15,56 @@
 (function () {
   'use strict';
 
-  // Inbound Webhook do GoHighLevel. Vazio = o lead fica so no localStorage.
+  // ---- destinos do lead ----
+  // App da Web do Apps Script ligado a planilha "[VEGAS] Leads do site".
+  // O codigo do script esta em integracoes/planilha-de-leads.gs, com o passo
+  // a passo de implantacao. Termina em /exec.
+  //
+  // A URL fica visivel aqui, como em qualquer formulario publico. Ela so
+  // ACEITA lead: nao le a planilha nem da acesso a conta Google. O pior que
+  // alguem faz conhecendo-a e inserir uma linha falsa.
+  var PLANILHA = '';
+
+  // Inbound Webhook do GoHighLevel, quando houver. Os dois convivem: a
+  // planilha e o registro, o CRM e o acompanhamento comercial.
   var GHL_WEBHOOK = '';
+
+  // text/plain evita o preflight: com application/json o navegador manda um
+  // OPTIONS antes, que nem o webhook do GHL nem o Apps Script respondem.
+  var TIPO_ENVIO = 'text/plain;charset=UTF-8';
+
+  /**
+   * Entrega o payload e segue a vida. Nao da para ler a resposta (sem CORS),
+   * entao esta funcao nao promete entrega — so garante que a requisicao saiu
+   * mesmo com a pagina navegando logo depois, que e o caso aqui: o WhatsApp
+   * abre em seguida.
+   */
+  function entrega(url, corpo) {
+    if (!url) return;
+    var saiu = false;
+    try {
+      if (navigator.sendBeacon) {
+        saiu = navigator.sendBeacon(url, new Blob([corpo], { type: TIPO_ENVIO }));
+      }
+    } catch (e) { /* cai no fetch */ }
+    if (saiu) return;
+    try {
+      fetch(url, {
+        method: 'POST', mode: 'no-cors', keepalive: true,
+        headers: { 'Content-Type': TIPO_ENVIO }, body: corpo
+      })['catch'](function () {});
+    } catch (e) { /* nada a fazer: o lead ja esta no localStorage */ }
+  }
+
+  /** Chave do envio. O sendBeacon pode entregar duas vezes; o Apps Script
+   *  descarta a repetida comparando este id. Um id por envio, nao por sessao. */
+  function chaveDeEnvio() {
+    try {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    } catch (e) { /* segue */ }
+    return 'e-' + Date.now().toString(36) + '-' +
+      Math.random().toString(36).slice(2, 10);
+  }
 
   var d = document;
   var $ = function (s, c) { return (c || d).querySelector(s); };
@@ -177,36 +225,25 @@
         estabelecimento: v.estabelecimento,
         tipo_estabelecimento: v.tipo,
         desafio: v.desafio,
-        source: 'Site — diagnóstico gratuito',
+        // Distingue o formulario da pagina do que abre em popup sobre um CTA.
+        // Sao o mesmo molde, entao so o contexto diferencia — e saber por qual
+        // dos dois o lead entrou muda o que vale ajustar depois.
+        source: form.closest('.popup')
+          ? 'Site — popup de CTA'
+          : 'Site — diagnóstico gratuito',
         utm_source: utm.utm_source, utm_medium: utm.utm_medium,
         utm_campaign: utm.utm_campaign, utm_term: utm.utm_term,
         utm_content: utm.utm_content, gclid: utm.gclid, fbclid: utm.fbclid,
         pagina: utm.landing_page, referrer: utm.referrer,
-        enviado_em: new Date().toISOString()
+        enviado_em: new Date().toISOString(),
+        id: chaveDeEnvio()
       };
 
       if (botao) { botao.disabled = true; botao.textContent = 'Enviando...'; }
 
-      if (GHL_WEBHOOK) {
-        var corpo = JSON.stringify(payload);
-        // text/plain evita o preflight: com application/json o navegador manda
-        // um OPTIONS antes, que o webhook do GHL nao responde.
-        var TIPO = 'text/plain;charset=UTF-8';
-        var enfileirado = false;
-        try {
-          if (navigator.sendBeacon) {
-            enfileirado = navigator.sendBeacon(GHL_WEBHOOK, new Blob([corpo], { type: TIPO }));
-          }
-        } catch (e) { /* segue para o fetch */ }
-        if (!enfileirado) {
-          try {
-            fetch(GHL_WEBHOOK, {
-              method: 'POST', mode: 'no-cors', keepalive: true,
-              headers: { 'Content-Type': TIPO }, body: corpo
-            })['catch'](function () {});
-          } catch (e) { /* segue */ }
-        }
-      }
+      var corpo = JSON.stringify(payload);
+      entrega(PLANILHA, corpo);
+      entrega(GHL_WEBHOOK, corpo);
 
       try {
         var leads = JSON.parse(localStorage.getItem('vegas-leads') || '[]');

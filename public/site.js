@@ -12,8 +12,41 @@
 (function () {
   'use strict';
 
-  // Inbound Webhook do GoHighLevel. Vazio = lead so no localStorage + WhatsApp.
+  // ---- destinos do lead ----
+  // Mesmos dois do site novo (public/vegas.js), para tudo cair na mesma
+  // planilha: App da Web do Apps Script e, quando houver, o webhook do GHL.
+  // Codigo do script e passo a passo em integracoes/planilha-de-leads.gs.
+  var PLANILHA = '';
   var GHL_WEBHOOK = '';
+
+  // text/plain evita o preflight de CORS: com application/json o navegador
+  // manda um OPTIONS antes, que nem o GHL nem o Apps Script respondem.
+  var TIPO_ENVIO = 'text/plain;charset=UTF-8';
+
+  function entrega(url, corpo) {
+    if (!url) return;
+    var saiu = false;
+    try {
+      if (navigator.sendBeacon) {
+        saiu = navigator.sendBeacon(url, new Blob([corpo], { type: TIPO_ENVIO }));
+      }
+    } catch (e) { /* cai no fetch */ }
+    if (saiu) return;
+    try {
+      fetch(url, {
+        method: 'POST', mode: 'no-cors', keepalive: true,
+        headers: { 'Content-Type': TIPO_ENVIO }, body: corpo
+      })['catch'](function () {});
+    } catch (e) { /* o lead ja esta no localStorage */ }
+  }
+
+  function chaveDeEnvio() {
+    try {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    } catch (e) { /* segue */ }
+    return 'e-' + Date.now().toString(36) + '-' +
+      Math.random().toString(36).slice(2, 10);
+  }
 
   var d = document;
   var $ = function (s, ctx) { return (ctx || d).querySelector(s); };
@@ -201,29 +234,13 @@
       utm_campaign: utm.utm_campaign, utm_term: utm.utm_term,
       utm_content: utm.utm_content, gclid: utm.gclid, fbclid: utm.fbclid,
       pagina: utm.landing_page, referrer: utm.referrer,
-      enviado_em: new Date().toISOString()
+      enviado_em: new Date().toISOString(),
+      id: chaveDeEnvio()
     };
 
-    if (GHL_WEBHOOK) {
-      var corpo = JSON.stringify(payload);
-      // text/plain evita o preflight de CORS: com application/json o navegador
-      // manda um OPTIONS antes, que o webhook do GHL nao responde.
-      var TIPO = 'text/plain;charset=UTF-8';
-      var entregue = false;
-      try {
-        if (navigator.sendBeacon) {
-          entregue = navigator.sendBeacon(GHL_WEBHOOK, new Blob([corpo], { type: TIPO }));
-        }
-      } catch (e) { /* segue */ }
-      if (!entregue) {
-        try {
-          fetch(GHL_WEBHOOK, {
-            method: 'POST', mode: 'no-cors', keepalive: true,
-            headers: { 'Content-Type': TIPO }, body: corpo
-          })['catch'](function () {});
-        } catch (e) { /* segue */ }
-      }
-    }
+    var corpo = JSON.stringify(payload);
+    entrega(PLANILHA, corpo);
+    entrega(GHL_WEBHOOK, corpo);
 
     enviaAoPainel({
       nome: nome, email: email, telefone: telefone,
