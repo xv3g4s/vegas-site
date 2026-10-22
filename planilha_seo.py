@@ -107,9 +107,12 @@ def grava(caminho, pags, canibal, dup, repetidas):
     linha("robots.txt", "existe", "Aponta o sitemap e libera buscadores tradicionais e de IA.")
     linha("Canonical", "33/33", "Cada página aponta para si mesma.")
     linha("Indexáveis", f'{len([p for p in pags if "noindex" not in p["robots"]])}/{len(pags)}')
-    linha("Search Console", "NÃO ENVIADO",
-          "Não dá para enviar ainda: o domínio não serve o deploy (deploy-info.txt deu 404). "
-          "O Google precisa alcançar o site para verificar a propriedade. Ver aba 'Técnico'.")
+    linha("Search Console — propriedade", "verificada",
+          "Por registro DNS (TXT), em 22/10/2026. Propriedade do tipo Domínio: cobre http, "
+          "https, www e subdomínios de uma vez, e não depende de o site responder.")
+    linha("Search Console — sitemap", "pendente do deploy",
+          "O envio pode ser feito, mas vai ficar em 'Não foi possível buscar' enquanto o "
+          "domínio não servir o site. Ver aba 'Técnico'.")
 
     # -------------------------------------------------------- 2. Páginas ---
     aba = wb.create_sheet("Páginas")
@@ -225,14 +228,19 @@ def grava(caminho, pags, canibal, dup, repetidas):
          "deploy-info.txt deu 404: a pasta do deploy ($HOME/vegasaceleradora.com.br) não é "
          "o document root do domínio. Enquanto isso, NENHUM visitante alcança o site — e "
          "nada abaixo pode ser feito."),
-        ("Search Console — propriedade", "NÃO FEITO",
-         "Depende do deploy. A verificação exige que o Google alcance o domínio (arquivo "
-         "HTML na raiz, meta tag ou registro DNS). Com o site fora do ar, qualquer método "
-         "de arquivo falha. O método DNS funcionaria hoje, mas enviar sitemap de um site "
-         "que não responde só gera erro no relatório."),
-        ("Search Console — envio do sitemap", "NÃO FEITO",
-         "Passo seguinte à verificação: Sitemaps → adicionar 'sitemap.xml'. Eu não tenho "
-         "ferramenta de Search Console nesta sessão; é um passo seu, de 2 minutos."),
+        ("Search Console — propriedade", "verificada",
+         "Feita em 22/10/2026 por registro DNS (TXT). É o tipo 'Domínio', que cobre http, "
+         "https, www e subdomínios numa propriedade só — e o único método que funciona com "
+         "o site fora do ar, já que não exige que o Google baixe nada do servidor. Nada a "
+         "manter no repositório: não há arquivo nem meta tag para o deploy sobrescrever."),
+        ("Search Console — envio do sitemap", "pode enviar",
+         "Sitemaps → colar 'sitemap.xml' (só isso; o domínio já é o prefixo da propriedade). "
+         "Enquanto o deploy não funcionar vai ficar em 'Não foi possível buscar o sitemap', "
+         "que não é punição — o Google reprocessa sozinho quando a URL passar a responder. "
+         "Enviar agora só adianta o passo."),
+        ("Search Console — primeiros dados", "depende do deploy",
+         "Cobertura, Desempenho e Core Web Vitals só começam a popular depois que o "
+         "Googlebot conseguir rastrear o site. Com 404 no domínio, não há o que rastrear."),
         ("Google Analytics / Tag Manager", "não instalado",
          "O site usa o coletor do Painel de Sites (app.johnyweb.com). Nenhum evento chegou "
          "até hoje — mesma causa: o site não está no ar."),
