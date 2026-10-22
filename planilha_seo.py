@@ -17,29 +17,14 @@ CLARO = "FFF3EDE3"
 VERMELHO = "FFD3372B"
 CINZA = "FF9C968A"
 
-# Sugestao de H1 para as paginas onde a chave nao aparece nele. Escritas a
-# mao: gerar titulo por regra produz frase de robo, e o H1 e a primeira coisa
-# que o visitante le. Sao propostas — cabe ao dono do texto aceitar ou nao.
-SUGESTAO_H1 = {
-    "/": "Agência de marketing para restaurantes que traz cliente que compra e volta",
-    "/sobre/": "A assessoria de marketing para restaurantes que só atende food service",
-    "/metodo/": "O método de marketing para restaurantes da Vegas: três frentes ao mesmo tempo",
-    "/servicos/": "Serviços de marketing para restaurantes e delivery",
-    "/servicos/automacao-whatsapp-delivery/": "Automação de WhatsApp para delivery: do anúncio ao pedido",
-    "/servicos/remarketing-restaurantes/": "Remarketing para restaurantes: falar de novo com quem já te conhece",
-    "/segmentos/": "Marketing para food service: a estratégia muda com o tipo de operação",
-    "/marketing-para-restaurantes/": "Marketing para restaurantes: dois negócios na mesma cozinha",
-    "/marketing-para-pizzarias/": "Marketing para pizzarias: vender também fora de sexta e sábado",
-    "/marketing-para-hamburguerias/": "Marketing para hamburguerias: marca, produto e ticket",
-    "/marketing-para-restaurantes-japoneses/": "Marketing para restaurantes japoneses: valor percebido e ocasião",
-    "/marketing-para-cafeterias/": "Marketing para cafeterias: frequência vale mais que alcance",
-    "/marketing-para-dark-kitchens/": "Marketing para dark kitchens: marca sem fachada",
-    "/marketing-para-bares/": "Marketing para bares: a agenda manda na demanda",
-    "/resultados/": "Resultados de marketing para restaurantes: o que medimos e o que isso não prova",
-    "/blog/": "Blog de marketing para restaurantes e delivery",
-    "/diagnostico/": "Diagnóstico de marketing para restaurantes, gratuito",
-    "/blog/marketing-para-restaurantes/": "(título) Marketing para restaurantes: o guia dos canais | Vegas",
-}
+# Sugestao de H1 para pagina onde a chave nao aparece nele.
+#
+# Hoje esta vazio porque as 17 sugestoes anteriores foram aplicadas: todas as
+# 31 paginas com alvo carregam a chave no titulo, no H1 e na descricao. O
+# mecanismo fica de pe para a proxima pagina que nascer — a coluna so aparece
+# preenchida quando houver falta, e escrever a sugestao a mao aqui continua
+# sendo melhor do que gerar titulo por regra, que produz frase de robo.
+SUGESTAO_H1 = {}
 
 
 def _cabecalho(aba, titulos, larguras):
