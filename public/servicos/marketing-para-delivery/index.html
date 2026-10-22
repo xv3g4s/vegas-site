@@ -60,8 +60,8 @@
 <nav class="trilha" aria-label="Você está em"><div class="wrap-estreito"><ol><li><a href="/">Home</a></li><li><a href="/servicos/">Serviços</a></li><li><span aria-current="page">Marketing para delivery</span></li></ol></div></nav>
 <main id="conteudo">
 <section class="escuro secao" style="padding-bottom:var(--e8)">
-  <div class="wrap-estreito">
-    <span class="rotulo">Serviço</span>
+  <div class="wrap-estreito centro">
+    <span class="rotulo-pill">Serviço</span>
     <h1>Marketing para delivery: o alcance que importa é o que o entregador percorre</h1>
     <p class="apoio" style="margin-top:var(--e5);font-size:clamp(18px,1.5vw,21px)">
       Operação de entrega tem três restrições que mudam tudo: a comida esfria,
@@ -74,6 +74,8 @@
     </div>
   </div>
 </section>
+
+<section class="faixa superficie"><ul><li>Alcance útil</li><li>Conversão</li><li>Recompra</li></ul></section>
 
 <section class="superficie secao-curta">
   <div class="wrap-estreito">
@@ -173,22 +175,7 @@
   </div>
 </section>
 
-<section class="secao" style="background:#000">
-  <div class="wrap">
-    <div class="grade grade-3" style="margin-bottom:var(--e8)">
-      <a class="card" href="/blog/como-aumentar-vendas-delivery/"><h3>Como aumentar vendas no delivery</h3><p>Os quatro pontos, e a ordem em que resolver.</p><span class="btn btn-3">Ler o guia</span></a>
-      <a class="card" href="/servicos/trafego-pago-restaurantes/"><h3>Tráfego pago para restaurantes</h3><p>Como as campanhas são estruturadas.</p><span class="btn btn-3">Ver serviço</span></a>
-      <a class="card" href="/marketing-para-dark-kitchens/"><h3>Marketing para dark kitchens</h3><p>Quando não existe fluxo espontâneo nenhum.</p><span class="btn btn-3">Ver página</span></a>
-    </div>
-    <div class="wrap-estreito" style="text-align:center">
-      <h2 style="margin-bottom:var(--e4)">Quanto do seu faturamento vem de um canal só?</h2>
-      <p class="apoio" style="margin:0 auto var(--e6)">
-        É a primeira conta do diagnóstico, e a que mais costuma surpreender.
-      </p>
-      <a href="/diagnostico/" class="btn btn-1" data-track-id="cta-diagnostico-fim" data-track-pos="Rodapé da página">Solicitar diagnóstico gratuito</a>
-    </div>
-  </div>
-</section>
+<section class="escuro secao" aria-labelledby="t-continua"><div class="wrap"><div class="cabeca-secao"><span class="rotulo">Continue por aqui</span><h2 id="t-continua">O que ler depois</h2></div><div class="grade grade-3" data-reveal><a class="card" href="/blog/como-aumentar-vendas-delivery/"><h3>Como aumentar vendas no delivery</h3><p>Os quatro pontos, e a ordem em que resolver.</p><span class="btn btn-3">Ler o artigo</span></a><a class="card" href="/servicos/trafego-pago-restaurantes/"><h3>Tráfego pago para restaurantes</h3><p>Como as campanhas são estruturadas.</p><span class="btn btn-3">Ver serviço</span></a><a class="card" href="/marketing-para-dark-kitchens/"><h3>Marketing para dark kitchens</h3><p>Quando não existe fluxo espontâneo nenhum.</p><span class="btn btn-3">Ver página</span></a></div></div></section><section class="faixa-marmore escuro" style="background-image:url(/img/marmore-faixa-vegas.webp)" aria-labelledby="t-cta"><div class="wrap-estreito"><img class="selo" src="/img/selo-vegas-aceleradora.webp" alt="" width="128" height="128" loading="lazy" decoding="async"><span class="rotulo-pill">Diagnóstico gratuito</span><h2 id="t-cta">Quanto do seu faturamento vem de um canal só?</h2><p class="apoio">É a primeira conta do diagnóstico, e a que mais costuma surpreender.</p><a href="/diagnostico/" class="btn btn-1" data-track-id="cta-diagnostico-fim" data-track-pos="Rodapé da página">Solicitar diagnóstico gratuito</a></div></section>
 
 </main>
 <footer class="rodape">
@@ -218,6 +205,33 @@
    data-track-id="cta-whatsapp-flutuante" data-track-pos="Flutuante">
   <img src="/img/atendente-vegas-b.webp" alt="" width="136" height="136" loading="lazy" decoding="async">
 </a>
+
+<!-- Molde do formulario, para o popup que o vegas.js abre no clique dos CTAs.
+     Dentro de <template> ele nao e renderizado nem encontrado por
+     querySelectorAll, entao nao colide com o formulario da /diagnostico/. E a
+     mesma definicao de site/componentes.py: popup e pagina nao podem divergir,
+     porque os nomes dos campos sao contrato com o vegas.js e com o f.js. -->
+<template id="tpl-diagnostico"><form data-form-diagnostico novalidate>
+<label class="campo"><span>Nome</span>
+<input type="text" name="nome" autocomplete="name" placeholder="Seu nome" required></label>
+<label class="campo"><span>WhatsApp</span>
+<input type="tel" name="whatsapp" autocomplete="tel" placeholder="(DDD) 9 9999-9999" required></label>
+<label class="campo"><span>E-mail</span>
+<input type="email" name="email" autocomplete="email" placeholder="seu@email.com.br" required></label>
+<label class="campo"><span>Nome do estabelecimento</span>
+<input type="text" name="estabelecimento" autocomplete="organization" placeholder="Como o seu negócio se chama" required></label>
+<label class="campo"><span>Tipo de estabelecimento</span>
+<select name="tipo"><option value="">Selecione</option><option>Restaurante</option><option>Pizzaria</option><option>Hamburgueria</option><option>Restaurante japonês</option><option>Cafeteria</option><option>Bar</option><option>Dark kitchen</option><option>Delivery</option><option>Outro</option></select></label>
+<label class="campo"><span>Principal desafio <span style="font-weight:400;color:var(--tinta-escura-2)">(opcional)</span></span>
+<textarea name="desafio" placeholder="O que mais te incomoda hoje no marketing da operação?"></textarea></label>
+<p class="form-erro" data-form-erro role="alert"></p>
+<button type="submit" class="btn btn-1" style="width:100%"
+        data-track-id="form-diagnostico-enviar" data-track-pos="Diagnóstico">Solicitar diagnóstico gratuito</button>
+<p class="form-ok" data-form-ok role="status" tabindex="-1" style="margin-top:var(--e3)"></p>
+<p style="font-size:14px;color:var(--tinta-escura-2);text-align:center;margin:var(--e3) 0 0">
+  Seus dados são usados apenas para o contato comercial.
+</p>
+</form></template>
 <script src="/vegas.js" defer></script>
 </body>
 </html>

@@ -114,8 +114,14 @@
   })();
 
   // ======================================================= formulario =====
-  var form = $('[data-form-diagnostico]');
-  if (form) {
+  // Uma funcao por formulario, e nao um formulario por pagina: o popup de CTA
+  // traz um segundo formulario para a mesma pagina, e ele precisa da mesma
+  // validacao e do mesmo envio. Antes isto era um bloco solto que so pegava o
+  // primeiro `[data-form-diagnostico]` que encontrasse.
+  function ligaFormulario(form) {
+    if (!form || form.dataset.ligado) return;
+    form.dataset.ligado = '1';
+
     var erro = $('[data-form-erro]', form);
     var ok = $('[data-form-ok]', form);
     var botao = $('button[type="submit"]', form);
@@ -222,33 +228,149 @@
     });
   }
 
+  $$('[data-form-diagnostico]').forEach(ligaFormulario);
+
+  // ================================================ popup de diagnostico ==
+  // A LP abria o formulario em popup no clique do CTA; o site passou a mandar
+  // o visitante para /diagnostico/. Tirar a pagina de baixo dos pes de quem ja
+  // estava lendo custa conversao, entao o popup volta — sem perder o link.
+  //
+  // O <a> continua apontando para /diagnostico/ de verdade. Sem JavaScript, ou
+  // se algo aqui falhar, o clique navega e o visitante encontra o mesmo
+  // formulario na pagina. O popup e enfeite por cima de um caminho que ja
+  // funciona, nunca a unica saida.
+  var molde = $('#tpl-diagnostico');
+  var naPaginaDoForm = /\/diagnostico\/?$/.test(location.pathname);
+
+  if (molde && molde.content && !naPaginaDoForm) {
+    var caixa = null;
+    var devolveFoco = null;
+
+    var fechaPopup = function () {
+      if (!caixa) return;
+      caixa.hidden = true;
+      d.documentElement.style.overflow = '';
+      if (devolveFoco && devolveFoco.focus) devolveFoco.focus();
+    };
+
+    var montaPopup = function () {
+      if (caixa) return caixa;
+      caixa = d.createElement('div');
+      caixa.className = 'popup';
+      caixa.hidden = true;
+      caixa.innerHTML =
+        '<div class="popup-fundo" data-fecha></div>' +
+        '<div class="popup-cartao" role="dialog" aria-modal="true"' +
+        ' aria-labelledby="popup-titulo">' +
+        '<button type="button" class="popup-x" data-fecha aria-label="Fechar">&times;</button>' +
+        '<span class="rotulo">Diagnóstico gratuito</span>' +
+        '<h2 id="popup-titulo">Conte sobre a sua operação</h2>' +
+        '<p class="popup-apoio">Uma conversa para entender o que já existe e onde ' +
+        'está o gargalo. Sem compromisso.</p>' +
+        '</div>';
+      caixa.querySelector('.popup-cartao').appendChild(molde.content.cloneNode(true));
+      d.body.appendChild(caixa);
+
+      ligaFormulario($('[data-form-diagnostico]', caixa));
+
+      caixa.addEventListener('click', function (ev) {
+        if (ev.target.closest('[data-fecha]')) fechaPopup();
+      });
+      d.addEventListener('keydown', function (ev) {
+        if (caixa.hidden) return;
+        if (ev.key === 'Escape' || ev.keyCode === 27) { fechaPopup(); return; }
+        if (ev.key !== 'Tab') return;
+        // Foco presa no cartao enquanto o popup esta aberto.
+        var foco = $$('a[href], button, input, select, textarea', caixa)
+          .filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+        if (!foco.length) return;
+        var primeiro = foco[0], ultimo = foco[foco.length - 1];
+        if (ev.shiftKey && d.activeElement === primeiro) { ev.preventDefault(); ultimo.focus(); }
+        else if (!ev.shiftKey && d.activeElement === ultimo) { ev.preventDefault(); primeiro.focus(); }
+      });
+      return caixa;
+    };
+
+    d.addEventListener('click', function (ev) {
+      var a = ev.target && ev.target.closest && ev.target.closest('a[href]');
+      if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;
+      if (a.target === '_blank') return;
+      // Compara o caminho, nao o href: na previa ele vem prefixado (/v3/...).
+      var caminho;
+      try { caminho = new URL(a.href, location.href).pathname; } catch (e) { return; }
+      if (!/\/diagnostico\/?$/.test(caminho)) return;
+
+      ev.preventDefault();
+      var p = montaPopup();
+      devolveFoco = a;
+      p.hidden = false;
+      d.documentElement.style.overflow = 'hidden';
+      var primeiro = $('input, select, textarea', p);
+      if (primeiro && primeiro.focus) primeiro.focus();
+    });
+  }
+
   // =========================================================== reveals ====
   // O conteudo nasce VISIVEL no HTML; e o JavaScript que esconde para animar.
   // Assim nenhuma falha aqui deixa a pagina em branco.
   var querMenos = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!querMenos && 'IntersectionObserver' in window) {
     var alvos = $$('[data-reveal]');
+
+    // 1. O que JA esta na tela no carregamento nao anima.
+    //    Antes todo alvo era escondido e revelado em seguida, inclusive o que
+    //    estava acima da dobra: dava um piscar no primeiro quadro, bem no
+    //    conteudo que o visitante olha primeiro. Animacao de entrada so faz
+    //    sentido em quem entra na tela.
+    var alturaJanela = window.innerHeight || d.documentElement.clientHeight;
+    alvos = alvos.filter(function (el) {
+      return el.getBoundingClientRect().top > alturaJanela * 0.9;
+    });
+
     if (alvos.length) {
+      // 2. Os filhos entram em cascata, nao o bloco inteiro de uma vez.
+      //    Uma grade de seis cards aparecendo como um retangulo unico nao
+      //    parece animacao, parece carregamento lento. Em cascata o olho
+      //    acompanha. O atraso e limitado para a ultima peca nao demorar.
+      var pecasDe = function (el) {
+        var filhos = [].slice.call(el.children);
+        return filhos.length > 1 && filhos.length <= 12 ? filhos : [el];
+      };
+      var CURVA = 'cubic-bezier(.22,.61,.36,1)';
+
       alvos.forEach(function (el) {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(16px)';
-        el.style.transition = 'opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1)';
+        pecasDe(el).forEach(function (peca, i) {
+          peca.style.opacity = '0';
+          peca.style.transform = 'translateY(14px)';
+          peca.style.transition =
+            'opacity .55s ' + CURVA + ' ' + Math.min(i * 70, 420) + 'ms, ' +
+            'transform .55s ' + CURVA + ' ' + Math.min(i * 70, 420) + 'ms';
+        });
       });
+
+      var mostra = function (el) {
+        pecasDe(el).forEach(function (peca) {
+          peca.style.opacity = '1';
+          peca.style.transform = 'none';
+        });
+      };
+
       var io = new IntersectionObserver(function (ents) {
         ents.forEach(function (e) {
           if (!e.isIntersecting) return;
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'none';
+          mostra(e.target);
           io.unobserve(e.target);
         });
       }, { rootMargin: '0px 0px -8% 0px' });
       alvos.forEach(function (el) { io.observe(el); });
-      // rede de seguranca: se algo falhar, o conteudo reaparece
-      setTimeout(function () {
-        alvos.forEach(function (el) {
-          if (el.style.opacity === '0') { el.style.opacity = '1'; el.style.transform = 'none'; }
-        });
-      }, 4000);
+
+      // 3. Rede de seguranca, agora mais curta e tambem ligada ao print.
+      //    O que nunca entra na tela — porque o visitante nao rolou ate la, ou
+      //    porque um rastreador so carrega a pagina — ficava invisivel por
+      //    quatro segundos. Em impressao ficava invisivel para sempre.
+      var revelaTudo = function () { alvos.forEach(mostra); };
+      setTimeout(revelaTudo, 2500);
+      window.addEventListener('beforeprint', revelaTudo);
     }
   }
 })();

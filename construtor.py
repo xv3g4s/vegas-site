@@ -37,6 +37,7 @@ import sys
 from datetime import date
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "site"))
+import componentes  # noqa: E402
 import mapa  # noqa: E402
 
 RAIZ = pathlib.Path(__file__).parent
@@ -283,7 +284,9 @@ def cards_de_artigos():
         f'<h3>{a.menu}</h3><p>{a.resumo}</p>'
         f'<span class="btn btn-3">Ler o artigo</span></a>'
         for a in pubs)
-    return f'<div class="grade grade-blog">{cards}</div>'
+    # grade-centrada: com 11 artigos a ultima linha tem um card so, e em
+    # grade ele fica encostado na esquerda como se faltasse alguma coisa.
+    return f'<div class="grade-centrada grade-centrada-2">{cards}</div>'
 
 
 def cards_de(pags, rotulo="Ver página"):
@@ -298,7 +301,8 @@ def cards_de(pags, rotulo="Ver página"):
         f'<a class="card" href="{a.url}"><h3>{a.menu}</h3>'
         f'<p>{a.resumo}</p><span class="btn btn-3">{rotulo}</span></a>'
         for a in pags if a.publicada)
-    return f'<div class="grade grade-3">{cards}</div>'
+    # Sao 7 segmentos e 5 servicos: nenhum dos dois fecha linha de tres.
+    return f'<div class="grade-centrada">{cards}</div>'
 
 
 def lista_de_categorias():
@@ -328,14 +332,14 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
     if d.get("rascunho"):
         return None
 
+    # Componentes: {{FAIXA}}, {{LOGOS}}, {{CTA}}, {{PROXIMOS}}... Ver
+    # site/componentes.py, que e onde os blocos da Home tem definicao unica.
+    corpo = componentes.aplica(corpo, sys.modules[__name__])
+
     # O conteudo das paginas escreve as URLs reais (/servicos/..., /blog/...).
     # Na previa elas precisam do prefixo, senao cada link interno cai em 404.
     # Reescrever aqui, uma vez, evita ter de lembrar disso em 36 arquivos.
-    corpo = corpo.replace("{{SERVICOS}}", cards_de(mapa.SERVICOS_FILHOS, "Ver serviço"))
-    corpo = corpo.replace("{{SEGMENTOS}}", cards_de(mapa.SEGMENTOS_FILHOS))
-    corpo = corpo.replace("{{ARTIGOS}}", cards_de_artigos())
-    corpo = corpo.replace("{{CATEGORIAS}}", lista_de_categorias())
-
+    # Roda DEPOIS dos componentes, para alcancar tambem os links que eles geram.
     corpo = re.sub(r'href="(/(?!/)[^"#][^"]*|/)"',
                    lambda m: f'href="{link(resolve(m.group(1)))}"', corpo)
 
@@ -351,9 +355,15 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
         blocos.append(faq)
     if d.get("tipo") == "artigo":
         # Autoria e a organizacao, que e o que da para afirmar com verdade: nao
-        # ha um autor pessoa confirmado. A data e a de escrita do arquivo, que
-        # tambem e verdadeira — melhor isso do que uma data inventada para
-        # parecer conteudo antigo.
+        # ha um autor pessoa confirmado.
+        #
+        # A data fica no bloco <!--dados--> e e obrigatoria. Antes ela caia em
+        # date.today(), o que fazia TODO artigo ser "publicado hoje" a cada
+        # build: a data do schema mudava sozinha, sem o texto mudar. Dado
+        # estruturado que se move sem motivo e pior do que dado ausente.
+        if not d.get("data"):
+            raise SystemExit(f'erro: {arquivo.name} e artigo e precisa de "data" '
+                             f'(AAAA-MM-DD) no bloco <!--dados-->')
         blocos.append({
             "@context": "https://schema.org",
             "@type": "Article",
@@ -362,8 +372,8 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
             "inLanguage": "pt-BR",
             "author": {"@id": mapa.DOMINIO + "/#organizacao"},
             "publisher": {"@id": mapa.DOMINIO + "/#organizacao"},
-            "datePublished": d.get("data", date.today().isoformat()),
-            "dateModified": d.get("data", date.today().isoformat()),
+            "datePublished": d["data"],
+            "dateModified": d.get("atualizado", d["data"]),
             "mainEntityOfPage": mapa.DOMINIO + d["url"],
         })
     ld = "\n".join(
@@ -424,6 +434,13 @@ def monta(arquivo: pathlib.Path) -> pathlib.Path:
 {corpo}
 </main>
 {rodape()}
+
+<!-- Molde do formulario, para o popup que o vegas.js abre no clique dos CTAs.
+     Dentro de <template> ele nao e renderizado nem encontrado por
+     querySelectorAll, entao nao colide com o formulario da /diagnostico/. E a
+     mesma definicao de site/componentes.py: popup e pagina nao podem divergir,
+     porque os nomes dos campos sao contrato com o vegas.js e com o f.js. -->
+<template id="tpl-diagnostico">{componentes.form()}</template>
 <script src="/vegas.js" defer></script>
 </body>
 </html>

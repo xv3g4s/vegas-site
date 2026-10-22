@@ -44,6 +44,25 @@ def whatsapp(texto=None):
     return f"https://api.whatsapp.com/send?phone=5527992246343&text={t}"
 
 
+# ----------------------------------------------------------- os clientes ---
+# A parede de logos aparece na Home, em /sobre/ e em /resultados/. Estava
+# copiada nos tres arquivos — oito <li> com estilo inline cada. Aqui e dado, e
+# o componente LOGOS monta a marcacao.
+#
+# Marca nova entra so nesta lista. Numero de cliente NAO entra em lugar nenhum
+# sem autorizacao escrita: logo e menção de atendimento, nao resultado.
+CLIENTES = [
+    ("case-donsini-restaurante-pizzaria.webp", "Don Sini Restaurante e Pizzaria"),
+    ("case-la-foods-delivery.webp",            "La Food's Delivery"),
+    ("case-restaurante-da-comadre.webp",       "Restaurante da Comadre"),
+    ("case-sabor-de-casa-pizzaria.webp",       "Sabor de Casa Pizzaria"),
+    ("case-mystic-burger.webp",                "Mystic Burger"),
+    ("case-taz-pizzaria.webp",                 "TAZ Pizzaria"),
+    ("case-pao-guloso-burger-opt.webp",        "Pão Guloso Burger"),
+    ("case-lua-negra.webp",                    "Lua Negra"),
+]
+
+
 # ------------------------------------------------------------- as paginas ---
 # (url, titulo no menu, ancora na Home enquanto nao existe, publicada)
 class Pag:

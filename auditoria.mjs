@@ -80,6 +80,10 @@ for (const rota of rotas) {
       ld: ld.length,
       palavras: texto.trim().split(/\s+/).filter(Boolean).length,
       marcador: /PREENCHER|lorem ipsum|XXXX/.test(texto),
+      // Marcador de componente que nao foi substituido. Ja aconteceu: um
+      // {{VS}} escrito em varias linhas nao casou com a expressao e foi
+      // publicado cru. O construtor agora para, e aqui ha a segunda rede.
+      cru: /\{\{[A-Z-]/.test(texto),
     };
   });
 
@@ -108,6 +112,7 @@ for (const rota of rotas) {
   if (!d.ldOk) prob.push(`${rota}: JSON-LD invalido`);
   if (!d.ld) prob.push(`${rota}: sem JSON-LD`);
   if (d.marcador) prob.push(`${rota}: texto placeholder visivel`);
+  if (d.cru) prob.push(`${rota}: marcador de componente nao substituido`);
   if (d.palavras < 350) prob.push(`${rota}: ${d.palavras} palavras`);
   if (!d.sanduiche) prob.push(`${rota}: sem menu sanduiche`);
   for (const i of d.dup) prob.push(`${rota}: id duplicado "${i}"`);

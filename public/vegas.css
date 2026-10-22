@@ -196,7 +196,38 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
    grade cabe tres por linha e deixa card orfao em numero par. */
 .grade-blog { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
 
-.cabeca-secao { max-width: 760px; margin-bottom: var(--e7); }
+/* Grade com a ultima linha centrada.
+   Grade CSS ancora todo item numa coluna, entao 7 cards em tres por linha
+   terminam em 3+3+1 com o ultimo encostado na esquerda, parecendo erro. Em
+   flex com justify-content:center a sobra fica no eixo — 3+3+1 centrado le
+   como decisao. A base e fracao exata para a linha cheia nao virar 4 por
+   engano, e os cortes trocam a fracao em vez de deixar o auto-fit decidir. */
+.grade-centrada { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--e5); }
+.grade-centrada > * { flex: 0 1 calc((100% - 2 * var(--e5)) / 3); min-width: 280px; }
+.grade-centrada-2 > * { flex-basis: calc((100% - var(--e5)) / 2); min-width: 400px; }
+@media (max-width: 1000px) {
+  .grade-centrada > * { flex-basis: calc((100% - var(--e5)) / 2); }
+}
+@media (max-width: 680px) {
+  .grade-centrada > *, .grade-centrada-2 > * { flex-basis: 100%; min-width: 0; }
+}
+
+/* Cabeca de secao centrada: rotulo, titulo e linha de apoio no eixo da pagina.
+   Antes era alinhada a esquerda e o titulo ficava colado na borda de um wrap de
+   1240px, longe do conteudo que anunciava. */
+.cabeca-secao {
+  max-width: 760px;
+  margin: 0 auto var(--e7);
+  text-align: center;
+}
+.cabeca-secao .apoio { margin-inline: auto; }
+
+/* Centraliza um bloco de texto inteiro — usado nos herois das paginas internas,
+   que sao uma coluna so. O heroi da Home nao recebe: ali o texto divide a linha
+   com o retrato, e centrar uma coluna ao lado de uma foto desalinha as duas. */
+.centro { text-align: center; }
+.centro .apoio, .centro > p { margin-inline: auto; }
+.centro .linha-botoes { justify-content: center; }
 
 /* Hero: o texto manda, a foto acompanha. Em 50/50 a headline de display
    quebrava em cinco linhas e pesava demais. */
@@ -206,6 +237,165 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 /* =============================================================================
    COMPONENTES
    ========================================================================== */
+
+/* ---- faixa de eixos (sob o heroi) ----
+   Tres palavras separadas por um ponto dourado. O separador e gerado pelo CSS,
+   e nao escrito como <li>, por um motivo pratico: como <li> ele era um item de
+   flex independente e, quando a linha quebrava no celular, sobrava sozinho no
+   inicio da linha de baixo ("• RECORRENCIA"). Aqui ele pertence ao item, entao
+   quebra junto. O gap tambem encolhe com a tela, para a linha caber inteira em
+   390px em vez de quebrar. */
+.faixa { padding: var(--e5) var(--gutter); }
+.faixa ul {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: var(--e2) clamp(14px, 4vw, 56px);
+  list-style: none; margin: 0 auto; padding: 0; max-width: 1240px;
+}
+.faixa li {
+  display: flex; align-items: center; gap: clamp(14px, 4vw, 56px);
+  white-space: nowrap;
+  font-size: clamp(13px, 2.6vw, 14px); font-weight: 800;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--tinta-2);
+}
+.faixa li + li::before { content: '•'; color: var(--ouro); letter-spacing: 0; }
+
+/* No celular as tres palavras e os dois pontos nao cabem numa linha: sobram
+   13px. Em vez de espremer a tipografia ate caber, o separador sai de cena e
+   ficam so as palavras, que ai cabem com folga. Em tela muito estreita elas
+   quebram — e quebram limpas, sem ponto orfao abrindo a segunda linha. */
+@media (max-width: 560px) {
+  .faixa li + li::before { content: none; }
+  .faixa ul { gap: var(--e2) var(--e4); }
+  .faixa li { letter-spacing: 0.12em; }
+}
+
+/* ---- tabela comparativa ----
+   Estava escrita com estilo inline em cada <td>, o que dava trinta atributos
+   style identicos por tabela e nenhum lugar para mudar a regra. */
+.tabela-rolagem { overflow-x: auto; }
+.tabela { width: 100%; border-collapse: collapse; font-size: var(--t-peq); min-width: 600px; }
+.tabela th, .tabela td { padding: var(--e3); text-align: left; border-bottom: 1px solid var(--linha); }
+.claro .tabela th, .claro .tabela td { border-bottom-color: var(--linha-clara); }
+.tabela tr:last-child td { border-bottom: 0; }
+.tabela thead th { color: var(--tinta-2); }
+.claro .tabela thead th { color: var(--tinta-escura); }
+
+/* ---- rotulo em pilula ----
+   Versao do rotulo que a LP usava no topo das secoes centradas: contorno
+   dourado, fundo quase transparente. Ancora o eixo central muito melhor do que
+   a palavra solta, que some num wrap de 1240px. */
+.rotulo-pill {
+  display: inline-block; margin: 0 0 var(--e4);
+  padding: 9px var(--e5);
+  border: 1px solid rgba(244,158,29,0.45); border-radius: var(--r-pill);
+  background: var(--ouro-fundo);
+  font-size: var(--t-rotulo); font-weight: 800;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--ouro);
+}
+.claro .rotulo-pill {
+  border-color: rgba(180,72,43,0.40); background: rgba(180,72,43,0.08);
+  color: var(--acento-claro);
+}
+
+/* ---- trecho em degrade dentro do titulo ----
+   `<em class="gradiente">` colore uma expressao do titulo com o degrade da
+   marca. Fallback de cor solida antes do clip: navegador sem
+   background-clip:text mostra a palavra em ouro, nao invisivel. */
+.gradiente {
+  font-style: normal;
+  color: var(--ouro);
+  background: linear-gradient(100deg, var(--vermelho) 0%, var(--ouro) 70%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.claro .gradiente {
+  color: var(--acento-claro);
+  background: linear-gradient(100deg, var(--acento-claro) 0%, #D9722F 80%);
+  -webkit-background-clip: text; background-clip: text;
+}
+
+/* ---- card com icone ----
+   Chip quadrado com o icone a esquerda do titulo. */
+.card-icone { display: grid; grid-template-columns: auto 1fr; gap: var(--e4); align-items: start; }
+.icone-chip {
+  display: grid; place-items: center; width: 46px; height: 46px;
+  border-radius: var(--r-peq);
+  border: 1px solid rgba(244,158,29,0.35); background: var(--ouro-fundo);
+  color: var(--ouro); flex-shrink: 0;
+}
+.claro .icone-chip {
+  border-color: rgba(180,72,43,0.30); background: rgba(180,72,43,0.08);
+  color: var(--acento-claro);
+}
+.icone-chip svg { width: 22px; height: 22px; display: block; }
+
+/* ---- passos numerados ----
+   O numero gigante vive no canto do card, em marca d'agua, e o numero legivel
+   fica no fluxo. Era o melhor componente da LP e nao tinha equivalente aqui: o
+   .card-num e discreto demais para uma sequencia. */
+.passo { position: relative; overflow: hidden; }
+.passo::before {
+  content: attr(data-passo);
+  position: absolute; top: -18px; right: -6px;
+  font-size: clamp(76px, 9vw, 124px); font-weight: 800; line-height: 1;
+  color: var(--ouro); opacity: 0.07; pointer-events: none;
+}
+.claro .passo::before { color: var(--acento-claro); opacity: 0.09; }
+.passo-num {
+  display: block; font-size: clamp(26px, 2.6vw, 34px); font-weight: 800;
+  line-height: 1; margin-bottom: var(--e3); color: var(--ouro);
+}
+.claro .passo-num { color: var(--acento-claro); }
+
+/* ---- comparacao sem/com ----
+   Duas colunas de cards e um disco "VS" no meio. O disco e decorativo e some
+   no empilhamento do celular, onde "no meio" nao quer dizer nada. */
+.vs { position: relative; display: grid; gap: var(--e5); grid-template-columns: 1fr 1fr; }
+.vs-titulo {
+  align-self: end;
+  font-size: var(--t-rotulo); font-weight: 800;
+  letter-spacing: 0.2em; text-transform: uppercase; margin: 0;
+}
+.vs-item { display: grid; grid-template-columns: auto 1fr; gap: var(--e3) var(--e4); align-items: start; }
+.vs-marca { font-size: 20px; line-height: 1.2; }
+.vs-nao { color: var(--tinta-3); }
+.vs-sim { color: var(--ouro); }
+.claro .vs-sim { color: var(--acento-claro); }
+/* O card herda a cor do lado so na marca e no rotulo; texto segue o padrao. */
+.vs-item h3 { color: var(--tinta); }
+.claro .vs-item h3 { color: var(--tinta-escura); }
+.vs-disco {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--vermelho), var(--ouro));
+  color: #FFF; font-size: 15px; font-weight: 800; letter-spacing: 0.08em;
+  box-shadow: 0 10px 30px rgba(211,55,43,0.40);
+}
+@media (max-width: 860px) {
+  .vs { grid-template-columns: 1fr; }
+  .vs-disco { display: none; }
+}
+
+/* ---- faixa de chamada sobre marmore ----
+   O bloco de conversao da LP: textura da marca ao fundo, selo, tudo centrado.
+   A sobreposicao escura existe para o contraste do texto nao depender do ponto
+   da textura que calhar de ficar atras dele. */
+.faixa-marmore {
+  position: relative; isolation: isolate;
+  padding: var(--secao) var(--gutter);
+  background: var(--preto) center/cover no-repeat;
+  text-align: center;
+}
+.faixa-marmore::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(ellipse at center, rgba(10,9,8,0.55) 0%, rgba(10,9,8,0.88) 100%);
+}
+.faixa-marmore .selo {
+  width: 62px; height: 62px; margin: 0 auto var(--e4); display: block;
+  border-radius: 50%; box-shadow: 0 0 36px rgba(244,158,29,0.45);
+}
+.faixa-marmore h2 { margin: 0 auto var(--e4); max-width: 18ch; }
+.faixa-marmore .apoio { margin: 0 auto var(--e6); color: var(--tinta-2); }
 
 /* ---- rotulo de secao (eyebrow) ---- */
 .rotulo {
@@ -465,6 +655,33 @@ a.card:hover, .card-interativo:hover { transform: translateY(-3px); }
   display: flex; flex-wrap: wrap; gap: var(--e4); justify-content: space-between;
   font-size: 14px; color: var(--tinta-3);
 }
+
+/* =============================================================================
+   POPUP DE DIAGNOSTICO
+   ==========================================================================
+   Criado pelo vegas.js no primeiro clique em um CTA. Nao existe no HTML: sem
+   JavaScript o mesmo CTA navega para /diagnostico/, que tem o formulario na
+   pagina. */
+
+.popup { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: var(--e4); }
+.popup[hidden] { display: none; }
+.popup-fundo { position: absolute; inset: 0; background: rgba(5,4,4,0.78); backdrop-filter: blur(4px); }
+.popup-cartao {
+  position: relative; width: min(560px, 100%); max-height: calc(100vh - 2 * var(--e4));
+  overflow-y: auto; padding: clamp(24px, 4vw, 40px);
+  background: var(--claro); color: var(--tinta-escura);
+  border-radius: var(--r-g); box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+.popup-cartao .rotulo { color: var(--acento-claro); }
+.popup-cartao h2 { font-size: var(--t-h3); margin: 0 0 var(--e3); }
+.popup-apoio { font-size: var(--t-peq); color: var(--tinta-escura-2); margin: 0 0 var(--e5); }
+.popup-x {
+  position: absolute; top: var(--e3); right: var(--e3);
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border: 0; border-radius: 50%; background: transparent; cursor: pointer;
+  font-size: 30px; line-height: 1; color: var(--tinta-escura-2);
+}
+.popup-x:hover { background: rgba(20,18,16,0.07); color: var(--tinta-escura); }
 
 /* ---- WhatsApp flutuante ---- */
 .zap {
