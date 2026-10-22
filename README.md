@@ -154,9 +154,13 @@ o envio pela fase de captura do evento `submit`, antes do `preventDefault()`.
 
 ### A planilha
 
-Tudo cai em **uma planilha so**: `[VEGAS] Leads do site`, com as abas `Leads` e
-`Resumo`. Quem recebe e um App da Web do Apps Script; o codigo e o passo a
-passo de implantacao estao em `integracoes/planilha-de-leads.gs`.
+Tudo cai em **uma planilha so**: `Lista de Leads - SITE VEGAS`, nas abas
+`Leads` e `Resumo`. Quem recebe e um App da Web do Apps Script; o codigo e o
+passo a passo de implantacao estao em `integracoes/planilha-de-leads.gs`.
+
+O script grava procurando o TITULO de cada coluna no cabecalho real, em vez de
+contar posicoes. A aba ja tinha 12 colunas e linhas gravadas pela integracao
+anterior: as colunas novas entram a direita e o historico fica onde esta.
 
 A URL `/exec` da implantacao vai na constante `PLANILHA`, no topo de
 `public/vegas.js` e de `public/site.js`. **Enquanto ela estiver vazia nada e
@@ -165,6 +169,21 @@ gravado** — o lead so chega pelo WhatsApp e pelo painel.
 O script aceita os dois formatos de envio (JSON no corpo, do site novo; e
 parametros soltos, da LP antiga) e descarta repetido pelo campo `id`, porque o
 `sendBeacon` pode entregar duas vezes.
+
+### As tres colunas de pagina
+
+Respondem perguntas diferentes, e e por isso que sao tres:
+
+    Pagina             onde o formulario foi enviado   -> o que CONVERTE
+    Pagina de entrada  a primeira pagina da visita     -> o que ATRAI
+    Veio de            o site anterior ao nosso        -> de ONDE veio
+
+Antes havia uma coluna so, alimentada por um `landing_page` que mudava de
+significado: a visita inteira so era guardada quando a URL trazia
+utm/gclid/fbclid. Sem esses parametros a coluna virava a pagina do formulario;
+com eles, a de entrada. Agora a entrada e guardada sempre, na primeira pagina
+da sessao (`sessionStorage`, chave `vegas-origem`), e a do formulario e lida no
+envio.
 
 ### GoHighLevel
 

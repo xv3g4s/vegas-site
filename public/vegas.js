@@ -143,21 +143,37 @@
     }, { passive: true });
   }
 
-  // ============================================================== UTM =====
-  var utm = (function () {
+  // ====================================================== origem =========
+  // Tres informacoes diferentes, que antes se misturavam numa so:
+  //
+  //   pagina_entrada   a PRIMEIRA pagina da visita. Diz o que traz gente.
+  //   pagina_formulario a pagina onde o formulario foi enviado. Diz o que
+  //                    converte. Lida na hora do envio, nao aqui.
+  //   referrer         o site anterior ao nosso, na primeira visita.
+  //
+  // Antes havia um campo `landing_page` so, e ele mentia conforme o caso: a
+  // visita inteira era guardada apenas quando a URL trazia utm/gclid/fbclid.
+  // Sem esses parametros, `landing_page` acabava sendo a pagina do formulario;
+  // com eles, a de entrada. Mesma coluna, dois significados — impossivel
+  // responder "de que pagina veio" olhando a planilha.
+  //
+  // Agora a entrada e guardada SEMPRE, na primeira pagina da sessao.
+  var origem = (function () {
     var p = new URLSearchParams(location.search);
     var o = {};
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid']
       .forEach(function (k) { o[k] = p.get(k) || ''; });
-    o.landing_page = location.href;
+    o.pagina_entrada = location.href;
     o.referrer = d.referrer || '';
-    // Quem chega por anuncio costuma navegar antes de converter: guardamos a
-    // origem da PRIMEIRA visita para o lead nao virar "direto".
+
     try {
-      var salvo = JSON.parse(sessionStorage.getItem('vegas-utm') || 'null');
+      var salvo = JSON.parse(sessionStorage.getItem('vegas-origem') || 'null');
+      // Ja ha entrada guardada: ela manda. Excecao — se a navegacao atual
+      // trouxer campanha nova, a campanha nova e que vale (o visitante
+      // voltou por um anuncio no meio da sessao).
       if (salvo && !o.utm_source && !o.gclid && !o.fbclid) return salvo;
-      if (o.utm_source || o.gclid || o.fbclid) sessionStorage.setItem('vegas-utm', JSON.stringify(o));
-    } catch (e) { /* modo privado */ }
+      sessionStorage.setItem('vegas-origem', JSON.stringify(o));
+    } catch (e) { /* modo privado: segue com a pagina atual */ }
     return o;
   })();
 
@@ -231,10 +247,13 @@
         source: form.closest('.popup')
           ? 'Site — popup de CTA'
           : 'Site — diagnóstico gratuito',
-        utm_source: utm.utm_source, utm_medium: utm.utm_medium,
-        utm_campaign: utm.utm_campaign, utm_term: utm.utm_term,
-        utm_content: utm.utm_content, gclid: utm.gclid, fbclid: utm.fbclid,
-        pagina: utm.landing_page, referrer: utm.referrer,
+        utm_source: origem.utm_source, utm_medium: origem.utm_medium,
+        utm_campaign: origem.utm_campaign, utm_term: origem.utm_term,
+        utm_content: origem.utm_content, gclid: origem.gclid, fbclid: origem.fbclid,
+        // A do formulario e lida agora; a de entrada veio da primeira pagina.
+        pagina: location.href,
+        pagina_entrada: origem.pagina_entrada,
+        referrer: origem.referrer,
         enviado_em: new Date().toISOString(),
         id: chaveDeEnvio()
       };

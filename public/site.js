@@ -97,20 +97,21 @@
     } catch (e) { /* o lead principal ja saiu para o GHL */ }
   }
 
-  // ---------------------------------------------------------------- UTM ----
-  var utm = (function () {
+  // ------------------------------------------------------------- origem ----
+  // Mesma logica do site novo (public/vegas.js): pagina de ENTRADA guardada
+  // sempre, pagina do FORMULARIO lida no envio. Antes era um campo so, que
+  // significava uma coisa com utm na URL e outra sem.
+  var origem = (function () {
     var p = new URLSearchParams(location.search);
     var o = {};
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid']
       .forEach(function (k) { o[k] = p.get(k) || ''; });
-    o.landing_page = location.href;
+    o.pagina_entrada = location.href;
     o.referrer = d.referrer || '';
-    // Quem chega por anuncio costuma navegar antes de converter: guardamos a
-    // origem da primeira visita para o lead nao virar "direto".
     try {
-      var salvo = JSON.parse(sessionStorage.getItem('vegas-utm') || 'null');
+      var salvo = JSON.parse(sessionStorage.getItem('vegas-origem') || 'null');
       if (salvo && !o.utm_source && !o.gclid && !o.fbclid) return salvo;
-      if (o.utm_source || o.gclid || o.fbclid) sessionStorage.setItem('vegas-utm', JSON.stringify(o));
+      sessionStorage.setItem('vegas-origem', JSON.stringify(o));
     } catch (e) { /* modo privado */ }
     return o;
   })();
@@ -230,10 +231,12 @@
       email: email,
       phone: telefone,
       source: 'Site — popup Vegas Aceleradora',
-      utm_source: utm.utm_source, utm_medium: utm.utm_medium,
-      utm_campaign: utm.utm_campaign, utm_term: utm.utm_term,
-      utm_content: utm.utm_content, gclid: utm.gclid, fbclid: utm.fbclid,
-      pagina: utm.landing_page, referrer: utm.referrer,
+      utm_source: origem.utm_source, utm_medium: origem.utm_medium,
+      utm_campaign: origem.utm_campaign, utm_term: origem.utm_term,
+      utm_content: origem.utm_content, gclid: origem.gclid, fbclid: origem.fbclid,
+      pagina: location.href,
+      pagina_entrada: origem.pagina_entrada,
+      referrer: origem.referrer,
       enviado_em: new Date().toISOString(),
       id: chaveDeEnvio()
     };
